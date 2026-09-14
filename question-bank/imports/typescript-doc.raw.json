@@ -1,0 +1,538 @@
+[
+  {
+    "sourceIndex": 1,
+    "category": "typescript",
+    "title": "TypeScript 相比 JS 的好处是什么",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "静态类型检查：编译阶段发现类型错误，而不是运行时报错；"
+      },
+      {
+        "kind": "text",
+        "text": "代码提示、智能补全，大型项目可读性、可维护性更好；"
+      },
+      {
+        "kind": "text",
+        "text": "接口、泛型可以约束数据结构，团队协作更规范；"
+      },
+      {
+        "kind": "text",
+        "text": "支持最新 ES 语法，编译向下兼容低版本 JS。"
+      },
+      {
+        "kind": "text",
+        "text": "TS 不会改变 JS 运行时，仅仅编译期做类型校验。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 2,
+    "category": "typescript",
+    "title": "type 和 interface 的区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 相同点：都可以定义对象类型，支持扩展。 区别："
+      },
+      {
+        "kind": "text",
+        "text": "interface 可以声明合并，写多个同名 interface 会自动合并；type 别名不能重复声明。"
+      },
+      {
+        "kind": "text",
+        "text": "type 可以定义基本类型、联合、交叉、元组；interface 只能描述对象 / 函数。"
+      },
+      {
+        "kind": "text",
+        "text": "interface 用extends做继承；type 用&交叉类型。"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "// interface 声明合并interface User { name:string }interface User { age:number }// 合并得到 {name:string;age:number}"
+      },
+      {
+        "kind": "text",
+        "text": "项目经验：描述对象、组件入参优先用 interface；联合类型、工具类型用 type。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 3,
+    "category": "typescript",
+    "title": "any、unknown、never、void 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "any：关闭 TS 类型检查，可以任意读写调用，尽量少用，等于放弃 TS 能力。"
+      },
+      {
+        "kind": "text",
+        "text": "unknown：未知类型，相比 any 更安全；不能直接调用属性 / 方法，必须先做类型缩小判断。"
+      },
+      {
+        "kind": "text",
+        "text": "void：函数没有返回值；可以返回 undefined。"
+      },
+      {
+        "kind": "text",
+        "text": "never：永远不会发生的值。函数抛出错误、死循环没有返回；联合类型穷尽判断后剩下的类型。"
+      },
+      {
+        "kind": "text",
+        "text": "简单记忆： any：啥都能干；unknown：啥都不能干，需要判断；never：根本不会出现。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 4,
+    "category": "typescript",
+    "title": "联合类型 | 和交叉类型 &",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "| 联合：满足其中一种类型即可 type A = number | string"
+      },
+      {
+        "kind": "text",
+        "text": "& 交叉：必须同时满足所有类型，把多个类型合并。"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "type Person = {name:string} & {age:number}// {name:string,age:number}"
+      },
+      {
+        "kind": "text",
+        "text": "注意：基本类型交叉 string & number 得到 never，不可能同时满足。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 5,
+    "category": "typescript",
+    "title": "泛型是什么？什么时候用泛型",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 泛型：类型参数，类型的参数化，让组件、函数支持多种类型，同时保留类型推导，不丢失类型信息，不写 any。"
+      },
+      {
+        "kind": "text",
+        "text": "示例："
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "function fn<T>(arg:T):T {"
+      },
+      {
+        "kind": "code",
+        "text": "return arg}"
+      },
+      {
+        "kind": "text",
+        "text": "使用场景："
+      },
+      {
+        "kind": "text",
+        "text": "封装通用工具函数；"
+      },
+      {
+        "kind": "text",
+        "text": "封装通用组件；"
+      },
+      {
+        "kind": "text",
+        "text": "axios 请求返回值约束。"
+      },
+      {
+        "kind": "text",
+        "text": "泛型约束 extends：限制泛型必须具备某些属性"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "function getLen<T extends {length:number}>(val:T){"
+      },
+      {
+        "kind": "code",
+        "text": "return val.length}"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 6,
+    "category": "typescript",
+    "title": "TS 工具类型 Partial、Required、Readonly、Pick、Omit、Exclude、Extract",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "高频，面试经常问，最好口述作用 答案："
+      },
+      {
+        "kind": "text",
+        "text": "Partial<T>：把 T 所有属性变为可选"
+      },
+      {
+        "kind": "text",
+        "text": "Required<T>：把 T 所有属性变为必选"
+      },
+      {
+        "kind": "text",
+        "text": "Readonly<T>：所有属性只读"
+      },
+      {
+        "kind": "text",
+        "text": "Pick<T,K>：挑选 T 中的 K 属性，生成新类型"
+      },
+      {
+        "kind": "text",
+        "text": "Omit<T,K>：剔除 T 中的 K 属性"
+      },
+      {
+        "kind": "text",
+        "text": "Exclude<T,U>：从 T 中排除可以赋值给 U 的类型"
+      },
+      {
+        "kind": "text",
+        "text": "Extract<T,U>：从 T 中提取可以赋值给 U 的类型"
+      },
+      {
+        "kind": "text",
+        "text": "校招重点记住前 6 个，会讲用途，不需要手写实现。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 7,
+    "category": "typescript",
+    "title": "as 类型断言，什么时候用？两种写法，风险",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 类型断言：告诉 TS “我比你更清楚这个类型”，绕过类型推导。 两种写法："
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "const a = val as stringconst b = <string>val"
+      },
+      {
+        "kind": "text",
+        "text": "风险：断言不会做运行时校验，断言错了运行时会报错，TS 不会拦你。 不要滥用，优先用类型缩小（if 判断）代替断言。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 8,
+    "category": "typescript",
+    "title": "! 非空断言操作符是什么",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： x! 告诉 TS：x 一定不是 null、undefined，消除 null 报错。"
+      },
+      {
+        "kind": "text",
+        "text": "同样只是编译期，运行时如果确实是 null，依然报错，慎用。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 9,
+    "category": "typescript",
+    "title": "? 可选属性 / 可选链 ?. / 空值合并 ??",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "可选属性 name?: string，属性可以不传，等价于 name:string | undefined"
+      },
+      {
+        "kind": "text",
+        "text": "可选链 obj?.info?.name，对象层级属性安全读取，中途为 null/undefined 直接返回 undefined，不抛异常。"
+      },
+      {
+        "kind": "text",
+        "text": "空值合并 a ?? b：a 为 null/undefined 才取 b；0、''、false 不会走后面。 区分 ||：|| 会把 0 '' false 也当成假值。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 10,
+    "category": "typescript",
+    "title": "tsconfig.json 重要配置",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "target：编译输出 JS 版本"
+      },
+      {
+        "kind": "text",
+        "text": "module：模块规范 esnext/commonjs"
+      },
+      {
+        "kind": "text",
+        "text": "strict:true：开启严格模式（最重要！开启后：noImplicitAny、strictNullChecks 全部打开，项目必开）"
+      },
+      {
+        "kind": "text",
+        "text": "strictNullChecks：严格检查 null、undefined，防止空报错"
+      },
+      {
+        "kind": "text",
+        "text": "esModuleInterop：兼容 commonjs 模块导入"
+      },
+      {
+        "kind": "text",
+        "text": "include/exclude：指定哪些文件参与编译"
+      },
+      {
+        "kind": "text",
+        "text": "baseUrl + paths：配置路径别名"
+      },
+      {
+        "kind": "text",
+        "text": "重点：strict 严格模式，几乎所有正式项目都会开启。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 11,
+    "category": "typescript",
+    "title": "类型守卫（类型缩小）是什么，举例",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 通过判断，把联合类型缩小成更具体类型。 方式：typeof、instanceof、in、自定义 is 类型守卫。"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "function isString(val:unknown): val is string{"
+      },
+      {
+        "kind": "code",
+        "text": "return typeof val === 'string'}"
+      },
+      {
+        "kind": "text",
+        "text": "val is string 是类型谓词，返回 true 后，变量被收窄为 string。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 12,
+    "category": "typescript",
+    "title": "泛型接口、泛型函数实际业务场景",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 后端返回统一格式："
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "interface Response<T> {"
+      },
+      {
+        "kind": "code",
+        "text": "code:number"
+      },
+      {
+        "kind": "code",
+        "text": "data:T"
+      },
+      {
+        "kind": "code",
+        "text": "msg:string}// Response<User> 把User传入T，约束data字段"
+      },
+      {
+        "kind": "text",
+        "text": "axios 封装的时候大量这么写。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 13,
+    "category": "typescript",
+    "title": "declare 声明，declare module 作用",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： declare 用来写类型声明，没有实际 JS 代码。"
+      },
+      {
+        "kind": "text",
+        "text": "declare module 'xxx'：给没有 ts 类型的第三方模块、图片资源做模块声明，解决 import 报红。 项目中 .d.ts 文件就是类型声明文件。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 14,
+    "category": "typescript",
+    "title": ".d.ts 文件作用",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： d.ts 是 TypeScript 类型声明文件，只存放类型，不编译产出 js。 存放全局类型、模块声明，整个项目可以直接使用里面的类型，不需要 import 导入。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 15,
+    "category": "typescript",
+    "title": "解释 readonly 修饰符",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： readonly name:string，对象属性只能初始化赋值，之后不能修改。 注意：readonly 只约束属性本身，对象内部子属性依然可以修改；只是编译期约束，不影响运行。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 16,
+    "category": "typescript",
+    "title": "什么是类型兼容性（结构化类型）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： TS 是结构化类型系统，不看名字，看结构是否匹配。 只要对象具备需要的全部属性，就算类型兼容，可以赋值。"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "interface Cat {name:string}const dog = {name:'旺财',age:2}let c:Cat = dog //可以赋值，满足name属性"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 17,
+    "category": "typescript",
+    "title": "枚举 enum，const enum 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 普通 enum：编译生成 JS 对象； const enum：常量枚举，编译直接内联，不会生成额外 JS 代码，体积更小。"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "enum Status { Success=0, Fail=1 }"
+      },
+      {
+        "kind": "text",
+        "text": "业务场景：状态码、类型常量。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 18,
+    "category": "typescript",
+    "title": "为什么会出现 noImplicitAny 报错",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： strict 模式开启noImplicitAny，当 TS 无法自动推导类型时，不会隐式给 any，直接报错，要求手动标注类型。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 19,
+    "category": "typescript",
+    "title": "函数重载是什么",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 同一个函数，接收不同参数，返回不同类型。写多个类型声明，一个实现。"
+      },
+      {
+        "kind": "text",
+        "text": "注意：重载只是 TS 编译期，JS 没有重载。"
+      },
+      {
+        "kind": "text",
+        "text": "ts"
+      },
+      {
+        "kind": "code",
+        "text": "function fn(x:number):numberfunction fn(x:string):stringfunction fn(x:number|string){"
+      },
+      {
+        "kind": "code",
+        "text": "return x}"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 20,
+    "category": "typescript",
+    "title": "TS 中如何处理第三方库没有类型定义",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "优先安装 @types/xxx 社区类型包；"
+      },
+      {
+        "kind": "text",
+        "text": "没有的话，在 d.ts 写 declare module 'xxx'；"
+      },
+      {
+        "kind": "text",
+        "text": "临时方案：import xxx from 'xxx' as any（不推荐临时使用）。"
+      }
+    ]
+  }
+]

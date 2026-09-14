@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="hero">
+    <text class="eyebrow">主动回忆 · 持续复习</text>
+    <view class="hero-row">
+      <view>
+        <text class="title">今天，刷几题？</text>
+        <text class="subtitle">已复习 {{todayCount}} 题，稳步建立知识网络</text>
+      </view>
+      <view class="today-number">{{todayCount}}</view>
+    </view>
+    <button class="primary-button" bindtap="goPractice">🎲 开始随机刷题</button>
+  </view>
+
+  <view class="section-header"><text>复习速览</text><text class="section-hint">已记录 {{totalReviewed}} 题</text></view>
+  <view class="status-grid">
+    <view wx:for="{{masteryItems}}" wx:key="status" class="status-card {{item.status}}" bindtap="goReview">
+      <text class="status-count">{{item.count}}</text><text class="status-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <view class="section-header"><text>按分类学习</text><text class="section-hint">10 个方向</text></view>
+  <view class="category-grid">
+    <view wx:for="{{categories}}" wx:key="id" class="category-card" bindtap="goCategory" data-id="{{item.id}}">
+      <view class="category-icon" style="background: {{item.color}}">{{item.icon}}</view>
+      <view><text class="category-name">{{item.name}}</text><text class="category-count">已复习 {{item.reviewedCount}} / {{item.totalCount}} 题</text></view>
+    </view>
+  </view>
+</view>

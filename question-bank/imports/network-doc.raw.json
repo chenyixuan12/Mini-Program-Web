@@ -1,0 +1,576 @@
+[
+  {
+    "sourceIndex": 1,
+    "category": "network",
+    "title": "HTTP1.0 / HTTP1.1 / HTTP2 / HTTP3 的区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "HTTP/1.0：短连接，每次请求新建 TCP 连接，请求完断开。"
+      },
+      {
+        "kind": "text",
+        "text": "HTTP/1.1："
+      },
+      {
+        "kind": "text",
+        "text": "默认长连接 keep-alive，一个 TCP 连接可以复用多次请求；"
+      },
+      {
+        "kind": "text",
+        "text": "增加缓存字段 If-Modified-Since、ETag；"
+      },
+      {
+        "kind": "text",
+        "text": "支持断点续传；"
+      },
+      {
+        "kind": "text",
+        "text": "队头阻塞：同一个连接，请求必须排队，前面响应没回来，后面请求等着。"
+      },
+      {
+        "kind": "text",
+        "text": "HTTP/2：二进制帧传输，多路复用，同一个 TCP 连接并发多个请求，解决队头阻塞；头部压缩；服务端推送 server-push。"
+      },
+      {
+        "kind": "text",
+        "text": "注意：HTTP2 只是解决应用层队头阻塞，TCP 层丢包依然会阻塞。"
+      },
+      {
+        "kind": "text",
+        "text": "HTTP/3：基于 QUIC 协议，底层 UDP，彻底解决 TCP 队头阻塞；0-RTT 握手，握手更快；弱网表现更好。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 2,
+    "category": "network",
+    "title": "GET 和 POST 的区别（面试必考题）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "参数位置：GET 参数放在 url 查询字符串；POST 放请求 body。"
+      },
+      {
+        "kind": "text",
+        "text": "缓存：GET 会被浏览器默认缓存；POST 默认不缓存。"
+      },
+      {
+        "kind": "text",
+        "text": "幂等性：GET 是幂等，多次请求结果一样；POST 一般非幂等。"
+      },
+      {
+        "kind": "text",
+        "text": "长度限制：GET 受 url 长度限制；POST 理论无限制。"
+      },
+      {
+        "kind": "text",
+        "text": "语义：GET 用于获取资源；POST 用于提交数据。"
+      },
+      {
+        "kind": "text",
+        "text": "重要误区：GET 和 POST 底层都是 TCP，GET 也可以带 body，POST 也可以拼接 url 参数，是规范约定，不是技术强制。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 3,
+    "category": "network",
+    "title": "什么是幂等性？哪些 HTTP 方法是幂等",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 幂等：多次发起相同请求，服务器产生的效果和一次请求完全一样。 幂等方法：GET、PUT、DELETE 非幂等：POST"
+      },
+      {
+        "kind": "text",
+        "text": "场景：重复提交表单，后端要做幂等处理，防止重复创建数据。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 4,
+    "category": "network",
+    "title": "HTTP 缓存（强缓存、协商缓存，超级高频）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： HTTP 缓存分为强缓存、协商缓存。"
+      },
+      {
+        "kind": "text",
+        "text": "强缓存"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器直接读取本地缓存，不发网络请求。 响应头："
+      },
+      {
+        "kind": "text",
+        "text": "Expires：绝对时间，老版本，受本地系统时间影响。"
+      },
+      {
+        "kind": "text",
+        "text": "Cache-Control: max-age=xxx 相对秒数，现代优先。 Cache-Control: no-cache：不走强缓存，强制走协商缓存； Cache-Control: no-store：完全不缓存。"
+      },
+      {
+        "kind": "text",
+        "text": "协商缓存"
+      },
+      {
+        "kind": "text",
+        "text": "强缓存失效，浏览器发请求给服务器，带标识，服务器判断资源是否没变。"
+      },
+      {
+        "kind": "text",
+        "text": "方案 1：Last-Modified（响应） / If-Modified-Since（请求），修改时间，精度秒级。"
+      },
+      {
+        "kind": "text",
+        "text": "方案 2：ETag（响应） / If-None-Match（请求），文件哈希标识，精度更高。"
+      },
+      {
+        "kind": "text",
+        "text": "服务器返回："
+      },
+      {
+        "kind": "text",
+        "text": "304 Not Modified：资源没变化，浏览器使用本地缓存；"
+      },
+      {
+        "kind": "text",
+        "text": "200：资源更新，返回新资源。"
+      },
+      {
+        "kind": "text",
+        "text": "优先级：ETag > Last-Modified；Cache-Control > Expires。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 5,
+    "category": "network",
+    "title": "2xx、3xx、4xx、5xx 状态码，常见状态码",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "2xx 成功 200 OK；201 创建成功；204 No-Content 无返回内容。"
+      },
+      {
+        "kind": "text",
+        "text": "3xx 重定向 / 缓存 301 永久重定向；302 临时重定向；304 协商缓存；307 临时重定向，保持请求方法。"
+      },
+      {
+        "kind": "text",
+        "text": "4xx 客户端错误 400 参数错误；401 未认证；403 权限禁止；404 资源不存在；405 方法不允许；429 请求过多限流。"
+      },
+      {
+        "kind": "text",
+        "text": "5xx 服务端错误 500 服务器内部错误；502 网关错误；503 服务不可用；504 网关超时。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 6,
+    "category": "network",
+    "title": "HTTPS 原理，HTTP 和 HTTPS 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： HTTP 明文传输，不安全；HTTPS = HTTP + TLS/SSL，加密传输。 TLS 握手流程："
+      },
+      {
+        "kind": "text",
+        "text": "客户端发送 Client Hello，携带支持的加密套件、随机数。"
+      },
+      {
+        "kind": "text",
+        "text": "服务端返回 Server Hello，选定加密套件、随机数、服务器证书。"
+      },
+      {
+        "kind": "text",
+        "text": "客户端验证证书合法性（CA）。"
+      },
+      {
+        "kind": "text",
+        "text": "客户端生成预主密钥，用服务器公钥加密传给服务端。"
+      },
+      {
+        "kind": "text",
+        "text": "服务端私钥解密得到预主密钥。"
+      },
+      {
+        "kind": "text",
+        "text": "双方通过三个随机数生成会话密钥，后续通信对称加密传输。"
+      },
+      {
+        "kind": "text",
+        "text": "非对称加密只用来交换密钥；真正传输数据用对称加密，速度快。 证书作用：证明服务器身份，防止中间人劫持。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 7,
+    "category": "network",
+    "title": "TCP 三次握手，四次挥手（校招常问，不用死记底层细节，讲清目的）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 三次握手（建立连接）："
+      },
+      {
+        "kind": "text",
+        "text": "客户端发 SYN；"
+      },
+      {
+        "kind": "text",
+        "text": "服务端返回 SYN+ACK；"
+      },
+      {
+        "kind": "text",
+        "text": "客户端返回 ACK。 目的：双向收发能力确认，防止旧无效连接。"
+      },
+      {
+        "kind": "text",
+        "text": "四次挥手（断开连接）："
+      },
+      {
+        "kind": "text",
+        "text": "客户端发 FIN；"
+      },
+      {
+        "kind": "text",
+        "text": "服务端 ACK 确认；"
+      },
+      {
+        "kind": "text",
+        "text": "服务端数据发送完毕，发送 FIN；"
+      },
+      {
+        "kind": "text",
+        "text": "客户端 ACK 确认。"
+      },
+      {
+        "kind": "text",
+        "text": "TIME-WAIT 状态：客户端最后等待，确保对方收到 ACK，等待 2MSLS。"
+      },
+      {
+        "kind": "text",
+        "text": "面试小技巧：前端不用深挖内核细节，讲清楚目的即可，不要背一堆标志位。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 8,
+    "category": "network",
+    "title": "TCP 和 UDP 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "TCP：面向连接；可靠传输；握手挥手；重传、拥塞控制；慢；HTTP/1/2 基于 TCP。"
+      },
+      {
+        "kind": "text",
+        "text": "UDP：无连接；不可靠；没有重传；速度快；QUIC (HTTP3) 基于 UDP。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 9,
+    "category": "network",
+    "title": "什么是跨域，同源策略，为什么浏览器要有同源策略",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 同源：协议、域名、端口三者全部相同。 同源策略：浏览器安全策略，限制不同源的脚本读取对方响应。 目的：防止恶意网站窃取用户数据，防止 CSRF 攻击。"
+      },
+      {
+        "kind": "text",
+        "text": "跨域不是请求发不出去，请求已经到达服务器，浏览器拦截返回结果。"
+      },
+      {
+        "kind": "text",
+        "text": "跨域解决方案："
+      },
+      {
+        "kind": "text",
+        "text": "CORS（后端设置响应头 Access-Control-Allow-Origin，生产首选）"
+      },
+      {
+        "kind": "text",
+        "text": "开发环境：webpack/vite proxy 代理"
+      },
+      {
+        "kind": "text",
+        "text": "Nginx 反向代理"
+      },
+      {
+        "kind": "text",
+        "text": "JSONP，仅支持 GET，老旧方案。"
+      },
+      {
+        "kind": "text",
+        "text": "CORS 简单区分简单请求、预检 OPTIONS 请求： 满足：method 为 GET/POST/HEAD，头部只有简单字段，就是简单请求； 否则浏览器先发 OPTIONS 预检请求，确认服务器允许跨域，再发真实请求。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 10,
+    "category": "network",
+    "title": "Cookie、sessionStorage、localStorage 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "Cookie"
+      },
+      {
+        "kind": "text",
+        "text": "存储大小 4k；每次 http 请求自动携带发给后端；可以设置过期时间；"
+      },
+      {
+        "kind": "text",
+        "text": "分域；有 HttpOnly、Secure、SameSite 属性，防范 XSS、CSRF。"
+      },
+      {
+        "kind": "text",
+        "text": "localStorage"
+      },
+      {
+        "kind": "text",
+        "text": "最大 5M；永久存储，手动清除；不会随 http 请求发送；同域共享。"
+      },
+      {
+        "kind": "text",
+        "text": "sessionStorage"
+      },
+      {
+        "kind": "text",
+        "text": "5M；页面会话级别，关闭标签页就清除；不同标签页不共享。"
+      },
+      {
+        "kind": "text",
+        "text": "安全：HttpOnly 的 cookie JS 不能读取，防御 XSS 窃取 cookie。SameSite 防止 CSRF。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 11,
+    "category": "network",
+    "title": "XSS 和 CSRF 是什么，怎么防御（前端安全必问）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "XSS 跨站脚本攻击"
+      },
+      {
+        "kind": "text",
+        "text": "恶意脚本注入页面执行。分为存储型、反射型、DOM 型。 防御："
+      },
+      {
+        "kind": "text",
+        "text": "输入输出转义，对 HTML 特殊字符转义；"
+      },
+      {
+        "kind": "text",
+        "text": "使用 CSP 内容安全策略；"
+      },
+      {
+        "kind": "text",
+        "text": "Cookie 设置 HttpOnly，防止 JS 读取 cookie；"
+      },
+      {
+        "kind": "text",
+        "text": "Vue/React 默认插值会做转义，v-innerHTML 危险。"
+      },
+      {
+        "kind": "text",
+        "text": "CSRF 跨站请求伪造"
+      },
+      {
+        "kind": "text",
+        "text": "利用浏览器自动携带 cookie，诱导用户在恶意页面发起请求，冒充用户操作。 防御："
+      },
+      {
+        "kind": "text",
+        "text": "token 校验，请求携带自定义 token；"
+      },
+      {
+        "kind": "text",
+        "text": "Cookie 设置 SameSite=Strict/Lax；"
+      },
+      {
+        "kind": "text",
+        "text": "校验 Referer。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 12,
+    "category": "network",
+    "title": "从输入 url 到页面渲染完整全过程",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "DNS 解析：域名转 IP；DNS 缓存、hosts。"
+      },
+      {
+        "kind": "text",
+        "text": "TCP 三次握手建立连接；HTTPS 则执行 TLS 握手。"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器发送 HTTP 请求。"
+      },
+      {
+        "kind": "text",
+        "text": "服务器处理，返回 HTTP 响应。"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器接收响应，拿到 HTML。"
+      },
+      {
+        "kind": "text",
+        "text": "解析 HTML 生成 DOM 树；解析 CSS 生成 CSSOM 树。"
+      },
+      {
+        "kind": "text",
+        "text": "DOM+CSSOM 合并生成 Render 树。"
+      },
+      {
+        "kind": "text",
+        "text": "布局（重排 reflow）：计算每个节点位置大小。"
+      },
+      {
+        "kind": "text",
+        "text": "绘制（重绘 repaint）：像素绘制到屏幕。"
+      },
+      {
+        "kind": "text",
+        "text": "解析 HTML 遇到 link、script 会阻塞；script 会阻塞 DOM 解析。defer、async 区别。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 13,
+    "category": "network",
+    "title": "script 标签 async 和 defer 的区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "普通 script：下载、执行都会阻塞 DOM 解析。"
+      },
+      {
+        "kind": "text",
+        "text": "async：脚本异步下载，下载完立刻执行，执行顺序不保证。"
+      },
+      {
+        "kind": "text",
+        "text": "defer：异步下载，DOM 解析完成之后再执行，保持脚本顺序执行。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 14,
+    "category": "network",
+    "title": "什么是 ETag，和 Last-Modified 对比",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： Last-Modified 是文件修改时间，秒级；如果文件内容没变，时间改动会误判。 ETag 是资源内容哈希，内容变化才改变，精度更高；但是服务器计算 ETag 有性能开销。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 15,
+    "category": "network",
+    "title": "什么是 CSP 内容安全策略",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 安全响应头，限制页面可以加载哪些脚本、资源，用来防御 XSS 攻击。 可以禁止内联脚本、禁止 eval，指定允许的资源域名。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 16,
+    "category": "network",
+    "title": "301 和 302 区别，有什么坑",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 301 永久重定向：浏览器会缓存重定向结果。 302 临时重定向：不缓存。 坑：302 会把 POST 请求变成 GET，所以出现 307 保持原请求方法。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 17,
+    "category": "network",
+    "title": "请求头常见字段：User-Agent、Referer、Origin、Content-Type",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "User-Agent：浏览器设备信息；"
+      },
+      {
+        "kind": "text",
+        "text": "Referer：请求来源页面地址；"
+      },
+      {
+        "kind": "text",
+        "text": "Origin：请求源，跨域请求带上；"
+      },
+      {
+        "kind": "text",
+        "text": "Content-Type：请求体格式； application/json、application/x-www-form-urlencoded、multipart/form-data上传文件。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 18,
+    "category": "network",
+    "title": "上传文件为什么用 multipart/form-data",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 普通表单编码无法传输二进制文件；multipart/form-data 把表单切割成多段，支持二进制文件上传。"
+      }
+    ]
+  }
+]

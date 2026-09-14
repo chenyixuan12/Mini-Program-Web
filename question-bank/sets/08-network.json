@@ -1,0 +1,1324 @@
+[
+  {
+    "id": "network-http-versions",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "协议版本"
+    ],
+    "title": "HTTP/1.0、HTTP/1.1、HTTP/2 和 HTTP/3 有什么关键区别？",
+    "answer": "HTTP/1.0 的连接复用不是默认规范语义，但实现可通过扩展使用 keep-alive；HTTP/1.1 默认持久连接，并完善缓存、分块传输和范围请求等能力。HTTP/1.1 流水线部署有限，常见客户端仍受同一连接响应顺序影响。\n\nHTTP/2 使用二进制帧、流多路复用和 HPACK，缓解应用层队头阻塞，但多个流仍共享 TCP 的丢包恢复。HTTP/3 运行在 QUIC 上，不同流的传输丢包通常互不阻塞，并支持更快建连和连接迁移；0-RTT 只适用于满足条件的恢复连接且存在重放风险。",
+    "keyPoints": [
+      "HTTP/1.1 默认使用持久连接",
+      "HTTP/2 采用二进制分帧和多路复用",
+      "HTTP/2 仍受 TCP 层丢包影响",
+      "HTTP/3 基于 QUIC 隔离不同流的传输阻塞",
+      "0-RTT 有条件且需防范重放"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "为什么 HTTP/2 下域名分片通常失去收益？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-get-post",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "请求方法"
+    ],
+    "title": "GET 和 POST 的语义、缓存与幂等性有什么区别？",
+    "answer": "GET 的语义是获取资源，属于安全且幂等的方法；POST 用于让资源按请求表示执行处理，通常不保证幂等。查询参数和消息体只是常见用法：协议语法不把 POST 参数限定在 body，但 GET 请求体缺乏通用语义，浏览器 Fetch 也不允许 GET/HEAD 携带 body。\n\nGET 响应更容易被缓存，但 POST 响应在满足明确缓存头和缓存实现支持时也可以缓存。URL 与消息体大小都受浏览器、代理和服务器配置限制，不能概括为 GET 有固定上限而 POST 无限。",
+    "keyPoints": [
+      "GET 是安全且幂等的资源读取语义",
+      "POST 通常用于非幂等处理",
+      "GET 请求体缺乏通用互操作语义",
+      "POST 响应在满足条件时也可缓存",
+      "URL 与请求体都存在实现限制"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "PUT 与 POST 在幂等性和资源标识上有什么区别？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-idempotency",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "幂等性"
+    ],
+    "title": "什么是幂等性？哪些 HTTP 方法是幂等？",
+    "answer": "幂等：多次发起相同请求，服务器产生的效果和一次请求完全一样。 幂等方法：GET、PUT、DELETE 非幂等：POST\n场景：重复提交表单，后端要做幂等处理，防止重复创建数据。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "幂等：多次发起相同请求，服务器产生的效果和一次请求完全一样。 幂等方法：GET、PUT、DELETE 非幂等：POST",
+      "场景：重复提交表单，后端要做幂等处理，防止重复创建数据",
+      "了解 HTTP 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-http-cache",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "缓存"
+    ],
+    "title": "HTTP 强缓存和协商缓存是如何配合的？",
+    "answer": "缓存先根据 Cache-Control、Expires 等新鲜度信息判断响应是否可直接复用；命中新鲜缓存时通常不联系源站。响应过期或标记 no-cache 时，需要用 If-None-Match/ETag 或 If-Modified-Since/Last-Modified 重新验证，未变化可返回 304。\n\nno-cache 表示复用前必须验证，不等于完全不存储；no-store 才是要求缓存不要存储。若同时发送两个验证器，HTTP 语义规定 If-None-Match 优先，但具体缓存行为还受 Vary、请求指令、共享缓存和实现策略影响。",
+    "keyPoints": [
+      "新鲜缓存可直接复用",
+      "no-cache 表示复用前重新验证",
+      "no-store 表示不要存储",
+      "ETag 与 Last-Modified 可用于条件请求",
+      "Vary 会影响缓存键"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么带内容哈希的静态资源适合 immutable 长缓存？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-status-codes",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "状态码"
+    ],
+    "title": "2xx、3xx、4xx、5xx 状态码，常见状态码？",
+    "answer": "2xx 成功 200 OK；201 创建成功；204 No-Content 无返回内容。\n3xx 重定向 / 缓存 301 永久重定向；302 临时重定向；304 协商缓存；307 临时重定向，保持请求方法。\n4xx 客户端错误 400 参数错误；401 未认证；403 权限禁止；404 资源不存在；405 方法不允许；429 请求过多限流。\n5xx 服务端错误 500 服务器内部错误；502 网关错误；503 服务不可用；504 网关超时。",
+    "keyPoints": [
+      "2xx 成功 200 OK；201 创建成功；204 No-Content 无返回内容",
+      "3xx 重定向 / 缓存 301 永久重定向；302 临时重定向；304 协商缓存；307 临时重定向，保持请求方法",
+      "4xx 客户端错误 400 参数错误；401 未认证；403 权限禁止；404 资源不存在；405 方法不允许；429 请求过多限流",
+      "5xx 服务端错误 500 服务器内部错误；502 网关错误；503 服务不可用；504 网关超时"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-https-tls",
+    "category": "network",
+    "tags": [
+      "HTTPS",
+      "TLS"
+    ],
+    "title": "现代 HTTPS 和 TLS 握手如何建立安全连接？",
+    "answer": "HTTPS 是在 TLS 安全通道上传输 HTTP。客户端与服务端协商协议版本和密码套件，服务端发送证书链证明公钥身份；客户端验证主机名、有效期、签名链等信息。现代 TLS 通常通过（EC）DHE 等密钥交换共同派生会话密钥，证书私钥用于签名认证，而不是简单用 RSA 加密一个预主密钥。\n\n后续应用数据使用对称加密和完整性保护。TLS 1.3 简化握手并支持会话恢复；0-RTT 数据存在重放风险，只适合可安全重放的操作。",
+    "keyPoints": [
+      "证书链用于认证服务器身份",
+      "现代握手通常使用临时 Diffie-Hellman 密钥交换",
+      "应用数据使用对称加密和完整性保护",
+      "TLS 1.3 简化握手",
+      "0-RTT 需要考虑重放风险"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "证书认证与密钥交换为什么是两个不同问题？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-tcp",
+    "category": "network",
+    "tags": [
+      "TCP",
+      "连接"
+    ],
+    "title": "TCP 三次握手和四次挥手分别解决什么问题？",
+    "answer": "三次握手（建立连接）：\n客户端发 SYN；\n服务端返回 SYN+ACK；\n客户端返回 ACK。 目的：双向收发能力确认，防止旧无效连接。\n四次挥手（断开连接）：\n客户端发 FIN；\n服务端 ACK 确认；\n服务端数据发送完毕，发送 FIN；\n客户端 ACK 确认。\nTIME-WAIT 状态：客户端最后等待，确保对方收到 ACK，等待 2MSLS。\n面试小技巧：前端不用深挖内核细节，讲清楚目的即可，不要背一堆标志位。",
+    "keyPoints": [
+      "三次握手（建立连接）：",
+      "客户端发 SYN",
+      "服务端返回 SYN+ACK",
+      "客户端返回 ACK。 目的：双向收发能力确认，防止旧无效连接",
+      "四次挥手（断开连接）："
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-tcp-udp",
+    "category": "network",
+    "tags": [
+      "TCP",
+      "UDP"
+    ],
+    "title": "TCP 和 UDP 区别？",
+    "answer": "TCP：面向连接；可靠传输；握手挥手；重传、拥塞控制；慢；HTTP/1/2 基于 TCP。\nUDP：无连接；不可靠；没有重传；速度快；QUIC (HTTP3) 基于 UDP。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "TCP：面向连接；可靠传输；握手挥手；重传、拥塞控制；慢；HTTP/1/2 基于 TCP",
+      "UDP：无连接；不可靠；没有重传；速度快；QUIC (HTTP3) 基于 UDP",
+      "了解 TCP 的风险和边界"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-cors",
+    "category": "network",
+    "tags": [
+      "同源策略",
+      "CORS"
+    ],
+    "title": "什么是跨域，同源策略，为什么浏览器要有同源策略？",
+    "answer": "同源：协议、域名、端口三者全部相同。 同源策略：浏览器安全策略，限制不同源的脚本读取对方响应。 目的：防止恶意网站窃取用户数据，防止 CSRF 攻击。\n跨域不是请求发不出去，请求已经到达服务器，浏览器拦截返回结果。\n跨域解决方案：\nCORS（后端设置响应头 Access-Control-Allow-Origin，生产首选）\n开发环境：webpack/vite proxy 代理\nNginx 反向代理\nJSONP，仅支持 GET，老旧方案。\nCORS 简单区分简单请求、预检 OPTIONS 请求： 满足：method 为 GET/POST/HEAD，头部只有简单字段，就是简单请求； 否则浏览器先发 OPTIONS 预检请求，确认服务器允许跨域，再发真实请求。",
+    "keyPoints": [
+      "同源：协议、域名、端口三者全部相同。 同源策略：浏览器安全策略，限制不同源的脚本读取对方响应。 目的：防止恶意网站窃取用户数据，防止 CSRF 攻击",
+      "跨域不是请求发不出去，请求已经到达服务器，浏览器拦截返回结果",
+      "CORS（后端设置响应头 Access-Control-Allow-Origin，生产首选）",
+      "开发环境：webpack/vite proxy 代理",
+      "Nginx 反向代理"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-web-storage-cookie",
+    "category": "network",
+    "tags": [
+      "Cookie",
+      "存储"
+    ],
+    "title": "Cookie、sessionStorage、localStorage 区别？",
+    "answer": "Cookie\n存储大小 4k；每次 http 请求自动携带发给后端；可以设置过期时间；\n分域；有 HttpOnly、Secure、SameSite 属性，防范 XSS、CSRF。\nlocalStorage\n最大 5M；永久存储，手动清除；不会随 http 请求发送；同域共享。\nsessionStorage\n5M；页面会话级别，关闭标签页就清除；不同标签页不共享。\n安全：HttpOnly 的 cookie JS 不能读取，防御 XSS 窃取 cookie。SameSite 防止 CSRF。",
+    "keyPoints": [
+      "存储大小 4k；每次 http 请求自动携带发给后端；可以设置过期时间",
+      "分域；有 HttpOnly、Secure、SameSite 属性，防范 XSS、CSRF",
+      "localStorage",
+      "最大 5M；永久存储，手动清除；不会随 http 请求发送；同域共享",
+      "sessionStorage"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-xss-csrf",
+    "category": "network",
+    "tags": [
+      "安全",
+      "XSS",
+      "CSRF"
+    ],
+    "title": "XSS 和 CSRF 是什么，怎么防御（前端安全必问）？",
+    "answer": "XSS 跨站脚本攻击\n恶意脚本注入页面执行。分为存储型、反射型、DOM 型。 防御：\n输入输出转义，对 HTML 特殊字符转义；\n使用 CSP 内容安全策略；\nCookie 设置 HttpOnly，防止 JS 读取 cookie；\nVue/React 默认插值会做转义，v-innerHTML 危险。\nCSRF 跨站请求伪造\n利用浏览器自动携带 cookie，诱导用户在恶意页面发起请求，冒充用户操作。 防御：\ntoken 校验，请求携带自定义 token；\nCookie 设置 SameSite=Strict/Lax；\n校验 Referer。",
+    "keyPoints": [
+      "XSS 跨站脚本攻击",
+      "恶意脚本注入页面执行。分为存储型、反射型、DOM 型。 防御：",
+      "输入输出转义，对 HTML 特殊字符转义",
+      "使用 CSP 内容安全策略",
+      "Cookie 设置 HttpOnly，防止 JS 读取 cookie"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-url-request-flow",
+    "category": "network",
+    "tags": [
+      "DNS",
+      "HTTP",
+      "TLS"
+    ],
+    "title": "从网络链路角度看，输入 URL 后发生了什么？",
+    "answer": "浏览器解析 URL 和策略，检查缓存、Service Worker、代理等可能的响应来源；需要联网时解析 DNS，选择并建立 TCP+TLS、QUIC 等连接，再发送 HTTP 请求。连接可能被复用，不一定每次都重新握手。\n\n响应经过重定向、缓存和安全检查后交给浏览器加载器。HTML 解析与子资源发现会并行推进，样式表通常阻塞首次渲染并可能阻塞后续脚本，普通同步脚本会阻塞解析；async、defer 和模块脚本具有不同调度语义。",
+    "keyPoints": [
+      "缓存或 Service Worker 可能直接提供响应",
+      "连接可能复用而非每次新建",
+      "DNS、传输连接和 HTTP 是不同阶段",
+      "子资源发现与 HTML 解析可并行推进",
+      "脚本和样式会以不同方式影响解析与渲染"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "连接复用时 DNS、TCP 和 TLS 阶段会如何反映在性能条目中？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-script-loading",
+    "category": "network",
+    "tags": [
+      "资源加载",
+      "脚本"
+    ],
+    "title": "script 标签 async 和 defer 的区别？",
+    "answer": "普通 script：下载、执行都会阻塞 DOM 解析。\nasync：脚本异步下载，下载完立刻执行，执行顺序不保证。\ndefer：异步下载，DOM 解析完成之后再执行，保持脚本顺序执行。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "普通 script：下载、执行都会阻塞 DOM 解析",
+      "async：脚本异步下载，下载完立刻执行，执行顺序不保证",
+      "defer：异步下载，DOM 解析完成之后再执行，保持脚本顺序执行"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-etag-last-modified",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "缓存"
+    ],
+    "title": "什么是 ETag，和 Last-Modified 对比？",
+    "answer": "Last-Modified 是文件修改时间，秒级；如果文件内容没变，时间改动会误判。 ETag 是资源内容哈希，内容变化才改变，精度更高；但是服务器计算 ETag 有性能开销。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "Last-Modified 是文件修改时间，秒级；如果文件内容没变，时间改动会误判。 ETag 是资源内容哈希，内容变化才改变，精度更高；但是服务器计算 ETag 有性能开销",
+      "辨别 缓存 的适用场景",
+      "了解 HTTP 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-csp",
+    "category": "network",
+    "tags": [
+      "安全",
+      "CSP"
+    ],
+    "title": "什么是 CSP 内容安全策略？",
+    "answer": "安全响应头，限制页面可以加载哪些脚本、资源，用来防御 XSS 攻击。 可以禁止内联脚本、禁止 eval，指定允许的资源域名。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。\n\n回答时应区分规范语义、常见实现和具体项目约束。",
+    "keyPoints": [
+      "安全响应头，限制页面可以加载哪些脚本、资源，用来防御 XSS 攻击。 可以禁止内联脚本、禁止 eval，指定允许的资源域名",
+      "辨别 CSP 的适用场景",
+      "了解 安全 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-redirect-301-302",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "重定向"
+    ],
+    "title": "301 和 302 区别，有什么坑？",
+    "answer": "301 永久重定向：浏览器会缓存重定向结果。 302 临时重定向：不缓存。 坑：302 会把 POST 请求变成 GET，所以出现 307 保持原请求方法。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "301 永久重定向：浏览器会缓存重定向结果。 302 临时重定向：不缓存。 坑：302 会把 POST 请求变成 GET，所以出现 307 保持原请求方法",
+      "辨别 重定向 的适用场景",
+      "了解 HTTP 的风险和边界"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-request-headers",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "请求头"
+    ],
+    "title": "请求头常见字段：User-Agent、Referer、Origin、Content-Type？",
+    "answer": "User-Agent：浏览器设备信息；\nReferer：请求来源页面地址；\nOrigin：请求源，跨域请求带上；\nContent-Type：请求体格式； application/json、application/x-www-form-urlencoded、multipart/form-data上传文件。",
+    "keyPoints": [
+      "User-Agent：浏览器设备信息",
+      "Referer：请求来源页面地址",
+      "Origin：请求源，跨域请求带上",
+      "Content-Type：请求体格式； application/json、application/x-www-form-urlencoded、multipart/form-data上传文件"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-multipart-form-data",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "文件上传"
+    ],
+    "title": "上传文件为什么用 multipart/form-data？",
+    "answer": "普通表单编码无法传输二进制文件；multipart/form-data 把表单切割成多段，支持二进制文件上传。\n\n具体行为还会受到协议版本、代理、缓存和服务端配置影响。\n\n回答时应区分规范语义、常见实现和具体项目约束。",
+    "keyPoints": [
+      "普通表单编码无法传输二进制文件；multipart/form-data 把表单切割成多段，支持二进制文件上传",
+      "辨别 文件上传 的适用场景",
+      "了解 HTTP 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-dns-resolution",
+    "category": "network",
+    "tags": [
+      "DNS",
+      "域名"
+    ],
+    "title": "DNS 解析通常经历哪些步骤？",
+    "answer": "客户端会先检查浏览器、系统和本地解析器缓存，再向递归解析器查询。递归解析器可能依次访问根、顶级域和权威 DNS 服务器获得记录。\n\n缓存时间由 TTL 等策略影响，hosts、代理和加密 DNS 也可能改变实际查询路径。",
+    "keyPoints": [
+      "客户端会先检查浏览器、系统和本地解析器缓存，再向递归解析器查询",
+      "递归解析器可能依次访问根、顶级域和权威 DNS 服务器获得记录",
+      "缓存时间由 TTL 等策略影响，hosts、代理和加密 DNS 也可能改变实际查询路径"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "DNS 缓存污染或过期时如何定位？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-dns-records",
+    "category": "network",
+    "tags": [
+      "DNS",
+      "记录类型"
+    ],
+    "title": "A、AAAA、CNAME、MX 和 TXT 记录分别做什么？",
+    "answer": "A 和 AAAA 分别把名称映射到 IPv4 与 IPv6 地址。CNAME 为名称建立别名，MX 指定邮件服务器，TXT 保存可验证的文本信息。\n\n记录类型的可组合规则、根域限制和服务商实现需要结合权威 DNS 配置确认。",
+    "keyPoints": [
+      "A 和 AAAA 分别把名称映射到 IPv4 与 IPv6 地址",
+      "CNAME 为名称建立别名，MX 指定邮件服务器，TXT 保存可验证的文本信息",
+      "记录类型的可组合规则、根域限制和服务商实现需要结合权威 DNS 配置确认"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么 CNAME 通常不能与同名其他记录并存？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-tcp-reliability",
+    "category": "network",
+    "tags": [
+      "TCP",
+      "可靠传输"
+    ],
+    "title": "TCP 如何提供可靠、有序的字节流？",
+    "answer": "TCP 使用序列号、确认应答和校验机制识别丢失、重复与乱序数据。发送端根据重传超时和快速重传等信号重新发送未确认数据。\n\n可靠性只保证连接内字节传输，不保证应用消息边界、业务幂等或对端已经持久化处理。",
+    "keyPoints": [
+      "TCP 使用序列号、确认应答和校验机制识别丢失、重复与乱序数据",
+      "发送端根据重传超时和快速重传等信号重新发送未确认数据",
+      "可靠性只保证连接内字节传输，不保证应用消息边界、业务幂等或对端已经持久化处理"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "TCP 确认收到是否等于应用已经处理？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-flow-congestion-control",
+    "category": "network",
+    "tags": [
+      "TCP",
+      "拥塞控制"
+    ],
+    "title": "流量控制和拥塞控制有什么区别？",
+    "answer": "流量控制通过接收窗口避免发送端压垮单个接收方缓冲区。拥塞控制根据网络丢包、时延等信号调整拥塞窗口，避免压垮传输路径。\n\n实际发送量同时受接收窗口和拥塞窗口限制，不同 TCP 算法的增长与恢复策略也不同。",
+    "keyPoints": [
+      "流量控制通过接收窗口避免发送端压垮单个接收方缓冲区",
+      "拥塞控制根据网络丢包、时延等信号调整拥塞窗口，避免压垮传输路径",
+      "实际发送量同时受接收窗口和拥塞窗口限制，不同 TCP 算法的增长与恢复策略也不同"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "带宽很高但 RTT 很大时为什么吞吐仍可能受限？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-certificate-validation",
+    "category": "network",
+    "tags": [
+      "TLS",
+      "证书"
+    ],
+    "title": "浏览器如何验证 HTTPS 证书？",
+    "answer": "浏览器会检查证书有效期、主机名、用途和签名链是否能连接到受信任根证书。还会结合吊销信息、证书透明度和本地安全策略判断连接是否可信。\n\n证书验证只确认身份绑定与链路安全，不代表网站业务内容本身可信。具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "浏览器会检查证书有效期、主机名、用途和签名链是否能连接到受信任根证书",
+      "还会结合吊销信息、证书透明度和本地安全策略判断连接是否可信",
+      "证书验证只确认身份绑定与链路安全，不代表网站业务内容本身可信"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "中间证书缺失为什么会导致部分客户端失败？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-http-message",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "报文"
+    ],
+    "title": "HTTP 请求和响应报文由哪些部分组成？",
+    "answer": "HTTP 消息包含起始行、头字段和可选消息体，具体线格式会随协议版本变化。请求方法与目标描述操作，响应状态码表达处理结果，头字段携带元数据。\n\nContent-Length、Transfer-Encoding、Content-Type 等字段决定消息边界或语义，不能混为一谈。",
+    "keyPoints": [
+      "HTTP 消息包含起始行、头字段和可选消息体，具体线格式会随协议版本变化",
+      "请求方法与目标描述操作，响应状态码表达处理结果，头字段携带元数据",
+      "Content-Length、Transfer-Encoding、Content-Type 等字段决定消息边界或语义，不能混为一谈"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "HTTP/2 中为什么看不到传统文本起始行？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-content-negotiation",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "内容协商"
+    ],
+    "title": "HTTP 内容协商如何选择响应格式？",
+    "answer": "客户端可以通过 Accept、Accept-Language、Accept-Encoding 等字段表达偏好。服务端选择表示形式并通过 Content-Type、Content-Language、Content-Encoding 返回结果。\n\n参与缓存选择的请求头应通过 Vary 声明，否则共享缓存可能复用错误变体。",
+    "keyPoints": [
+      "客户端可以通过 Accept、Accept-Language、Accept-Encoding 等字段表达偏好",
+      "服务端选择表示形式并通过 Content-Type、Content-Language、Content-Encoding 返回结果",
+      "参与缓存选择的请求头应通过 Vary 声明，否则共享缓存可能复用错误变体"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "Vary: Accept-Encoding 对缓存键有什么影响？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-content-encoding",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "压缩"
+    ],
+    "title": "gzip、Brotli 等内容编码如何协商？",
+    "answer": "客户端用 Accept-Encoding 声明支持的编码，服务端用 Content-Encoding 标记实际压缩方式。文本资源通常压缩收益明显，已经压缩的图片视频再次压缩可能收益有限。\n\n压缩会消耗 CPU，并需正确设置缓存变体和防范少数与机密数据相关的压缩侧信道。",
+    "keyPoints": [
+      "客户端用 Accept-Encoding 声明支持的编码，服务端用 Content-Encoding 标记实际压缩方式",
+      "文本资源通常压缩收益明显，已经压缩的图片视频再次压缩可能收益有限",
+      "压缩会消耗 CPU，并需正确设置缓存变体和防范少数与机密数据相关的压缩侧信道"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "Brotli 为什么常用于 HTTPS 静态资源？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-connection-reuse",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "连接复用"
+    ],
+    "title": "HTTP 连接复用为什么能改善性能？",
+    "answer": "复用连接可以减少 TCP 和 TLS 握手带来的往返与计算成本。HTTP/1.1 可在连接上顺序发送多个请求，HTTP/2 和 HTTP/3 支持更强的并发复用。\n\n空闲超时、代理限制、域名分片和连接迁移都会影响实际复用效果。",
+    "keyPoints": [
+      "复用连接可以减少 TCP 和 TLS 握手带来的往返与计算成本",
+      "HTTP/1.1 可在连接上顺序发送多个请求，HTTP/2 和 HTTP/3 支持更强的并发复用",
+      "空闲超时、代理限制、域名分片和连接迁移都会影响实际复用效果"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "域名分片为什么可能损害 HTTP/2 性能？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-http2-multiplexing",
+    "category": "network",
+    "tags": [
+      "HTTP/2",
+      "多路复用"
+    ],
+    "title": "HTTP/2 多路复用解决了什么问题？",
+    "answer": "HTTP/2 把消息拆成带流标识的二进制帧，让多个请求响应交错使用同一连接。它缓解 HTTP/1.1 应用层队头阻塞和多连接开销，并支持流级优先级与控制。\n\n多个流仍共享同一 TCP 连接，底层丢包可能阻塞后续字节到达所有流。",
+    "keyPoints": [
+      "HTTP/2 把消息拆成带流标识的二进制帧，让多个请求响应交错使用同一连接",
+      "它缓解 HTTP/1.1 应用层队头阻塞和多连接开销，并支持流级优先级与控制",
+      "多个流仍共享同一 TCP 连接，底层丢包可能阻塞后续字节到达所有流"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "HTTP/2 为什么仍可能受到 TCP 队头阻塞？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-http2-hpack",
+    "category": "network",
+    "tags": [
+      "HTTP/2",
+      "头部压缩"
+    ],
+    "title": "HPACK 为什么能压缩 HTTP/2 头部？",
+    "answer": "HPACK 使用静态表、动态表和霍夫曼编码减少重复头字段传输。编码器和解码器维护同步状态，因此表大小和敏感字段处理会影响压缩与安全。\n\n头部压缩降低冗余但不压缩消息体，消息体仍由 Content-Encoding 等机制处理。",
+    "keyPoints": [
+      "HPACK 使用静态表、动态表和霍夫曼编码减少重复头字段传输",
+      "编码器和解码器维护同步状态，因此表大小和敏感字段处理会影响压缩与安全",
+      "头部压缩降低冗余但不压缩消息体，消息体仍由 Content-Encoding 等机制处理"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "为什么 Authorization 等敏感字段不应随意进入动态表？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-http3-quic",
+    "category": "network",
+    "tags": [
+      "HTTP/3",
+      "QUIC"
+    ],
+    "title": "HTTP/3 和 QUIC 的核心变化是什么？",
+    "answer": "HTTP/3 把 HTTP 语义映射到基于 UDP 的 QUIC 传输上，并内置 TLS 1.3。QUIC 在用户态管理多个独立流，一个流丢包通常不会阻塞其他流的数据交付。\n\n它还支持连接迁移和更快建连，但会受到网络设备 UDP 策略与实现成熟度影响。",
+    "keyPoints": [
+      "HTTP/3 把 HTTP 语义映射到基于 UDP 的 QUIC 传输上，并内置 TLS 1.3",
+      "QUIC 在用户态管理多个独立流，一个流丢包通常不会阻塞其他流的数据交付",
+      "它还支持连接迁移和更快建连，但会受到网络设备 UDP 策略与实现成熟度影响"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "QUIC 连接 ID 如何支持网络切换？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-cdn",
+    "category": "network",
+    "tags": [
+      "CDN",
+      "缓存"
+    ],
+    "title": "CDN 如何加速静态资源和动态请求？",
+    "answer": "CDN 通过分布式边缘节点让用户从更近位置获取缓存内容。缓存键、TTL、回源策略和主动失效决定命中率与内容新鲜度。\n\n动态加速还可能优化路由与连接复用，但个性化响应必须避免被错误共享缓存。具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "CDN 通过分布式边缘节点让用户从更近位置获取缓存内容",
+      "缓存键、TTL、回源策略和主动失效决定命中率与内容新鲜度",
+      "动态加速还可能优化路由与连接复用，但个性化响应必须避免被错误共享缓存"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "带哈希静态资源为什么适合长时间 CDN 缓存？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-reverse-proxy",
+    "category": "network",
+    "tags": [
+      "代理",
+      "架构"
+    ],
+    "title": "反向代理在 Web 架构中承担哪些职责？",
+    "answer": "反向代理代表服务端接收客户端请求，并转发到内部应用实例。它可以处理 TLS 终止、负载均衡、缓存、压缩、鉴权和统一日志。\n\n代理会改变客户端地址与协议观察结果，应用需正确处理 Forwarded 或 X-Forwarded-* 且只信任受控代理。",
+    "keyPoints": [
+      "反向代理代表服务端接收客户端请求，并转发到内部应用实例",
+      "它可以处理 TLS 终止、负载均衡、缓存、压缩、鉴权和统一日志",
+      "代理会改变客户端地址与协议观察结果，应用需正确处理 Forwarded 或 X-Forwarded-* 且只信任受控代理"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "错误信任 X-Forwarded-For 会带来什么风险？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-load-balancing",
+    "category": "network",
+    "tags": [
+      "负载均衡",
+      "可用性"
+    ],
+    "title": "常见负载均衡策略有什么取舍？",
+    "answer": "轮询、最少连接、哈希和基于权重的策略适合不同请求成本与状态模型。健康检查和故障摘除决定流量是否会继续进入异常实例。\n\n粘性会话简化有状态应用但降低弹性，通常更推荐外置会话状态或无状态服务。具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "轮询、最少连接、哈希和基于权重的策略适合不同请求成本与状态模型",
+      "健康检查和故障摘除决定流量是否会继续进入异常实例",
+      "粘性会话简化有状态应用但降低弹性，通常更推荐外置会话状态或无状态服务"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "一致性哈希适合解决什么分配问题？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-websocket",
+    "category": "network",
+    "tags": [
+      "WebSocket",
+      "实时通信"
+    ],
+    "title": "WebSocket 的握手和通信特点是什么？",
+    "answer": "WebSocket 通常先通过 HTTP Upgrade 握手，再在同一连接上进行全双工帧通信。它适合双向低延迟消息，但心跳、重连、背压、鉴权续期和水平扩展需由应用设计。\n\n浏览器 WebSocket API 不提供通用请求头自定义，跨站连接仍要在服务端校验 Origin 和身份。",
+    "keyPoints": [
+      "WebSocket 通常先通过 HTTP Upgrade 握手，再在同一连接上进行全双工帧通信",
+      "它适合双向低延迟消息，但心跳、重连、背压、鉴权续期和水平扩展需由应用设计",
+      "浏览器 WebSocket API 不提供通用请求头自定义，跨站连接仍要在服务端校验 Origin 和身份"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "WebSocket 断线重连如何避免重复消息？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-sse",
+    "category": "network",
+    "tags": [
+      "SSE",
+      "实时通信"
+    ],
+    "title": "Server-Sent Events 与 WebSocket 如何选择？",
+    "answer": "SSE 基于 HTTP 文本事件流，主要支持服务端到浏览器的单向推送。浏览器 EventSource 提供自动重连和事件 ID 机制，代理兼容通常较好。\n\n需要双向高频二进制通信时 WebSocket 更合适，只需服务器推送时 SSE 往往更简单。",
+    "keyPoints": [
+      "SSE 基于 HTTP 文本事件流，主要支持服务端到浏览器的单向推送",
+      "浏览器 EventSource 提供自动重连和事件 ID 机制，代理兼容通常较好",
+      "需要双向高频二进制通信时 WebSocket 更合适，只需服务器推送时 SSE 往往更简单"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "SSE 如何从 Last-Event-ID 继续接收？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-polling",
+    "category": "network",
+    "tags": [
+      "轮询",
+      "实时通信"
+    ],
+    "title": "短轮询、长轮询和流式响应有什么区别？",
+    "answer": "短轮询按固定间隔重复请求，简单但可能产生大量空响应和延迟。长轮询让服务端等待事件或超时后返回，客户端随后立即发起下一次请求。\n\n流式响应保持连接并持续传输分块数据，需要考虑代理缓冲、断线恢复和背压。具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "短轮询按固定间隔重复请求，简单但可能产生大量空响应和延迟",
+      "长轮询让服务端等待事件或超时后返回，客户端随后立即发起下一次请求",
+      "流式响应保持连接并持续传输分块数据，需要考虑代理缓冲、断线恢复和背压"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "什么业务量级下短轮询仍是合理选择？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-rest",
+    "category": "network",
+    "tags": [
+      "API",
+      "REST"
+    ],
+    "title": "REST 风格接口的核心约束是什么？",
+    "answer": "REST 强调资源标识、统一接口、无状态交互和可缓存等约束。HTTP 方法、状态码和表示形式应表达资源操作语义，而不是只把所有请求包装成一个动作入口。\n\n实际 API 可以借鉴 REST 约束，但不应把 URL 命名规则等同于完整 REST 架构。",
+    "keyPoints": [
+      "REST 强调资源标识、统一接口、无状态交互和可缓存等约束",
+      "HTTP 方法、状态码和表示形式应表达资源操作语义，而不是只把所有请求包装成一个动作入口",
+      "实际 API 可以借鉴 REST 约束，但不应把 URL 命名规则等同于完整 REST 架构"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "无状态约束是否意味着服务端不能保存任何数据？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-graphql",
+    "category": "network",
+    "tags": [
+      "API",
+      "GraphQL"
+    ],
+    "title": "GraphQL 相比 REST 有哪些优势和成本？",
+    "answer": "GraphQL 允许客户端按模式查询所需字段，减少多端字段组合中的过取和欠取。单一端点并不等于单一成本，服务端需要限制查询深度、复杂度并解决 N+1 访问。\n\nHTTP 缓存、错误状态和文件上传等能力需要额外约定，是否采用取决于领域和团队工具链。",
+    "keyPoints": [
+      "GraphQL 允许客户端按模式查询所需字段，减少多端字段组合中的过取和欠取",
+      "单一端点并不等于单一成本，服务端需要限制查询深度、复杂度并解决 N+1 访问",
+      "HTTP 缓存、错误状态和文件上传等能力需要额外约定，是否采用取决于领域和团队工具链"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "DataLoader 如何缓解 GraphQL N+1 问题？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-rpc",
+    "category": "network",
+    "tags": [
+      "API",
+      "RPC"
+    ],
+    "title": "RPC 与资源风格 HTTP API 有什么区别？",
+    "answer": "RPC 以调用远程方法为中心，接口通常明确表达动作和参数。资源风格 API 更强调统一方法作用于资源表示，两者都可以运行在 HTTP 等传输之上。\n\nRPC 生成代码和强契约有利于内部服务，但版本演进、重试语义和跨语言兼容仍需设计。",
+    "keyPoints": [
+      "RPC 以调用远程方法为中心，接口通常明确表达动作和参数",
+      "资源风格 API 更强调统一方法作用于资源表示，两者都可以运行在 HTTP 等传输之上",
+      "RPC 生成代码和强契约有利于内部服务，但版本演进、重试语义和跨语言兼容仍需设计"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么 RPC 超时后不能直接假设服务端未执行？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-cookie-security",
+    "category": "network",
+    "tags": [
+      "Cookie",
+      "安全"
+    ],
+    "title": "Cookie 的 Secure、HttpOnly、SameSite 和 Domain 如何配置？",
+    "answer": "Secure 限制 Cookie 通过安全连接发送，HttpOnly 阻止脚本读取但不阻止自动携带。SameSite 控制跨站请求携带策略，Domain 和 Path 决定作用范围但不是可靠的安全隔离边界。\n\n会话 Cookie 应缩小作用域、设置合理过期并配合 CSRF 防御，跨站场景还要满足 Secure 等要求。",
+    "keyPoints": [
+      "Secure 限制 Cookie 通过安全连接发送，HttpOnly 阻止脚本读取但不阻止自动携带",
+      "SameSite 控制跨站请求携带策略，Domain 和 Path 决定作用范围但不是可靠的安全隔离边界",
+      "会话 Cookie 应缩小作用域、设置合理过期并配合 CSRF 防御，跨站场景还要满足 Secure 等要求"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "SameSite=None 为什么通常必须配合 Secure？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-cors-credentials",
+    "category": "network",
+    "tags": [
+      "CORS",
+      "凭据"
+    ],
+    "title": "携带凭据的 CORS 请求需要满足哪些条件？",
+    "answer": "客户端需显式设置 credentials，服务端也要返回 Access-Control-Allow-Credentials: true。允许凭据时 Access-Control-Allow-Origin 不能使用通配符，而应返回经过白名单验证的具体源。\n\nCORS 只控制浏览器脚本读取响应，不替代身份认证、CSRF 防御和服务端授权。",
+    "keyPoints": [
+      "客户端需显式设置 credentials，服务端也要返回 Access-Control-Allow-Credentials: true",
+      "允许凭据时 Access-Control-Allow-Origin 不能使用通配符，而应返回经过白名单验证的具体源",
+      "CORS 只控制浏览器脚本读取响应，不替代身份认证、CSRF 防御和服务端授权"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么动态回显 Origin 之前必须校验白名单？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-preflight-cache",
+    "category": "network",
+    "tags": [
+      "CORS",
+      "预检"
+    ],
+    "title": "CORS 预检结果可以如何缓存？",
+    "answer": "浏览器可根据 Access-Control-Max-Age 在一段时间内复用预检许可。预检缓存与普通 HTTP 响应缓存是不同的内部缓存，浏览器还可能限制最大缓存时间。\n\n方法、请求头或源变化会影响许可匹配，不能依赖预检缓存绕过服务端鉴权。",
+    "keyPoints": [
+      "浏览器可根据 Access-Control-Max-Age 在一段时间内复用预检许可",
+      "预检缓存与普通 HTTP 响应缓存是不同的内部缓存，浏览器还可能限制最大缓存时间",
+      "方法、请求头或源变化会影响许可匹配，不能依赖预检缓存绕过服务端鉴权"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么减少自定义请求头可能降低预检频率？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-sri",
+    "category": "network",
+    "tags": [
+      "安全",
+      "资源完整性"
+    ],
+    "title": "Subresource Integrity 如何防止第三方资源被篡改？",
+    "answer": "SRI 让页面在 link 或 script 上声明资源内容的密码学摘要。浏览器下载后校验摘要，不匹配就拒绝执行或应用该资源。\n\n跨源资源通常还要满足 CORS 要求，版本更新时必须同步更新摘要并保留可用回退策略。",
+    "keyPoints": [
+      "SRI 让页面在 link 或 script 上声明资源内容的密码学摘要",
+      "浏览器下载后校验摘要，不匹配就拒绝执行或应用该资源",
+      "跨源资源通常还要满足 CORS 要求，版本更新时必须同步更新摘要并保留可用回退策略"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "SRI 与 CSP 可以怎样配合？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-hsts",
+    "category": "network",
+    "tags": [
+      "HTTPS",
+      "安全"
+    ],
+    "title": "HSTS 解决了什么问题？",
+    "answer": "HSTS 响应头要求浏览器在有效期内只通过 HTTPS 访问指定站点。它可以阻止后续 HTTP 降级和部分 SSL stripping 攻击，并可选择覆盖子域。\n\n首次访问前仍可能没有策略，预加载列表能缩小窗口但需要满足严格申请和退出条件。",
+    "keyPoints": [
+      "HSTS 响应头要求浏览器在有效期内只通过 HTTPS 访问指定站点",
+      "它可以阻止后续 HTTP 降级和部分 SSL stripping 攻击，并可选择覆盖子域",
+      "首次访问前仍可能没有策略，预加载列表能缩小窗口但需要满足严格申请和退出条件"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "includeSubDomains 开启前为什么要检查所有子域？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-mixed-content",
+    "category": "network",
+    "tags": [
+      "HTTPS",
+      "安全"
+    ],
+    "title": "什么是混合内容，浏览器会如何处理？",
+    "answer": "HTTPS 页面加载 HTTP 子资源会破坏安全上下文，被称为混合内容。脚本、样式等主动内容通常会被阻止，部分被动资源可能升级或按浏览器策略处理。\n\n应从源站和构建产物消除 HTTP URL，并用 CSP 报告或升级指令辅助迁移。",
+    "keyPoints": [
+      "HTTPS 页面加载 HTTP 子资源会破坏安全上下文，被称为混合内容",
+      "脚本、样式等主动内容通常会被阻止，部分被动资源可能升级或按浏览器策略处理",
+      "应从源站和构建产物消除 HTTP URL，并用 CSP 报告或升级指令辅助迁移"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么只把首页改成 HTTPS 仍可能不安全？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-fetch-abort",
+    "category": "network",
+    "tags": [
+      "Fetch",
+      "取消"
+    ],
+    "title": "Fetch 请求如何实现超时和取消？",
+    "answer": "Fetch 本身通过 AbortSignal 接收取消通知，可由 AbortController 或 AbortSignal.timeout 等方式触发。取消会让读取请求或响应过程失败，但无法保证服务端没有收到或执行请求。\n\n业务应区分超时、用户取消和网络失败，并清理重试计时器与流读取资源。",
+    "keyPoints": [
+      "Fetch 本身通过 AbortSignal 接收取消通知，可由 AbortController 或 AbortSignal.timeout 等方式触发",
+      "取消会让读取请求或响应过程失败，但无法保证服务端没有收到或执行请求",
+      "业务应区分超时、用户取消和网络失败，并清理重试计时器与流读取资源"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "取消 POST 请求后为什么仍需考虑幂等性？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-retry-backoff",
+    "category": "network",
+    "tags": [
+      "可靠性",
+      "重试"
+    ],
+    "title": "网络请求重试为什么需要指数退避和抖动？",
+    "answer": "立即同步重试会在故障时放大流量并造成重试风暴。指数退避逐步拉长间隔，随机抖动避免大量客户端在同一时刻再次请求。\n\n只有幂等或带幂等键的操作才适合自动重试，还应设置总时限、次数和可重试错误范围。具体行为还会受到协议版本、代理、缓存和服务端配置影响。",
+    "keyPoints": [
+      "立即同步重试会在故障时放大流量并造成重试风暴",
+      "指数退避逐步拉长间隔，随机抖动避免大量客户端在同一时刻再次请求",
+      "只有幂等或带幂等键的操作才适合自动重试，还应设置总时限、次数和可重试错误范围"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "Retry-After 响应头应如何参与退避策略？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-rate-limiting",
+    "category": "network",
+    "tags": [
+      "限流",
+      "可靠性"
+    ],
+    "title": "服务端限流常见算法有哪些？",
+    "answer": "固定窗口实现简单但边界可能突发，滑动窗口能更平滑地统计请求。令牌桶允许一定突发并控制平均速率，漏桶更强调恒定流出。\n\n客户端收到限流响应应尊重 Retry-After 并避免并发重试，服务端还要选择用户、IP 或令牌等合理维度。",
+    "keyPoints": [
+      "固定窗口实现简单但边界可能突发，滑动窗口能更平滑地统计请求",
+      "令牌桶允许一定突发并控制平均速率，漏桶更强调恒定流出",
+      "客户端收到限流响应应尊重 Retry-After 并避免并发重试，服务端还要选择用户、IP 或令牌等合理维度"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "分布式限流如何避免多个节点各自超发？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-resumable-upload",
+    "category": "network",
+    "tags": [
+      "文件上传",
+      "可靠性"
+    ],
+    "title": "大文件分片和断点续传需要设计哪些协议？",
+    "answer": "客户端把文件切片并为文件或分片计算稳定标识，服务端记录已接收范围。重试上传应具备幂等性，合并前要校验顺序、大小、摘要和用户权限。\n\n并发分片能提高吞吐但会增加内存、连接和服务端合并压力，还需处理取消与过期清理。",
+    "keyPoints": [
+      "客户端把文件切片并为文件或分片计算稳定标识，服务端记录已接收范围",
+      "重试上传应具备幂等性，合并前要校验顺序、大小、摘要和用户权限",
+      "并发分片能提高吞吐但会增加内存、连接和服务端合并压力，还需处理取消与过期清理"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如何避免相同分片重复写入？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "network-range-requests",
+    "category": "network",
+    "tags": [
+      "HTTP",
+      "范围请求"
+    ],
+    "title": "HTTP Range 请求如何支持断点下载？",
+    "answer": "客户端用 Range 请求指定需要的字节范围，服务端支持时返回 206 和 Content-Range。Accept-Ranges 可提示能力，If-Range 能在资源未变化时继续范围下载。\n\n多个范围、压缩表示和资源变化会增加实现复杂度，客户端必须验证总长度与响应范围。",
+    "keyPoints": [
+      "客户端用 Range 请求指定需要的字节范围，服务端支持时返回 206 和 Content-Range",
+      "Accept-Ranges 可提示能力，If-Range 能在资源未变化时继续范围下载",
+      "多个范围、压缩表示和资源变化会增加实现复杂度，客户端必须验证总长度与响应范围"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "资源 ETag 变化后为什么不应继续拼接旧分片？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  }
+]

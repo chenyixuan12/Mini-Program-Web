@@ -1,0 +1,1319 @@
+[
+  {
+    "id": "browser-render",
+    "category": "browser",
+    "tags": [
+      "导航",
+      "渲染"
+    ],
+    "title": "从浏览器内部视角看，输入 URL 到页面展示经历了什么？",
+    "answer": "导航先经过 URL 解析、权限策略、缓存与 Service Worker 检查，需要联网时再完成 DNS、连接和 HTTP 交换。拿到 HTML 后，解析器逐步构建 DOM，样式表形成 CSSOM，同时预加载扫描器尝试提前发现子资源。\n\n浏览器随后计算样式、生成布局盒、执行布局、绘制并合成到屏幕。普通同步脚本可能暂停 HTML 解析；样式表不阻止 DOM 节点继续被解析，但通常阻塞渲染，并可能让依赖已计算样式的脚本等待。最终过程是流式和增量的，不是严格串行的九个步骤。",
+    "keyPoints": [
+      "导航可能先命中缓存或 Service Worker",
+      "HTML 解析与子资源加载是增量并行过程",
+      "DOM 与 CSSOM 参与样式计算和布局",
+      "同步脚本可能阻塞解析",
+      "样式表通常阻塞渲染并可能间接阻塞脚本"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "预加载扫描器为什么无法发现所有动态资源？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-render-cost",
+    "category": "browser",
+    "tags": [
+      "渲染",
+      "性能"
+    ],
+    "title": "重排、重绘和合成有什么区别，如何定位性能问题？",
+    "answer": "布局会计算元素几何信息；当样式变化使几何失效时，需要重新布局。读取 offsetWidth 等属性本身不总是昂贵，但在前面存在尚未处理的样式写入时，可能强制同步布局。重绘更新像素记录，合成则组合已经绘制的图层。\n\ntransform 和 opacity 常能避免布局，并可能只触发合成，但不保证一定使用 GPU 或完全没有绘制成本。优化应先通过性能轨迹定位布局、绘制和合成开销，再批量读写、拆分长任务并谨慎使用 will-change。",
+    "keyPoints": [
+      "布局负责几何计算",
+      "交替读写容易造成强制同步布局",
+      "重绘更新绘制记录",
+      "transform/opacity 可能只需合成但并非绝对",
+      "分层过多会增加内存与合成成本"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何在 Performance 面板中识别 layout thrashing？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-script-async-defer",
+    "category": "browser",
+    "tags": [
+      "脚本",
+      "解析"
+    ],
+    "title": "script 标签 async /defer 的区别？",
+    "answer": "普通 script：下载、执行都会阻塞 DOM 解析。\nasync：异步下载脚本，下载完成立刻执行，执行顺序无法保证。适合不依赖 DOM、无依赖的脚本。\ndefer：异步下载脚本，等到 DOM 全部解析完成之后执行，保留脚本书写顺序。",
+    "keyPoints": [
+      "普通 script：下载、执行都会阻塞 DOM 解析",
+      "async：异步下载脚本，下载完成立刻执行，执行顺序无法保证。适合不依赖 DOM、无依赖的脚本",
+      "defer：异步下载脚本，等到 DOM 全部解析完成之后执行，保留脚本书写顺序"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-dom-bom",
+    "category": "browser",
+    "tags": [
+      "DOM",
+      "BOM"
+    ],
+    "title": "DOM、BOM 分别是什么？",
+    "answer": "DOM：文档对象模型，操作页面文档节点，增删改查元素。\nBOM：浏览器对象模型，操作浏览器窗口：window、location、history、navigator、setTimeout。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "DOM：文档对象模型，操作页面文档节点，增删改查元素",
+      "BOM：浏览器对象模型，操作浏览器窗口：window、location、history、navigator、setTimeout",
+      "了解 DOM 的风险和边界"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-event-flow",
+    "category": "browser",
+    "tags": [
+      "事件",
+      "事件委托"
+    ],
+    "title": "事件流：捕获、目标、冒泡；事件委托原理和优缺点？",
+    "answer": "DOM 事件流三个阶段：捕获阶段 → 目标阶段 → 冒泡阶段。 addEventListener('click',fn,false)，false 冒泡；true 开启捕获。\n事件委托（事件代理） 原理：利用事件冒泡，把子元素事件绑定到父元素上。 优点：\n减少事件绑定数量，节省内存；\n对动态新增的 DOM 节点自动生效，不用重复绑定事件。 缺点：部分事件不冒泡（blur、focus）无法委托；层级太深会有性能损耗。",
+    "keyPoints": [
+      "DOM 事件流三个阶段：捕获阶段 → 目标阶段 → 冒泡阶段。 addEventListener('click',fn,false)，false 冒泡；true 开启捕获",
+      "事件委托（事件代理） 原理：利用事件冒泡，把子元素事件绑定到父元素上。 优点：",
+      "减少事件绑定数量，节省内存",
+      "对动态新增的 DOM 节点自动生效，不用重复绑定事件。 缺点：部分事件不冒泡（blur、focus）无法委托；层级太深会有性能损耗"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-storage",
+    "category": "browser",
+    "tags": [
+      "存储",
+      "Cookie"
+    ],
+    "title": "Cookie、localStorage、sessionStorage 区别？",
+    "answer": "Cookie：约 4KB；每次 http 请求自动携带发给后端；可设置过期时间；有 HttpOnly、Secure、SameSite 安全属性。\nlocalStorage：约 5MB；永久存储，手动删除；不会随请求发送；同域所有标签页共享。\nsessionStorage：约 5MB；仅当前标签会话，关闭标签页销毁；不同标签互相隔离。\n存储都受同源策略限制。",
+    "keyPoints": [
+      "Cookie：约 4KB；每次 http 请求自动携带发给后端；可设置过期时间；有 HttpOnly、Secure、SameSite 安全属性",
+      "localStorage：约 5MB；永久存储，手动删除；不会随请求发送；同域所有标签页共享",
+      "sessionStorage：约 5MB；仅当前标签会话，关闭标签页销毁；不同标签互相隔离",
+      "存储都受同源策略限制"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-same-origin",
+    "category": "browser",
+    "tags": [
+      "安全",
+      "同源策略"
+    ],
+    "title": "同源策略是什么，为什么要有同源策略？",
+    "answer": "同源：协议、域名、端口三者全部相同。 浏览器同源策略限制不同源页面之间 DOM、数据、接口访问。 目的：安全防护，防止恶意网站窃取用户信息，防范 CSRF 攻击。 跨域：请求是发出去的，浏览器拦截返回结果。",
+    "keyPoints": [
+      "同源：协议、域名、端口三者全部相同。 浏览器同源策略限制不同源页面之间 DOM、数据、接口访问。 目的：安全防护，防止恶意网站窃取用户信息，防范 CSRF 攻击。 跨域：请求是发出去的，浏览器拦截返回结果",
+      "辨别 同源策略 的适用场景",
+      "了解 安全 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-cache",
+    "category": "browser",
+    "tags": [
+      "缓存",
+      "内存"
+    ],
+    "title": "浏览器中的 Memory Cache、Disk Cache 与 HTTP 缓存是什么关系？",
+    "answer": "HTTP 缓存规则决定响应是否可存储、何时新鲜以及何时需要重新验证；Memory Cache、Disk Cache 是浏览器可能采用的内部存储位置和实现策略，不是与强缓存、协商缓存并列的协议层分类。\n\n浏览器可能根据资源大小、生命周期、隐私模式和内存压力决定放在内存或磁盘，具体优先顺序并无可依赖的统一标准。开发者应通过 Cache-Control、ETag、Vary 等表达语义，而不是依赖资源一定进入某种内部缓存。",
+    "keyPoints": [
+      "HTTP 缓存定义可存储和复用语义",
+      "Memory/Disk 是浏览器内部实现位置",
+      "内部放置策略不可作为业务契约",
+      "Cache-Control 和验证器用于表达缓存策略",
+      "开发者工具标签不等于协议规范分类"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么 from memory cache 不能说明响应一定没有重新验证？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-gc-memory-leak",
+    "category": "browser",
+    "tags": [
+      "内存",
+      "垃圾回收"
+    ],
+    "title": "垃圾回收机制，浏览器 GC，常见内存泄漏场景？",
+    "answer": "浏览器 JS 主要使用标记-清除算法。 从根对象 window 出发，标记所有可达对象；没有标记的视为垃圾，回收释放内存。\n内存泄漏常见场景：\n意外的全局变量；\n闭包没有释放，引用一直存活；\n定时器、事件监听忘记清除；\nDOM 元素引用保存，DOM 删除后变量没有置 null；\n不合理的缓存无限增长。\n排查：Chrome DevTools Memory 面板。",
+    "keyPoints": [
+      "浏览器 JS 主要使用标记-清除算法。 从根对象 window 出发，标记所有可达对象；没有标记的视为垃圾，回收释放内存",
+      "内存泄漏常见场景：",
+      "意外的全局变量",
+      "闭包没有释放，引用一直存活",
+      "定时器、事件监听忘记清除"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-render-blocking",
+    "category": "browser",
+    "tags": [
+      "渲染",
+      "资源加载"
+    ],
+    "title": "什么是渲染阻塞资源，脚本和样式如何影响关键路径？",
+    "answer": "普通同步脚本在解析到 script 时通常暂停 HTML 解析并执行；defer、async 和模块脚本具有不同下载与执行时机。样式表一般不阻止 HTML 解析器继续构建 DOM，但会阻塞首次渲染，并可能让后续需要计算样式的脚本等待。\n\n图片通常不阻塞 DOM 解析，但会影响 load、布局稳定性和 LCP。是否属于关键阻塞资源取决于位置、媒体条件、优先级和首屏依赖，应该结合网络瀑布图与性能轨迹判断。",
+    "keyPoints": [
+      "同步脚本通常阻塞 HTML 解析",
+      "defer/async/module 改变执行时机",
+      "样式表通常阻塞首次渲染",
+      "图片可影响 LCP 和布局但不阻塞 DOM 解析",
+      "关键性取决于首屏依赖与加载顺序"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "media 属性如何让非当前媒体样式降低阻塞优先级？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-foit-fout",
+    "category": "browser",
+    "tags": [
+      "字体",
+      "渲染"
+    ],
+    "title": "页面白屏、FOIT、FOUT 概念？",
+    "answer": "白屏：关键资源缺失，页面长时间看不到内容。\nFOIT：字体未下载完成，文字隐藏，下载完才显示文字。\nFOUT：先用后备字体显示，字体下载完成替换。 现在一般推荐 FOUT，提升用户体验。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "白屏：关键资源缺失，页面长时间看不到内容",
+      "FOIT：字体未下载完成，文字隐藏，下载完才显示文字",
+      "FOUT：先用后备字体显示，字体下载完成替换。 现在一般推荐 FOUT，提升用户体验"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-raf-timeout",
+    "category": "browser",
+    "tags": [
+      "动画",
+      "调度"
+    ],
+    "title": "requestAnimationFrame 和 setTimeout 区别？",
+    "answer": "requestAnimationFrame：和浏览器刷新频率同步（一般 60 帧），在下一次渲染前执行，动画性能更好；页面隐藏时自动暂停，节省 CPU。\nsetTimeout：定时器，时间只是最小延迟，受 JS 主线程阻塞影响，时间不准。\n做动画优先 requestAnimationFrame。",
+    "keyPoints": [
+      "requestAnimationFrame：和浏览器刷新频率同步（一般 60 帧），在下一次渲染前执行，动画性能更好；页面隐藏时自动暂停，节省 CPU",
+      "setTimeout：定时器，时间只是最小延迟，受 JS 主线程阻塞影响，时间不准",
+      "做动画优先 requestAnimationFrame"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-event-loop",
+    "category": "browser",
+    "tags": [
+      "事件循环",
+      "渲染"
+    ],
+    "title": "微任务、宏任务，浏览器事件循环完整流程？",
+    "answer": "宏任务：script 整体代码、setTimeout、setInterval、ajax、UI 渲染。 微任务：Promise.then/catch、await 之后代码、MutationObserver。\n浏览器执行顺序：\n执行同步代码；\n同步执行完，把所有微任务全部清空；\n浏览器进行页面渲染；\n取出一个宏任务执行；循环往复。\n注意：渲染时机在一轮微任务全部执行完毕之后。",
+    "keyPoints": [
+      "宏任务：script 整体代码、setTimeout、setInterval、ajax、UI 渲染。 微任务：Promise.then/catch、await 之后代码、MutationObserver",
+      "浏览器执行顺序：",
+      "同步执行完，把所有微任务全部清空",
+      "浏览器进行页面渲染",
+      "取出一个宏任务执行；循环往复"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-mutation-observer",
+    "category": "browser",
+    "tags": [
+      "DOM",
+      "观察器"
+    ],
+    "title": "MutationObserver 是干什么的？",
+    "answer": "异步监听 DOM 树变化，DOM 增删改、属性变化触发回调；属于微任务。 对比 Mutation 事件是同步，性能差。校招了解概念即可，很少手写。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "异步监听 DOM 树变化，DOM 增删改、属性变化触发回调；属于微任务。 对比 Mutation 事件是同步，性能差。校招了解概念即可，很少手写",
+      "辨别 观察器 的适用场景",
+      "了解 DOM 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-cross-tab",
+    "category": "browser",
+    "tags": [
+      "跨页面通信"
+    ],
+    "title": "跨标签页通信有哪些方案？",
+    "answer": "localStorage + storage 事件；\nSharedWorker；\nBroadcastChannel；\npostMessage（iframe、窗口之间）。\n面试记住前 3 种即可。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "localStorage + storage 事件",
+      "SharedWorker",
+      "BroadcastChannel",
+      "postMessage（iframe、窗口之间）",
+      "面试记住前 3 种即可"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-post-message",
+    "category": "browser",
+    "tags": [
+      "跨域",
+      "通信"
+    ],
+    "title": "postMessage 作用，安全注意点？",
+    "answer": "可以实现不同源 iframe、窗口之间通信，不受同源策略限制。 安全：接收消息的时候一定要校验 origin 来源，防止恶意页面发送消息。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。\n\n回答时应区分规范语义、常见实现和具体项目约束。",
+    "keyPoints": [
+      "可以实现不同源 iframe、窗口之间通信，不受同源策略限制。 安全：接收消息的时候一定要校验 origin 来源，防止恶意页面发送消息",
+      "辨别 通信 的适用场景",
+      "了解 跨域 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-layout-thrashing",
+    "category": "browser",
+    "tags": [
+      "布局",
+      "性能"
+    ],
+    "title": "回流防抖？浏览器的 Layout thrashing（布局抖动）？",
+    "answer": "布局抖动：循环中一边读取布局属性 (offsetWidth)，一边修改 DOM，浏览器反复强制重排，性能很差。 解决：读写分离，全部读完布局属性，再统一修改 DOM。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "布局抖动：循环中一边读取布局属性 (offsetWidth)，一边修改 DOM，浏览器反复强制重排，性能很差。 解决：读写分离，全部读完布局属性，再统一修改 DOM",
+      "辨别 性能 的适用场景",
+      "了解 布局 的风险和边界"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-service-worker",
+    "category": "browser",
+    "tags": [
+      "Service Worker",
+      "离线"
+    ],
+    "title": "Service Worker 了解？",
+    "answer": "独立于主线程的后台线程，离线缓存，PWA 技术。可以拦截请求，做离线缓存。 特点：脱离页面，页面关闭依然运行；必须 HTTPS 环境。\n校招了解概念，大厂才深挖。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "独立于主线程的后台线程，离线缓存，PWA 技术。可以拦截请求，做离线缓存。 特点：脱离页面，页面关闭依然运行；必须 HTTPS 环境",
+      "校招了解概念，大厂才深挖",
+      "了解 Service Worker 的风险和边界"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-virtual-dom",
+    "category": "browser",
+    "tags": [
+      "DOM",
+      "框架"
+    ],
+    "title": "虚拟 DOM 和真实 DOM 对比？",
+    "answer": "虚拟 DOM：JS 对象，描述 DOM 结构。 真实 DOM：浏览器 DOM 节点，操作开销大。 虚拟 DOM 不是更快，是复杂场景下减少频繁完整重排；简单操作直接操作 DOM 会更快。\n\n浏览器实现存在差异，上线前应结合目标环境和性能工具验证。",
+    "keyPoints": [
+      "虚拟 DOM：JS 对象，描述 DOM 结构。 真实 DOM：浏览器 DOM 节点，操作开销大。 虚拟 DOM 不是更快，是复杂场景下减少频繁完整重排；简单操作直接操作 DOM 会更快",
+      "辨别 框架 的适用场景",
+      "了解 DOM 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-process-model",
+    "category": "browser",
+    "tags": [
+      "进程",
+      "架构"
+    ],
+    "title": "浏览器的进程模型（多进程）？",
+    "answer": "现代浏览器是多进程架构：\n浏览器主进程：界面、标签管理；\n渲染进程（每个标签页）：JS 引擎、DOM 解析、渲染；\nGPU 进程：GPU 合成；\n网络进程：网络请求。\n同一个域名现在会开启渲染进程隔离。JS 渲染线程和 GUI 渲染线程互斥，JS 长时间阻塞会卡住页面渲染。",
+    "keyPoints": [
+      "现代浏览器是多进程架构：",
+      "浏览器主进程：界面、标签管理",
+      "渲染进程（每个标签页）：JS 引擎、DOM 解析、渲染",
+      "GPU 进程：GPU 合成",
+      "网络进程：网络请求"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-html-parser",
+    "category": "browser",
+    "tags": [
+      "HTML",
+      "解析"
+    ],
+    "title": "浏览器 HTML 解析器如何构建 DOM？",
+    "answer": "HTML 解析器把字节解码为字符并经过分词、树构建算法生成 DOM。解析具有错误恢复规则，非法嵌套可能被自动重排而与源码结构不同。\n\n同步脚本、document.write 和网络等待可能影响解析进度，不能把 HTML 当作普通 XML 处理。",
+    "keyPoints": [
+      "HTML 解析器把字节解码为字符并经过分词、树构建算法生成 DOM",
+      "解析具有错误恢复规则，非法嵌套可能被自动重排而与源码结构不同",
+      "同步脚本、document.write 和网络等待可能影响解析进度，不能把 HTML 当作普通 XML 处理"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "非法表格嵌套为什么可能导致节点位置变化？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-cssom-render-tree",
+    "category": "browser",
+    "tags": [
+      "CSSOM",
+      "渲染"
+    ],
+    "title": "CSSOM、DOM 和渲染树之间是什么关系？",
+    "answer": "浏览器解析样式表形成 CSSOM，并结合 DOM 计算每个可见节点的样式。渲染树包含参与视觉布局的盒，不会简单一一对应所有 DOM 节点。\n\ndisplay:none、伪元素和匿名盒等情况说明 DOM 与渲染结构存在差异。",
+    "keyPoints": [
+      "浏览器解析样式表形成 CSSOM，并结合 DOM 计算每个可见节点的样式",
+      "渲染树包含参与视觉布局的盒，不会简单一一对应所有 DOM 节点",
+      "display:none、伪元素和匿名盒等情况说明 DOM 与渲染结构存在差异"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "visibility:hidden 的元素是否进入布局？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-preload-scanner",
+    "category": "browser",
+    "tags": [
+      "资源加载",
+      "解析"
+    ],
+    "title": "预加载扫描器如何改善页面加载？",
+    "answer": "主 HTML 解析器被脚本阻塞时，预加载扫描器仍可提前发现图片、样式和脚本 URL。提前发起请求能减少关键资源排队时间，但动态拼接地址或深层 CSS 依赖可能无法被发现。\n\npreload 提示应与真实资源类型、跨源属性和使用时机匹配，否则会浪费带宽。",
+    "keyPoints": [
+      "主 HTML 解析器被脚本阻塞时，预加载扫描器仍可提前发现图片、样式和脚本 URL",
+      "提前发起请求能减少关键资源排队时间，但动态拼接地址或深层 CSS 依赖可能无法被发现",
+      "preload 提示应与真实资源类型、跨源属性和使用时机匹配，否则会浪费带宽"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "为什么动态注入的关键资源更容易被发现得太晚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-critical-rendering-path",
+    "category": "browser",
+    "tags": [
+      "渲染",
+      "性能"
+    ],
+    "title": "什么是关键渲染路径，优化时应关注什么？",
+    "answer": "关键渲染路径涵盖取得 HTML、构建 DOM/CSSOM、计算样式、布局、绘制和合成等关键步骤。关键 CSS、阻塞脚本、字体和首屏媒体会影响首次可见内容的时机。\n\n优化应基于网络瀑布图和性能轨迹缩短依赖链，而不是机械内联所有资源。",
+    "keyPoints": [
+      "关键渲染路径涵盖取得 HTML、构建 DOM/CSSOM、计算样式、布局、绘制和合成等关键步骤",
+      "关键 CSS、阻塞脚本、字体和首屏媒体会影响首次可见内容的时机",
+      "优化应基于网络瀑布图和性能轨迹缩短依赖链，而不是机械内联所有资源"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如何识别真正阻塞首屏的 CSS？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-compositor-layers",
+    "category": "browser",
+    "tags": [
+      "合成",
+      "性能"
+    ],
+    "title": "浏览器为什么创建合成层，层越多越好吗？",
+    "answer": "合成层允许浏览器把部分绘制结果作为独立纹理变换并在合成阶段组合。transform、视频、滚动区域等因素可能触发分层，但具体启发式由浏览器决定。\n\n过多图层会增加显存、上传和合成成本，will-change 应按需短期使用并通过工具验证。",
+    "keyPoints": [
+      "合成层允许浏览器把部分绘制结果作为独立纹理变换并在合成阶段组合",
+      "transform、视频、滚动区域等因素可能触发分层，但具体启发式由浏览器决定",
+      "过多图层会增加显存、上传和合成成本，will-change 应按需短期使用并通过工具验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如何在开发者工具中检查图层数量和合成原因？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-domcontentloaded-load",
+    "category": "browser",
+    "tags": [
+      "生命周期",
+      "事件"
+    ],
+    "title": "DOMContentLoaded 与 load 事件有什么区别？",
+    "answer": "DOMContentLoaded 在文档解析完成并等待延迟脚本执行后触发，不等待普通图片等所有子资源。load 会等待页面及大多数依赖资源完成加载后触发。\n\n异步脚本、模块脚本、样式依赖和缓存会影响具体时序，业务初始化应选择最早满足依赖的时机。",
+    "keyPoints": [
+      "DOMContentLoaded 在文档解析完成并等待延迟脚本执行后触发，不等待普通图片等所有子资源",
+      "load 会等待页面及大多数依赖资源完成加载后触发",
+      "异步脚本、模块脚本、样式依赖和缓存会影响具体时序，业务初始化应选择最早满足依赖的时机"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "defer 脚本与 DOMContentLoaded 的顺序是什么？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-history-navigation",
+    "category": "browser",
+    "tags": [
+      "History API",
+      "路由"
+    ],
+    "title": "History API 如何支持前端路由？",
+    "answer": "pushState 和 replaceState 可以修改会话历史和 URL，而不触发传统整页导航。用户前进后退会触发 popstate，应用需根据 URL 恢复界面状态。\n\n服务端必须为可直接访问的前端路由提供回退，同时要处理滚动、标题和无障碍焦点。",
+    "keyPoints": [
+      "pushState 和 replaceState 可以修改会话历史和 URL，而不触发传统整页导航",
+      "用户前进后退会触发 popstate，应用需根据 URL 恢复界面状态",
+      "服务端必须为可直接访问的前端路由提供回退，同时要处理滚动、标题和无障碍焦点"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "pushState 为什么不会自动触发 popstate？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-indexeddb",
+    "category": "browser",
+    "tags": [
+      "存储",
+      "IndexedDB"
+    ],
+    "title": "IndexedDB 适合保存什么数据？",
+    "answer": "IndexedDB 是浏览器中的异步事务型对象数据库，适合较大的结构化数据和离线索引。对象仓库、索引和事务决定读写范围，版本升级通过 onupgradeneeded 修改结构。\n\n配额、隐私分区和清理策略因浏览器而异，关键数据仍需服务端持久化。",
+    "keyPoints": [
+      "IndexedDB 是浏览器中的异步事务型对象数据库，适合较大的结构化数据和离线索引",
+      "对象仓库、索引和事务决定读写范围，版本升级通过 onupgradeneeded 修改结构",
+      "配额、隐私分区和清理策略因浏览器而异，关键数据仍需服务端持久化"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "版本升级事务失败时如何恢复？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-cache-api",
+    "category": "browser",
+    "tags": [
+      "缓存",
+      "Service Worker"
+    ],
+    "title": "Cache API 与 HTTP 缓存有什么区别？",
+    "answer": "Cache API 允许脚本显式保存 Request 和 Response 对，常由 Service Worker 管理离线资源。它不会自动遵循应用期望的更新策略，也不等同于浏览器透明管理的 HTTP 缓存。\n\n应用需要设计版本、清理、匹配键和失败回退，避免长期保留过期或敏感响应。",
+    "keyPoints": [
+      "Cache API 允许脚本显式保存 Request 和 Response 对，常由 Service Worker 管理离线资源",
+      "它不会自动遵循应用期望的更新策略，也不等同于浏览器透明管理的 HTTP 缓存",
+      "应用需要设计版本、清理、匹配键和失败回退，避免长期保留过期或敏感响应"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "Cache API 为什么不能替代业务数据库？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-web-worker",
+    "category": "browser",
+    "tags": [
+      "Worker",
+      "并发"
+    ],
+    "title": "Web Worker 能解决什么问题？",
+    "answer": "Web Worker 在独立线程环境执行脚本，可以把计算密集任务移出页面主线程。Worker 不能直接访问 DOM，需要通过消息和结构化克隆或可转移对象通信。\n\n线程创建、数据复制和任务拆分有成本，短小任务不一定能从 Worker 获益。",
+    "keyPoints": [
+      "Web Worker 在独立线程环境执行脚本，可以把计算密集任务移出页面主线程",
+      "Worker 不能直接访问 DOM，需要通过消息和结构化克隆或可转移对象通信",
+      "线程创建、数据复制和任务拆分有成本，短小任务不一定能从 Worker 获益"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何把大 ArrayBuffer 高效传给 Worker？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-shared-worker",
+    "category": "browser",
+    "tags": [
+      "Worker",
+      "多页面"
+    ],
+    "title": "SharedWorker 与普通 Web Worker 有什么区别？",
+    "answer": "SharedWorker 可以被同源的多个页面或上下文连接并共享一个后台执行实例。各连接通过 MessagePort 通信，生命周期和浏览器支持比普通 Worker 更复杂。\n\n它适合少数跨标签共享协调场景，但常需要 BroadcastChannel、Service Worker 等替代方案评估。",
+    "keyPoints": [
+      "SharedWorker 可以被同源的多个页面或上下文连接并共享一个后台执行实例",
+      "各连接通过 MessagePort 通信，生命周期和浏览器支持比普通 Worker 更复杂",
+      "它适合少数跨标签共享协调场景，但常需要 BroadcastChannel、Service Worker 等替代方案评估"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "SharedWorker 何时会被浏览器终止？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-intersection-observer",
+    "category": "browser",
+    "tags": [
+      "观察器",
+      "性能"
+    ],
+    "title": "IntersectionObserver 适合哪些场景？",
+    "answer": "IntersectionObserver 异步报告目标与根视口或容器的交叉变化。它适合懒加载、曝光统计和无限滚动触发，避免在滚动事件中频繁同步测量布局。\n\n回调并非逐像素实时触发，阈值、rootMargin 和遮挡语义需要按业务设计。",
+    "keyPoints": [
+      "IntersectionObserver 异步报告目标与根视口或容器的交叉变化",
+      "它适合懒加载、曝光统计和无限滚动触发，避免在滚动事件中频繁同步测量布局",
+      "回调并非逐像素实时触发，阈值、rootMargin 和遮挡语义需要按业务设计"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "曝光统计为什么还要结合可见时长？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-resize-observer",
+    "category": "browser",
+    "tags": [
+      "观察器",
+      "布局"
+    ],
+    "title": "ResizeObserver 与 window resize 有什么区别？",
+    "answer": "ResizeObserver 观察具体元素内容盒或边框盒尺寸变化，而不只监听视口大小。它适合容器驱动组件和图表自适应，但回调中继续修改尺寸可能造成观察循环。\n\n应批量处理更新并避免在回调里无条件写回导致 ResizeObserver loop 警告。",
+    "keyPoints": [
+      "ResizeObserver 观察具体元素内容盒或边框盒尺寸变化，而不只监听视口大小",
+      "它适合容器驱动组件和图表自适应，但回调中继续修改尺寸可能造成观察循环",
+      "应批量处理更新并避免在回调里无条件写回导致 ResizeObserver loop 警告"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何避免尺寸观察回调反复触发自身？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-performance-observer",
+    "category": "browser",
+    "tags": [
+      "性能",
+      "观察器"
+    ],
+    "title": "PerformanceObserver 可以采集哪些性能数据？",
+    "answer": "PerformanceObserver 订阅浏览器产生的 performance entry，例如资源、导航、长任务和 Web Vitals 相关条目。supportedEntryTypes 可用于判断环境支持，buffered 选项能读取观察前已产生的部分记录。\n\n采集代码自身应轻量，并对采样、聚合和用户隐私做控制。",
+    "keyPoints": [
+      "PerformanceObserver 订阅浏览器产生的 performance entry，例如资源、导航、长任务和 Web Vitals 相关条目",
+      "supportedEntryTypes 可用于判断环境支持，buffered 选项能读取观察前已产生的部分记录",
+      "采集代码自身应轻量，并对采样、聚合和用户隐私做控制"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如何用 PerformanceObserver 观察 LCP？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-page-visibility",
+    "category": "browser",
+    "tags": [
+      "生命周期",
+      "可见性"
+    ],
+    "title": "Page Visibility API 有什么用途？",
+    "answer": "document.visibilityState 和 visibilitychange 可以判断页面是否处于可见状态。页面隐藏时可暂停轮播、降低轮询频率或记录会话状态，减少后台资源消耗。\n\n隐藏不等于页面即将永久卸载，保存关键数据还要结合 pagehide 等生命周期信号。",
+    "keyPoints": [
+      "document.visibilityState 和 visibilitychange 可以判断页面是否处于可见状态",
+      "页面隐藏时可暂停轮播、降低轮询频率或记录会话状态，减少后台资源消耗",
+      "隐藏不等于页面即将永久卸载，保存关键数据还要结合 pagehide 等生命周期信号"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么不应依赖 beforeunload 作为唯一保存时机？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-bfcache",
+    "category": "browser",
+    "tags": [
+      "导航",
+      "缓存"
+    ],
+    "title": "什么是往返缓存 bfcache？",
+    "answer": "bfcache 可以保存完整页面状态，使前进后退时无需重新创建文档即可快速恢复。pageshow 和 pagehide 的 persisted 属性可用于识别保存与恢复。\n\n某些不可安全冻结的行为会影响可用性，应用恢复后还要刷新过期数据和连接状态。",
+    "keyPoints": [
+      "bfcache 可以保存完整页面状态，使前进后退时无需重新创建文档即可快速恢复",
+      "pageshow 和 pagehide 的 persisted 属性可用于识别保存与恢复",
+      "某些不可安全冻结的行为会影响可用性，应用恢复后还要刷新过期数据和连接状态"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "页面从 bfcache 恢复时会重新触发 DOMContentLoaded 吗？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-speculation-rules",
+    "category": "browser",
+    "tags": [
+      "导航",
+      "预渲染"
+    ],
+    "title": "预取、预连接和预渲染有什么区别？",
+    "answer": "preconnect 提前建立连接，prefetch 提前下载未来可能使用的资源或文档。prerender 会提前加载并渲染整个页面，命中时导航极快但资源和隐私成本更高。\n\n提示必须基于较高置信度并考虑用户网络、登录状态和副作用，不能无差别预加载。",
+    "keyPoints": [
+      "preconnect 提前建立连接，prefetch 提前下载未来可能使用的资源或文档",
+      "prerender 会提前加载并渲染整个页面，命中时导航极快但资源和隐私成本更高",
+      "提示必须基于较高置信度并考虑用户网络、登录状态和副作用，不能无差别预加载"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "预渲染页面如何避免重复执行分析上报？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-web-components",
+    "category": "browser",
+    "tags": [
+      "Web Components",
+      "组件"
+    ],
+    "title": "Web Components 由哪些核心能力组成？",
+    "answer": "Custom Elements 定义自定义元素及生命周期，Shadow DOM 提供封装树。template 和 slot 支持可复用结构与内容分发，CSS 自定义属性常用于跨边界主题配置。\n\n原生组件仍需设计属性反射、表单参与、可访问性和服务端渲染策略。",
+    "keyPoints": [
+      "Custom Elements 定义自定义元素及生命周期，Shadow DOM 提供封装树",
+      "template 和 slot 支持可复用结构与内容分发，CSS 自定义属性常用于跨边界主题配置",
+      "原生组件仍需设计属性反射、表单参与、可访问性和服务端渲染策略"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "自定义元素升级过程会在什么时候发生？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-shadow-dom",
+    "category": "browser",
+    "tags": [
+      "Shadow DOM",
+      "封装"
+    ],
+    "title": "Shadow DOM 提供了哪些封装边界？",
+    "answer": "Shadow DOM 把内部节点树与外部文档查询和样式匹配建立边界。事件可以根据 composed 属性穿过边界，并在传播时发生目标重定向。\n\n封装不是安全边界，外部仍可通过公开引用、CSS 自定义属性和 part 等设计接口交互。",
+    "keyPoints": [
+      "Shadow DOM 把内部节点树与外部文档查询和样式匹配建立边界",
+      "事件可以根据 composed 属性穿过边界，并在传播时发生目标重定向",
+      "封装不是安全边界，外部仍可通过公开引用、CSS 自定义属性和 part 等设计接口交互"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "composedPath 如何帮助理解事件跨边界传播？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-accessibility-tree",
+    "category": "browser",
+    "tags": [
+      "可访问性",
+      "渲染"
+    ],
+    "title": "可访问性树与 DOM 有什么关系？",
+    "answer": "浏览器根据 DOM、样式和 ARIA 计算可访问性树，辅助技术通过它理解角色、名称、状态和关系。部分隐藏或纯装饰节点不会出现在树中，错误 ARIA 也可能覆盖原生语义。\n\n应优先使用语义 HTML，并通过浏览器无障碍面板和真实辅助技术验证。",
+    "keyPoints": [
+      "浏览器根据 DOM、样式和 ARIA 计算可访问性树，辅助技术通过它理解角色、名称、状态和关系",
+      "部分隐藏或纯装饰节点不会出现在树中，错误 ARIA 也可能覆盖原生语义",
+      "应优先使用语义 HTML，并通过浏览器无障碍面板和真实辅助技术验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "display:none 与 aria-hidden 对可访问性树有什么影响？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-clipboard-api",
+    "category": "browser",
+    "tags": [
+      "Clipboard",
+      "权限"
+    ],
+    "title": "Clipboard API 使用时有哪些安全限制？",
+    "answer": "异步 Clipboard API 通常要求安全上下文，并受用户激活和权限策略限制。读取剪贴板比写入更敏感，不同浏览器的提示与授权行为存在差异。\n\n应用应提供失败回退、避免静默读取敏感信息，并只写入用户明确请求的内容。",
+    "keyPoints": [
+      "异步 Clipboard API 通常要求安全上下文，并受用户激活和权限策略限制",
+      "读取剪贴板比写入更敏感，不同浏览器的提示与授权行为存在差异",
+      "应用应提供失败回退、避免静默读取敏感信息，并只写入用户明确请求的内容"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么复制按钮应在真实点击事件中调用 API？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-permissions-api",
+    "category": "browser",
+    "tags": [
+      "权限",
+      "隐私"
+    ],
+    "title": "Permissions API 能否统一管理所有浏览器权限？",
+    "answer": "Permissions API 可以查询部分能力的 granted、denied 或 prompt 状态。并非所有权限都支持查询，浏览器还会结合用户手势、权限策略和站点设置决定实际调用结果。\n\n权限状态可能变化，应用必须处理 API 调用仍然失败的情况，不能仅依赖预查询。",
+    "keyPoints": [
+      "Permissions API 可以查询部分能力的 granted、denied 或 prompt 状态",
+      "并非所有权限都支持查询，浏览器还会结合用户手势、权限策略和站点设置决定实际调用结果",
+      "权限状态可能变化，应用必须处理 API 调用仍然失败的情况，不能仅依赖预查询"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么查询结果为 granted 仍可能操作失败？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-iframe-sandbox",
+    "category": "browser",
+    "tags": [
+      "iframe",
+      "安全"
+    ],
+    "title": "iframe sandbox 如何限制嵌入页面？",
+    "answer": "sandbox 在默认情况下限制脚本、表单、导航、弹窗和源身份等多项能力。allow-* 令牌只应按最小权限逐项开放，组合 allow-scripts 与 allow-same-origin 对同源内容尤其危险。\n\n还应配合 CSP、Permissions Policy、postMessage 源校验和独立域名形成完整边界。",
+    "keyPoints": [
+      "sandbox 在默认情况下限制脚本、表单、导航、弹窗和源身份等多项能力",
+      "allow-* 令牌只应按最小权限逐项开放，组合 allow-scripts 与 allow-same-origin 对同源内容尤其危险",
+      "还应配合 CSP、Permissions Policy、postMessage 源校验和独立域名形成完整边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么同源 iframe 同时允许脚本和 same-origin 风险较高？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-task-scheduling",
+    "category": "browser",
+    "tags": [
+      "调度",
+      "性能"
+    ],
+    "title": "requestIdleCallback、scheduler.postTask 和普通任务如何选择？",
+    "answer": "requestIdleCallback 适合可延后的低优先级工作，但触发时机不保证且支持范围有限。scheduler.postTask 可表达任务优先级和取消，但需要检查目标浏览器支持。\n\n关键交互应拆分长任务并及时让出主线程，不能把业务正确性依赖于空闲回调一定执行。",
+    "keyPoints": [
+      "requestIdleCallback 适合可延后的低优先级工作，但触发时机不保证且支持范围有限",
+      "scheduler.postTask 可表达任务优先级和取消，但需要检查目标浏览器支持",
+      "关键交互应拆分长任务并及时让出主线程，不能把业务正确性依赖于空闲回调一定执行"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "后台统计任务如何设置超时兜底？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-long-tasks",
+    "category": "browser",
+    "tags": [
+      "性能",
+      "主线程"
+    ],
+    "title": "什么是长任务，它为什么影响交互响应？",
+    "answer": "主线程连续执行超过较长时间的任务会阻塞输入、渲染和其他任务调度。大量脚本解析、同步计算和一次性 DOM 工作都可能形成长任务。\n\n可通过性能轨迹定位归因，把工作拆分、延后或移到 Worker，并关注真实 INP 等用户指标。",
+    "keyPoints": [
+      "主线程连续执行超过较长时间的任务会阻塞输入、渲染和其他任务调度",
+      "大量脚本解析、同步计算和一次性 DOM 工作都可能形成长任务",
+      "可通过性能轨迹定位归因，把工作拆分、延后或移到 Worker，并关注真实 INP 等用户指标"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "任务拆分后如何避免总执行时间反而显著增加？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-event-retargeting",
+    "category": "browser",
+    "tags": [
+      "事件",
+      "Shadow DOM"
+    ],
+    "title": "事件穿过 Shadow DOM 时为什么会发生重定向？",
+    "answer": "为保护组件内部结构，事件从 Shadow DOM 传播到外部时 target 可能被重定向为宿主元素。是否穿过边界由事件的 composed 属性决定，传播阶段仍受 bubbles 和捕获规则影响。\n\n需要了解原始传播路径时可检查 composedPath，但组件不应泄漏不稳定的内部实现契约。",
+    "keyPoints": [
+      "为保护组件内部结构，事件从 Shadow DOM 传播到外部时 target 可能被重定向为宿主元素",
+      "是否穿过边界由事件的 composed 属性决定，传播阶段仍受 bubbles 和捕获规则影响",
+      "需要了解原始传播路径时可检查 composedPath，但组件不应泄漏不稳定的内部实现契约"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "自定义事件如何设置 bubbles 和 composed？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-resource-timing",
+    "category": "browser",
+    "tags": [
+      "性能",
+      "网络"
+    ],
+    "title": "Resource Timing API 可以分析哪些加载阶段？",
+    "answer": "资源性能条目包含排队、DNS、连接、TLS、请求和响应等时间戳。跨源资源若未通过 Timing-Allow-Origin 授权，部分详细时间会被隐藏。\n\n结合 transferSize、encodedBodySize 和 decodedBodySize 可以判断缓存与压缩，但仍要考虑协议复用。",
+    "keyPoints": [
+      "资源性能条目包含排队、DNS、连接、TLS、请求和响应等时间戳",
+      "跨源资源若未通过 Timing-Allow-Origin 授权，部分详细时间会被隐藏",
+      "结合 transferSize、encodedBodySize 和 decodedBodySize 可以判断缓存与压缩，但仍要考虑协议复用"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何从资源时间判断可能命中了缓存？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-navigation-timing",
+    "category": "browser",
+    "tags": [
+      "性能",
+      "导航"
+    ],
+    "title": "Navigation Timing 如何拆解一次页面导航？",
+    "answer": "导航性能条目描述重定向、DNS、连接、请求响应、DOM 处理和 load 等阶段。同一连接复用时 DNS 或连接阶段可能为零，不能据此误判数据缺失。\n\n应结合服务端时间、资源瀑布和用户性能指标定位瓶颈，而不是只看 loadEventEnd。",
+    "keyPoints": [
+      "导航性能条目描述重定向、DNS、连接、请求响应、DOM 处理和 load 等阶段",
+      "同一连接复用时 DNS 或连接阶段可能为零，不能据此误判数据缺失",
+      "应结合服务端时间、资源瀑布和用户性能指标定位瓶颈，而不是只看 loadEventEnd"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "TTFB 较高可能由哪些环节造成？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-memory-profiling",
+    "category": "browser",
+    "tags": [
+      "内存",
+      "调试"
+    ],
+    "title": "如何用浏览器工具定位前端内存泄漏？",
+    "answer": "可以比较多次堆快照、查看对象保留路径并观察执行操作后的内存趋势。脱离 DOM、未移除监听器、定时器、闭包和无限缓存是常见泄漏来源。\n\n垃圾回收时机不确定，测试应重复稳定操作并确认对象在强制回收后仍被意外引用。",
+    "keyPoints": [
+      "可以比较多次堆快照、查看对象保留路径并观察执行操作后的内存趋势",
+      "脱离 DOM、未移除监听器、定时器、闭包和无限缓存是常见泄漏来源",
+      "垃圾回收时机不确定，测试应重复稳定操作并确认对象在强制回收后仍被意外引用"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "保留路径比单纯对象数量更能说明什么问题？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "browser-storage-partitioning",
+    "category": "browser",
+    "tags": [
+      "存储",
+      "隐私"
+    ],
+    "title": "浏览器存储分区会怎样影响第三方内容？",
+    "answer": "现代浏览器可能按顶级站点对第三方 Cookie、缓存和其他状态进行分区。同一个嵌入源在不同顶级站点下可能看到不同存储空间，传统跨站跟踪和单点状态共享会失效。\n\n应用应使用明确的身份协议和受支持的存储访问机制，并避免依赖浏览器实现细节绕过隐私策略。",
+    "keyPoints": [
+      "现代浏览器可能按顶级站点对第三方 Cookie、缓存和其他状态进行分区",
+      "同一个嵌入源在不同顶级站点下可能看到不同存储空间，传统跨站跟踪和单点状态共享会失效",
+      "应用应使用明确的身份协议和受支持的存储访问机制，并避免依赖浏览器实现细节绕过隐私策略"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "第三方 iframe 如何在合规前提下请求存储访问？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web APIs",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  }
+]

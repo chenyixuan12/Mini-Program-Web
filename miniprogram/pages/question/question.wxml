@@ -1,0 +1,14 @@
+<view wx:if="{{question}}" class="page">
+  <view class="top-row"><text class="category">{{question.categoryName}} · {{question.difficulty}}</text><button class="favorite" bindtap="onFavorite">{{isFavorite ? '♥ 已收藏' : '♡ 收藏'}}</button></view>
+  <view class="question-card"><text class="question-index">INTERVIEW QUESTION</text><text class="title">{{question.title}}</text><view class="tags"><text wx:for="{{question.tags}}" wx:key="*this" class="tag">{{item}}</text></view></view>
+  <view class="thinking"><text class="thinking-title">先在脑中组织你的回答</text><text>试着从定义、原理、实践与边界条件展开。</text></view>
+  <button class="answer-toggle" bindtap="toggleAnswer">{{showAnswer ? '收起参考答案 ↑' : '展开参考答案 ↓'}}</button>
+  <view wx:if="{{showAnswer}}" class="answer-content">
+    <view class="answer-card"><text class="answer-heading">参考回答</text><text class="answer-text">{{question.answer}}</text></view>
+    <view class="answer-card"><text class="answer-heading">关键要点</text><view wx:for="{{question.keyPoints}}" wx:key="*this" class="point"><text class="dot">•</text><text>{{item}}</text></view></view>
+    <view wx:if="{{question.followUps.length}}" class="answer-card"><text class="answer-heading">面试追问</text><view wx:for="{{question.followUps}}" wx:key="*this" class="follow-up">{{index + 1}}. {{item}}</view></view>
+    <view wx:if="{{question.hasCode}}" class="code-card"><text class="code-language">{{question.codeLanguage}}</text><text class="code">{{question.code}}</text></view>
+  </view>
+  <view class="bottom-space"></view>
+  <view class="mastery-bar"><view class="mastery-tip">{{isTransitioning ? '正在切换下一题…' : (masteryText ? '当前：' + masteryText : '答完后，标记掌握度')}}</view><view class="mastery-actions"><button class="mastery mastered" bindtap="onMastery" data-mastery="mastered" disabled="{{isTransitioning}}">已掌握</button><button class="mastery uncertain" bindtap="onMastery" data-mastery="uncertain" disabled="{{isTransitioning}}">模糊</button><button class="mastery unmastered" bindtap="onMastery" data-mastery="unmastered" disabled="{{isTransitioning}}">未掌握</button></view></view>
+</view>

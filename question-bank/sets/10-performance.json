@@ -1,0 +1,1302 @@
+[
+  {
+    "id": "performance-01",
+    "category": "performance",
+    "tags": [
+      "Web Vitals",
+      "性能优化"
+    ],
+    "title": "前端性能优化应该从哪里开始？",
+    "answer": "先明确用户路径和目标指标，再用实验室工具与真实用户数据定位瓶颈。优化应遵循测量、提出假设、做小改动、复测和持续监控，避免凭感觉堆缓存或拆组件。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "先明确用户路径和目标指标，再用实验室工具与真实用户数据定位瓶颈",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“前端性能优化应该从哪里开始”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "web.dev Core Web Vitals",
+        "url": "https://web.dev/articles/vitals"
+      },
+      {
+        "title": "MDN Performance API",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Performance_API"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-02",
+    "category": "performance",
+    "tags": [
+      "Web Vitals",
+      "性能优化"
+    ],
+    "title": "LCP 指标衡量什么，常见优化方向有哪些？",
+    "answer": "LCP 衡量视口内最大文本或图片内容的呈现时间。应定位具体 LCP 元素，减少 TTFB、提前发现关键资源、优化图片和字体，并避免被阻塞的 CSS 或长任务延迟绘制。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "LCP 衡量视口内最大文本或图片内容的呈现时间",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“LCP 指标衡量什么，常见优化方向有哪些”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Performance API",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Performance_API"
+      },
+      {
+        "title": "MDN Preloading Content",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-03",
+    "category": "performance",
+    "tags": [
+      "Web Vitals",
+      "性能优化"
+    ],
+    "title": "CLS 为什么会升高，如何避免布局偏移？",
+    "answer": "未预留图片和广告尺寸、字体替换、异步插入内容都可能造成 CLS。为媒体设置宽高比或固定尺寸，避免在已有内容上方插入，并合理使用字体加载策略。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "未预留图片和广告尺寸、字体替换、异步插入内容都可能造成 CLS",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“CLS 为什么会升高，如何避免布局偏移”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Preloading Content",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload"
+      },
+      {
+        "title": "MDN Responsive Images",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-04",
+    "category": "performance",
+    "tags": [
+      "Web Vitals",
+      "性能优化"
+    ],
+    "title": "INP 衡量什么，如何降低交互延迟？",
+    "answer": "INP 关注用户交互到下一次绘制完成的延迟，长任务、复杂事件处理和大量 DOM 更新都会拖慢它。应拆分长任务、减少同步计算、延迟非关键工作并优化事件处理路径。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "INP 关注用户交互到下一次绘制完成的延迟，长任务、复杂事件处理和大量 DOM 更新都会拖慢它",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“INP 衡量什么，如何降低交互延迟”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Responsive Images",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images"
+      },
+      {
+        "title": "web.dev Optimize LCP",
+        "url": "https://web.dev/articles/optimize-lcp"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-05",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "TTFB 受哪些因素影响，前端能做什么？",
+    "answer": "TTFB 包含网络连接、请求排队、服务端处理和首字节返回时间。前端可使用 CDN、合理缓存、预连接和减少重定向降低等待，但服务端查询和渲染通常需要后端协同优化。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "TTFB 包含网络连接、请求排队、服务端处理和首字节返回时间",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“TTFB 受哪些因素影响，前端能做什么”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "web.dev Optimize LCP",
+        "url": "https://web.dev/articles/optimize-lcp"
+      },
+      {
+        "title": "web.dev Optimize CLS",
+        "url": "https://web.dev/articles/optimize-cls"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-06",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "从输入 URL 到首屏渲染，性能优化应看哪些阶段？",
+    "answer": "应拆分 DNS、连接、请求、响应、解析、脚本执行、样式计算和绘制阶段，用 Performance 面板与 Navigation Timing 对照。每阶段的瓶颈不同，不能只看总耗时或单个网络请求。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "应拆分 DNS、连接、请求、响应、解析、脚本执行、样式计算和绘制阶段，用 Performance 面板与 Navigation Timing 对照",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“从输入 URL 到首屏渲染，性能优化应看哪些阶段”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "web.dev Optimize CLS",
+        "url": "https://web.dev/articles/optimize-cls"
+      },
+      {
+        "title": "web.dev Optimize INP",
+        "url": "https://web.dev/articles/optimize-inp"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-07",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "preload、prefetch 和 preconnect 如何选择？",
+    "answer": "preload 用于当前页面很快必需的已知资源，prefetch 面向未来导航的低优先级资源，preconnect 提前建立跨域连接。误用 preload 会抢占关键带宽，prefetch 也不应替代首屏资源优化。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "preload 用于当前页面很快必需的已知资源，prefetch 面向未来导航的低优先级资源，preconnect 提前建立跨域连接",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“preload、prefetch 和 preconnect 如何选择”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "web.dev Optimize INP",
+        "url": "https://web.dev/articles/optimize-inp"
+      },
+      {
+        "title": "MDN Web Workers",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-08",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "关键渲染路径包含哪些资源？",
+    "answer": "HTML、阻塞解析的脚本、关键 CSS、首屏字体和 LCP 图片通常位于关键路径。应减少它们的数量和体积，延后非关键脚本，并用优先级提示让浏览器作出正确调度。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "HTML、阻塞解析的脚本、关键 CSS、首屏字体和 LCP 图片通常位于关键路径",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“关键渲染路径包含哪些资源”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web Workers",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API"
+      },
+      {
+        "title": "MDN HTTP Caching",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-09",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "如何优化 JavaScript 对首屏的影响？",
+    "answer": "减少入口代码和第三方脚本，按路由和功能懒加载；对非关键任务使用 defer、async、requestIdleCallback 或调度拆分。优化后还要确认代码执行时间，而不只是压缩包体。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "减少入口代码和第三方脚本，按路由和功能懒加载；对非关键任务使用 defer、async、requestIdleCallback 或调度拆分",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“如何优化 JavaScript 对首屏的影响”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN HTTP Caching",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
+      },
+      {
+        "title": "Chrome DevTools Performance",
+        "url": "https://developer.chrome.com/docs/devtools/performance"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-10",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "async、defer 和普通 script 有什么区别？",
+    "answer": "普通脚本会阻塞 HTML 解析；defer 下载不阻塞解析并在文档解析完成后按顺序执行；async 下载不阻塞但加载后立即执行且顺序不保证。选择取决于脚本是否依赖 DOM 和其他脚本。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "普通脚本会阻塞 HTML 解析；defer 下载不阻塞解析并在文档解析完成后按顺序执行；async 下载不阻塞但加载后立即执行且顺序不保证",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“async、defer 和普通 script 有什么区别”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "Chrome DevTools Performance",
+        "url": "https://developer.chrome.com/docs/devtools/performance"
+      },
+      {
+        "title": "Chrome DevTools Memory",
+        "url": "https://developer.chrome.com/docs/devtools/memory-problems"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-11",
+    "category": "performance",
+    "tags": [
+      "加载性能",
+      "性能优化"
+    ],
+    "title": "为什么第三方脚本经常成为性能瓶颈？",
+    "answer": "第三方脚本会增加 DNS、连接、下载和主线程执行成本，且其行为不完全受本团队控制。应审查必要性、延迟加载、使用 facade 或服务端集成，并监控供应商版本变化。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "第三方脚本会增加 DNS、连接、下载和主线程执行成本，且其行为不完全受本团队控制",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“为什么第三方脚本经常成为性能瓶颈”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "Chrome DevTools Memory",
+        "url": "https://developer.chrome.com/docs/devtools/memory-problems"
+      },
+      {
+        "title": "web.dev Performance Budgets",
+        "url": "https://web.dev/articles/performance-budgets-101"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-12",
+    "category": "performance",
+    "tags": [
+      "资源优化",
+      "性能优化"
+    ],
+    "title": "现代图片格式和响应式图片如何使用？",
+    "answer": "根据设备和内容选择 AVIF、WebP 或合适的 JPEG/PNG，并通过 srcset、sizes 和 picture 提供不同尺寸与格式。不要只压缩文件，还要避免下载远大于显示尺寸的图片。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "根据设备和内容选择 AVIF、WebP 或合适的 JPEG/PNG，并通过 srcset、sizes 和 picture 提供不同尺寸与格式",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“现代图片格式和响应式图片如何使用”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "web.dev Performance Budgets",
+        "url": "https://web.dev/articles/performance-budgets-101"
+      },
+      {
+        "title": "web.dev Core Web Vitals",
+        "url": "https://web.dev/articles/vitals"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-13",
+    "category": "performance",
+    "tags": [
+      "资源优化",
+      "性能优化"
+    ],
+    "title": "首屏图片应该如何加载？",
+    "answer": "确定为 LCP 图片时可使用合适尺寸、现代格式和 fetchpriority=high，必要时 preload；非首屏图片使用 loading=lazy。高优先级资源必须克制，否则会挤压 CSS 和字体带宽。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "确定为 LCP 图片时可使用合适尺寸、现代格式和 fetchpriority=high，必要时 preload；非首屏图片使用 loading=lazy",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“首屏图片应该如何加载”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-14",
+    "category": "performance",
+    "tags": [
+      "资源优化",
+      "性能优化"
+    ],
+    "title": "字体加载如何避免阻塞和文字跳动？",
+    "answer": "压缩并子集化字体，使用 font-display 控制替换策略，预加载确实首屏使用的字体并声明正确的 crossorigin。应配套备用字体度量或调整布局，降低字体切换造成的 CLS。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "压缩并子集化字体，使用 font-display 控制替换策略，预加载确实首屏使用的字体并声明正确的 crossorigin",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“字体加载如何避免阻塞和文字跳动”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-15",
+    "category": "performance",
+    "tags": [
+      "资源优化",
+      "性能优化"
+    ],
+    "title": "SVG、PNG 和 CSS 图形如何取舍？",
+    "answer": "图标和简单矢量适合 SVG，照片适合压缩位图，简单装饰可用 CSS。要考虑可访问性、缓存复用、解析成本和安全清洗，不能因为格式先进就忽略实际尺寸与使用频率。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "图标和简单矢量适合 SVG，照片适合压缩位图，简单装饰可用 CSS",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“SVG、PNG 和 CSS 图形如何取舍”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-16",
+    "category": "performance",
+    "tags": [
+      "缓存",
+      "性能优化"
+    ],
+    "title": "前端静态资源缓存策略如何设计？",
+    "answer": "带内容哈希的 JS、CSS、图片可以长时间 immutable 缓存；HTML、配置和服务端数据采用短缓存或协商缓存。发布流程要保证新旧资源在缓存过渡期能共存，避免 chunk 404。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "带内容哈希的 JS、CSS、图片可以长时间 immutable 缓存；HTML、配置和服务端数据采用短缓存或协商缓存",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“前端静态资源缓存策略如何设计”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-17",
+    "category": "performance",
+    "tags": [
+      "缓存",
+      "性能优化"
+    ],
+    "title": "Service Worker 缓存策略有哪些常见模式？",
+    "answer": "常见模式包括 cache first、network first、stale while revalidate 和 network only。策略应按资源是否实时、离线需求和更新风险选择，并处理版本升级、失败回退和缓存空间上限。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "常见模式包括 cache first、network first、stale while revalidate 和 network only",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“Service Worker 缓存策略有哪些常见模式”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-18",
+    "category": "performance",
+    "tags": [
+      "首屏",
+      "工程化"
+    ],
+    "title": "页面白屏常见原因有哪些，如何定位？",
+    "answer": "白屏可能由 HTML 返回慢、关键 CSS 或脚本阻塞、JavaScript 执行异常、接口串行等待或首屏内容渲染过晚造成。应结合 Navigation Timing、Performance 面板、错误监控和首屏截图区分网络、执行与渲染阶段。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "白屏可能由 HTML 返回慢、关键 CSS 或脚本阻塞、JavaScript 执行异常、接口串行等待或首屏内容渲染过晚造成",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如何区分网络慢导致的白屏和 JS 报错导致的白屏？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "web.dev Core Web Vitals",
+        "url": "https://web.dev/articles/vitals"
+      },
+      {
+        "title": "MDN Web Performance",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance"
+      }
+    ]
+  },
+  {
+    "id": "performance-19",
+    "category": "performance",
+    "tags": [
+      "Web Vitals",
+      "工程化"
+    ],
+    "title": "FCP 和 LCP 有什么区别？",
+    "answer": "FCP 表示首次有内容绘制，LCP 表示最大文本或图片内容绘制；FCP 更早反映页面开始有反馈，LCP 更接近主要内容可见。优化时要分别看资源阻塞和最大元素加载链路。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "FCP 表示首次有内容绘制，LCP 表示最大文本或图片内容绘制；FCP 更早反映页面开始有反馈，LCP 更接近主要内容可见",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么 FCP 很快但 LCP 仍然很慢？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "web.dev Core Web Vitals",
+        "url": "https://web.dev/articles/vitals"
+      }
+    ]
+  },
+  {
+    "id": "performance-20",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "性能优化"
+    ],
+    "title": "重绘和回流有什么区别，如何降低成本？",
+    "answer": "重绘只更新像素，回流会重新计算几何并可能影响后代和兄弟节点，通常更昂贵。减少 DOM 规模、批量更新、隔离布局上下文和使用合成属性能降低成本，但要用时间线验证。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "重绘只更新像素，回流会重新计算几何并可能影响后代和兄弟节点，通常更昂贵",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“重绘和回流有什么区别，如何降低成本”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-21",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "性能优化"
+    ],
+    "title": "为什么 transform 动画通常比改变 top 更流畅？",
+    "answer": "transform 通常可在合成阶段处理，避免每帧重新布局；top 等几何属性会触发布局和绘制。仍需控制图层数量、动画元素面积和主线程工作，不能把所有元素都强制提升图层。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "transform 通常可在合成阶段处理，避免每帧重新布局；top 等几何属性会触发布局和绘制",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“为什么 transform 动画通常比改变 top 更流畅”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-22",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "性能优化"
+    ],
+    "title": "虚拟列表解决什么问题，使用时有哪些坑？",
+    "answer": "虚拟列表只渲染视口附近的少量项目，降低 DOM 数量和布局成本。需要处理动态高度、滚动定位、键稳定性、可访问性和快速滚动时的占位，否则会出现跳动或内容丢失。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "虚拟列表只渲染视口附近的少量项目，降低 DOM 数量和布局成本",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“虚拟列表解决什么问题，使用时有哪些坑”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-23",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "性能优化"
+    ],
+    "title": "长列表应该如何优化？",
+    "answer": "先减少每项渲染成本和不必要更新，再考虑分页、虚拟化和图片懒加载。列表项应使用稳定 key，避免在滚动事件中执行重计算，并通过性能面板确认瓶颈确实在 DOM 或布局。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "先减少每项渲染成本和不必要更新，再考虑分页、虚拟化和图片懒加载",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“长列表应该如何优化”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-24",
+    "category": "performance",
+    "tags": [
+      "主线程",
+      "性能优化"
+    ],
+    "title": "什么是长任务，如何拆分？",
+    "answer": "主线程上持续超过约 50ms 的任务会阻塞输入和绘制。可把循环分片到多个任务、使用 scheduler 或 setTimeout 让出主线程，并将纯计算移到 Web Worker，拆分后要保持状态一致。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "主线程上持续超过约 50ms 的任务会阻塞输入和绘制",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“什么是长任务，如何拆分”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-25",
+    "category": "performance",
+    "tags": [
+      "主线程",
+      "性能优化"
+    ],
+    "title": "Web Worker 适合处理哪些工作？",
+    "answer": "Worker 适合解析大 JSON、搜索索引、图像处理等 CPU 密集且可独立执行的任务。主线程与 Worker 通过消息传递，结构化克隆会有成本，必要时使用 Transferable，不能直接访问 DOM。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "Worker 适合解析大 JSON、搜索索引、图像处理等 CPU 密集且可独立执行的任务",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“Web Worker 适合处理哪些工作”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-26",
+    "category": "performance",
+    "tags": [
+      "网络",
+      "工程化"
+    ],
+    "title": "DNS、TCP 和 TLS 握手如何影响首屏加载？",
+    "answer": "首次访问通常要经历 DNS 解析、TCP 建连和 HTTPS 的 TLS 握手，这些往返会增加请求开始前的等待。可通过 CDN、连接复用、缓存 DNS、preconnect 和减少跨域来源降低成本。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "首次访问通常要经历 DNS 解析、TCP 建连和 HTTPS 的 TLS 握手，这些往返会增加请求开始前的等待",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "preconnect 为什么不能给所有第三方域名都加？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN Web Performance",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance"
+      }
+    ]
+  },
+  {
+    "id": "performance-27",
+    "category": "performance",
+    "tags": [
+      "网络",
+      "工程化"
+    ],
+    "title": "CDN 为什么能加速静态资源？",
+    "answer": "CDN 把静态资源缓存到靠近用户的边缘节点，减少跨地域传输距离和源站压力。要配合内容哈希、合理缓存头和回源策略，发布时避免 HTML 与资源版本错配。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "CDN 把静态资源缓存到靠近用户的边缘节点，减少跨地域传输距离和源站压力",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "CDN 缓存未及时更新时有哪些处理方式？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN HTTP Caching",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
+      }
+    ]
+  },
+  {
+    "id": "performance-28",
+    "category": "performance",
+    "tags": [
+      "事件性能",
+      "性能优化"
+    ],
+    "title": "防抖和节流分别适合什么场景？",
+    "answer": "防抖在连续触发停止后执行，适合搜索输入和 resize；节流限制执行频率，适合滚动、拖拽和持续上报。实现时要处理尾调用、this、参数以及组件销毁后的定时器清理。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "防抖在连续触发停止后执行，适合搜索输入和 resize；节流限制执行频率，适合滚动、拖拽和持续上报",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“防抖和节流分别适合什么场景”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-29",
+    "category": "performance",
+    "tags": [
+      "内存",
+      "性能优化"
+    ],
+    "title": "前端常见内存泄漏来源有哪些？",
+    "answer": "未移除的事件监听、定时器、Observer、订阅和闭包引用都可能让页面对象无法回收。组件卸载时应统一清理，并用 heap snapshot 比较快照确认泄漏对象和保留路径。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "未移除的事件监听、定时器、Observer、订阅和闭包引用都可能让页面对象无法回收",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“前端常见内存泄漏来源有哪些”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-30",
+    "category": "performance",
+    "tags": [
+      "传输",
+      "工程化"
+    ],
+    "title": "gzip 和 Brotli 压缩应该如何选择？",
+    "answer": "文本资源如 HTML、CSS、JavaScript 和 JSON 适合压缩传输；Brotli 在许多文本场景压缩率更好，gzip 兼容范围更广。图片和视频通常已经压缩，重复压缩收益很小。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "文本资源如 HTML、CSS、JavaScript 和 JSON 适合压缩传输；Brotli 在许多文本场景压缩率更好，gzip 兼容范围更广",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么压缩传输体积变小后，解析和执行时间仍可能很长？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN Web Performance",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance"
+      }
+    ]
+  },
+  {
+    "id": "performance-31",
+    "category": "performance",
+    "tags": [
+      "网络",
+      "性能优化"
+    ],
+    "title": "HTTP/2 多路复用对前端性能意味着什么？",
+    "answer": "HTTP/2 在单连接上复用多个流并压缩头部，通常减少连接和队头等待，但 TCP 丢包仍可能影响整条连接。应减少不必要请求并让资源优先级合理，不能简单套用 HTTP/1 的域名分片。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "HTTP/2 在单连接上复用多个流并压缩头部，通常减少连接和队头等待，但 TCP 丢包仍可能影响整条连接",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“HTTP/2 多路复用对前端性能意味着什么”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-32",
+    "category": "performance",
+    "tags": [
+      "加载",
+      "工程化"
+    ],
+    "title": "图片和组件懒加载应该如何设计？",
+    "answer": "首屏关键图片和内容不能盲目懒加载，否则会拖慢 LCP；视口外图片、低频组件和路由页面适合在接近使用时加载。懒加载还要处理占位尺寸、加载失败和快速滚动场景。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "首屏关键图片和内容不能盲目懒加载，否则会拖慢 LCP；视口外图片、低频组件和路由页面适合在接近使用时加载",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "懒加载如何避免图片出现布局跳动？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "web.dev Fast Load Times",
+        "url": "https://web.dev/fast/"
+      }
+    ]
+  },
+  {
+    "id": "performance-33",
+    "category": "performance",
+    "tags": [
+      "加载",
+      "工程化"
+    ],
+    "title": "浏览器请求瀑布图中如何判断资源被阻塞？",
+    "answer": "观察请求的排队、阻塞、连接、等待首字节和下载阶段，并结合 Initiator 找出依赖链。若关键资源排在大量低优先级资源之后，应减少请求、调整优先级或改变加载顺序。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "观察请求的排队、阻塞、连接、等待首字节和下载阶段，并结合 Initiator 找出依赖链",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么一个小脚本也可能阻塞首屏渲染？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN Web Performance",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance"
+      }
+    ]
+  },
+  {
+    "id": "performance-34",
+    "category": "performance",
+    "tags": [
+      "网络",
+      "性能优化"
+    ],
+    "title": "请求瀑布图应该重点看什么？",
+    "answer": "关注关键请求的排队、阻塞、DNS、连接、TTFB、下载和依赖关系，找出被串行化的资源与低优先级误判。瀑布图只是线索，还要结合带宽、缓存命中和真实设备复测。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "关注关键请求的排队、阻塞、DNS、连接、TTFB、下载和依赖关系，找出被串行化的资源与低优先级误判",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“请求瀑布图应该重点看什么”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-35",
+    "category": "performance",
+    "tags": [
+      "请求",
+      "工程化"
+    ],
+    "title": "AbortController 在前端请求优化中有什么作用？",
+    "answer": "AbortController 可以取消已经过期的 fetch，例如搜索关键词变化、页面离开或重复提交时取消旧请求。取消后要区分 AbortError 与真实网络失败，避免把主动取消误报成系统错误。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "AbortController 可以取消已经过期的 fetch，例如搜索关键词变化、页面离开或重复提交时取消旧请求",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "取消旧请求后如何避免旧响应覆盖新数据？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN Web Performance",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance"
+      }
+    ]
+  },
+  {
+    "id": "performance-36",
+    "category": "performance",
+    "tags": [
+      "缓存",
+      "工程化"
+    ],
+    "title": "前端如何缓存接口数据并避免脏数据？",
+    "answer": "应按接口实时性设置缓存时间和失效策略，查询参数、用户身份和权限必须纳入缓存键。写操作成功后主动更新或失效相关缓存，不能用永久缓存替代服务端一致性。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "应按接口实时性设置缓存时间和失效策略，查询参数、用户身份和权限必须纳入缓存键",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "哪些数据不适合放在浏览器长期缓存中？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN HTTP Caching",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
+      }
+    ]
+  },
+  {
+    "id": "performance-37",
+    "category": "performance",
+    "tags": [
+      "数据",
+      "性能优化"
+    ],
+    "title": "前端如何避免重复请求？",
+    "answer": "为相同查询建立缓存和请求去重，设置合理的新鲜度与失效条件；页面离开时取消无用请求，写操作后主动更新或失效相关缓存。缓存必须考虑用户、权限和参数边界。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "为相同查询建立缓存和请求去重，设置合理的新鲜度与失效条件；页面离开时取消无用请求，写操作后主动更新或失效相关缓存",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“前端如何避免重复请求”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-38",
+    "category": "performance",
+    "tags": [
+      "框架性能",
+      "性能优化"
+    ],
+    "title": "组件渲染为什么会变慢，如何定位？",
+    "answer": "常见原因是状态范围过大、父组件频繁更新、列表 key 不稳定和昂贵计算重复执行。使用框架 Profiler、性能时间线和实际交互复现定位，再通过拆分状态、记忆化或虚拟化验证收益。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "常见原因是状态范围过大、父组件频繁更新、列表 key 不稳定和昂贵计算重复执行",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“组件渲染为什么会变慢，如何定位”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-39",
+    "category": "performance",
+    "tags": [
+      "框架性能",
+      "性能优化"
+    ],
+    "title": "记忆化优化什么时候会适得其反？",
+    "answer": "memo、useMemo 或 computed 也有比较和缓存维护成本，若计算很轻或依赖经常变化，收益可能为负。应先用 profiling 证明重复计算是瓶颈，并保持依赖完整避免陈旧数据。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "memo、useMemo 或 computed 也有比较和缓存维护成本，若计算很轻或依赖经常变化，收益可能为负",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“记忆化优化什么时候会适得其反”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-40",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "工程化"
+    ],
+    "title": "React 或 Vue 列表中的 key 为什么重要？",
+    "answer": "key 帮助框架判断列表项是否是同一个实体，从而复用正确的节点和组件状态。使用数组下标作为 key 在插入、删除和排序后可能复用错误节点，造成输入框内容或动画错位。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "key 帮助框架判断列表项是否是同一个实体，从而复用正确的节点和组件状态",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "什么情况下使用数组下标作为 key 仍然可以接受？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-41",
+    "category": "performance",
+    "tags": [
+      "框架性能",
+      "性能优化"
+    ],
+    "title": "Hydration 为什么可能阻塞交互？",
+    "answer": "Hydration 需要在客户端重新执行组件并绑定事件，页面越大、JS 越多，主线程占用越久。可减少首屏组件、采用局部或渐进式 hydration，并确保服务端与客户端输出一致。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "Hydration 需要在客户端重新执行组件并绑定事件，页面越大、JS 越多，主线程占用越久",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“Hydration 为什么可能阻塞交互”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-42",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "工程化"
+    ],
+    "title": "为什么 DOM 节点过多会拖慢页面？",
+    "answer": "DOM 越大，样式匹配、布局、绘制和更新传播的成本通常越高，频繁修改还可能触发更大范围的计算。应减少无意义节点、分页或虚拟化长列表，并用 Performance 面板验证实际瓶颈。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "DOM 越大，样式匹配、布局、绘制和更新传播的成本通常越高，频繁修改还可能触发更大范围的计算",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "减少 DOM 数量和减少 JavaScript 执行哪个应优先？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-43",
+    "category": "performance",
+    "tags": [
+      "可访问性",
+      "性能优化"
+    ],
+    "title": "可访问性为什么也是性能工程的一部分？",
+    "answer": "语义 HTML、合理焦点和减少无意义 DOM 既改善辅助技术体验，也常常减少脚本和样式复杂度。性能优化不能通过移除键盘操作、隐藏文本或延迟必要反馈来换分数。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "语义 HTML、合理焦点和减少无意义 DOM 既改善辅助技术体验，也常常减少脚本和样式复杂度",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“可访问性为什么也是性能工程的一部分”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-44",
+    "category": "performance",
+    "tags": [
+      "渲染",
+      "工程化"
+    ],
+    "title": "如何优化组件的重复渲染？",
+    "answer": "先用框架 Profiler 找到频繁更新和昂贵组件，再缩小状态范围、拆分组件、稳定 props 引用或缓存确有成本的计算。盲目给所有组件加 memo 可能增加比较开销并掩盖状态设计问题。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "先用框架 Profiler 找到频繁更新和昂贵组件，再缩小状态范围、拆分组件、稳定 props 引用或缓存确有成本的计算",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何证明一次组件渲染优化确实有效？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-45",
+    "category": "performance",
+    "tags": [
+      "监控",
+      "性能优化"
+    ],
+    "title": "前端性能预算应该如何制定？",
+    "answer": "为 JS、CSS、图片、关键请求数、LCP、INP 和 CLS 设定可执行阈值，并纳入 CI 或发布监控。预算要基于用户设备和业务目标，超预算时明确负责人和例外审批。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "为 JS、CSS、图片、关键请求数、LCP、INP 和 CLS 设定可执行阈值，并纳入 CI 或发布监控",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“前端性能预算应该如何制定”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-46",
+    "category": "performance",
+    "tags": [
+      "监控",
+      "性能优化"
+    ],
+    "title": "如何监控 SPA 的路由切换性能？",
+    "answer": "为路由开始、数据准备、渲染完成和可交互建立统一标记，结合 Long Task、资源和错误信息上报。不要只用页面加载事件衡量 SPA，切换失败和取消也要结束计时。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "为路由开始、数据准备、渲染完成和可交互建立统一标记，结合 Long Task、资源和错误信息上报",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“如何监控 SPA 的路由切换性能”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-47",
+    "category": "performance",
+    "tags": [
+      "监控",
+      "工程化"
+    ],
+    "title": "前端如何监控白屏和首屏可用时间？",
+    "answer": "可以记录导航开始、首个内容、关键元素出现和首次可交互时间，同时上报 JS 错误、资源失败和接口超时。SPA 还要为路由切换单独打点，不能只依赖 load 事件。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "可以记录导航开始、首个内容、关键元素出现和首次可交互时间，同时上报 JS 错误、资源失败和接口超时",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "白屏监控如何避免把用户主动停留在空状态误判为故障？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "web.dev Core Web Vitals",
+        "url": "https://web.dev/articles/vitals"
+      }
+    ]
+  },
+  {
+    "id": "performance-48",
+    "category": "performance",
+    "tags": [
+      "优化方法",
+      "性能优化"
+    ],
+    "title": "如何判断一次性能优化是否值得上线？",
+    "answer": "比较优化前后的关键指标、错误率、包体、服务端成本和用户路径完成率，并确认不同设备没有回归。收益若只在实验室出现而真实数据无变化，应回到瓶颈和样本质量重新分析。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "比较优化前后的关键指标、错误率、包体、服务端成本和用户路径完成率，并确认不同设备没有回归",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“如何判断一次性能优化是否值得上线”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "performance-49",
+    "category": "performance",
+    "tags": [
+      "性能方法",
+      "工程化"
+    ],
+    "title": "如何做一次可靠的性能对比实验？",
+    "answer": "固定页面数据、浏览器、设备和网络条件，先采集多次基线，再只改一个主要变量并重复测量。除了平均值，还要观察 P75、长任务、错误率和包体，避免偶然波动造成错误结论。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "固定页面数据、浏览器、设备和网络条件，先采集多次基线，再只改一个主要变量并重复测量",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么性能测试需要多次运行而不能只看一次 Lighthouse 分数？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "MDN Web Performance",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance"
+      }
+    ]
+  },
+  {
+    "id": "performance-50",
+    "category": "performance",
+    "tags": [
+      "性能预算",
+      "工程化"
+    ],
+    "title": "前端性能预算通常包括哪些项目？",
+    "answer": "预算可以覆盖首屏 JavaScript、CSS、图片体积、请求数、LCP、INP、CLS 和关键接口耗时。预算应绑定用户设备和业务路径，在 CI 和线上监控中持续检查，超限要能定位到具体提交。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "预算可以覆盖首屏 JavaScript、CSS、图片体积、请求数、LCP、INP、CLS 和关键接口耗时",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "性能预算超限时应该优先削减哪类资源？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "web.dev Core Web Vitals",
+        "url": "https://web.dev/articles/vitals"
+      },
+      {
+        "title": "web.dev Fast Load Times",
+        "url": "https://web.dev/fast/"
+      }
+    ]
+  }
+]

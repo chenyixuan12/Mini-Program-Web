@@ -1,0 +1,28 @@
+$color-primary: #2563eb;
+$color-text: #172033;
+$color-muted: #697386;
+$color-surface: #ffffff;
+$color-background: #f6f8fc;
+$color-mastered: #16803c;
+$color-uncertain: #c97613;
+$color-unmastered: #d14343;
+$radius-card: 24rpx;
+$page-padding: 32rpx;
+
+page {
+  color: $color-text;
+  background: $color-background;
+  font-size: 28rpx;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+  background: transparent;
+  border: 0;
+
+  &::after {
+    border: 0;
+  }
+}

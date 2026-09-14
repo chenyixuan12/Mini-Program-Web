@@ -1,0 +1,382 @@
+[
+  {
+    "id": "html-semantic",
+    "category": "html",
+    "tags": [
+      "语义化"
+    ],
+    "title": "HTML 语义化有什么价值，常用标签有哪些？",
+    "answer": "语义化是用标签本身表达内容的结构和含义，而不是只依赖 class。它让搜索引擎、读屏软件和维护者都更容易理解页面。\n\n页面主体通常使用 header、nav、main、article、section、aside、footer；按钮使用 button，列表使用 ul / ol。",
+    "keyPoints": [
+      "提高可访问性与 SEO",
+      "结构含义优先于视觉样式",
+      "一个页面通常只有一个 main"
+    ],
+    "difficulty": 1,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "html-src-href",
+    "category": "html",
+    "tags": [
+      "资源加载"
+    ],
+    "title": "script 的 src 与 link 的 href 有什么区别？",
+    "answer": "src 会把外部资源嵌入当前文档，浏览器下载并执行脚本时会影响 HTML 解析；href 用来建立当前文档与外部资源的关系，例如样式表或链接。\n\n普通 script 会阻塞解析，defer 脚本在文档解析完成后按顺序执行。",
+    "keyPoints": [
+      "src 用于嵌入资源",
+      "href 用于关联资源",
+      "defer 可避免阻塞 HTML 解析"
+    ],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "html-doctype-standards-mode", "category": "html", "tags": ["文档声明", "兼容模式"],
+    "title": "DOCTYPE 有什么作用，省略后可能发生什么？",
+    "answer": "`<!doctype html>` 告诉浏览器按 HTML 标准模式解析页面。它不是普通 HTML 标签，也不负责指定某个 HTML 版本。\n\n省略或使用某些旧声明可能触发怪异模式，使盒模型和部分布局行为与标准模式不同。",
+    "keyPoints": ["触发标准模式", "不是 HTML 标签", "避免怪异模式的兼容行为"], "difficulty": 1,
+    "followUps": ["如何在开发者工具中判断页面处于哪种文档模式？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-lang-charset-viewport", "category": "html", "tags": ["文档元数据", "移动端"],
+    "title": "HTML 文档中的 lang、charset 和 viewport 分别解决什么问题？",
+    "answer": "`lang` 声明页面主要语言，帮助读屏和搜索；`charset` 指定字符编码，通常尽早写为 UTF-8；viewport 控制移动浏览器的布局视口。\n\n常用 viewport 设置是 `width=device-width, initial-scale=1`，不应为阻止缩放而牺牲可访问性。",
+    "keyPoints": ["lang 描述内容语言", "charset 决定字符解码", "viewport 影响移动端布局视口"], "difficulty": 1,
+    "followUps": ["为什么 charset 声明应尽量靠前？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-document-head-body", "category": "html", "tags": ["文档结构"],
+    "title": "head 和 body 中通常分别放什么内容？",
+    "answer": "head 保存标题、字符集、样式、图标和 SEO 等文档元数据，通常不直接成为页面主体内容；body 保存用户可见或可交互的文档内容。\n\n脚本可按加载策略放在 head 或 body，关键是明确它是否阻塞解析以及何时执行。",
+    "keyPoints": ["head 主要承载元数据和资源关系", "body 承载文档主体", "脚本位置需结合加载策略"], "difficulty": 1,
+    "followUps": ["为什么现代项目常把带 defer 的脚本放在 head？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-block-inline-semantics", "category": "html", "tags": ["元素分类", "布局"],
+    "title": "块级元素和行内元素有什么区别，这种说法有哪些边界？",
+    "answer": "传统上，块级元素通常独占一行，行内元素随文本流排列。但 HTML 元素的内容模型与 CSS 的 display 是两套概念，任意元素都能通过 CSS 改变外部显示类型。\n\n因此不能仅凭默认视觉表现判断标签是否可以嵌套。",
+    "keyPoints": ["默认显示行为不同", "HTML 内容模型决定合法嵌套", "CSS display 可改变布局表现"], "difficulty": 1,
+    "followUps": ["为什么不能简单说 div 一定是块、span 一定是行内？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-global-attributes", "category": "html", "tags": ["属性", "基础"],
+    "title": "常见的 HTML 全局属性有哪些，使用时要注意什么？",
+    "answer": "id、class、title、hidden、tabindex、lang 和 `data-*` 等可用于大多数元素。id 在文档中应唯一；title 不能替代可见说明或无障碍名称。\n\n属性应表达稳定语义，不要把大量业务状态无约束地塞进 DOM。",
+    "keyPoints": ["全局属性适用于大多数元素", "id 应保持唯一", "title 不能作为唯一提示渠道"], "difficulty": 1,
+    "followUps": ["什么时候适合使用 `data-*` 而不是 class？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-boolean-attributes", "category": "html", "tags": ["属性", "表单"],
+    "title": "HTML 布尔属性如何判断真假？",
+    "answer": "disabled、checked、required 等布尔属性只要出现在元素上就表示真，与属性文本写成 `true` 或 `false` 无关。要表示假，应移除该属性。\n\nDOM 属性通常暴露为布尔值，模板绑定时应避免输出 `disabled=\"false\"`。",
+    "keyPoints": ["出现即为真", "字符串 false 仍表示真", "假值应通过移除属性表达"], "difficulty": 1,
+    "followUps": ["HTML 属性和 DOM property 为什么有时不同步？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-form-label", "category": "html", "tags": ["表单", "可访问性"],
+    "title": "为什么表单控件需要 label，如何正确关联？",
+    "answer": "label 为控件提供可访问名称，并扩大可点击区域。可以用 `for` 对应控件唯一 id，也可以把控件包在 label 内。\n\nplaceholder 会消失且通常对比度较弱，不能替代 label。",
+    "keyPoints": ["提供控件名称", "扩大点击范围", "for 与 id 或嵌套关联", "placeholder 不能替代 label"], "difficulty": 1,
+    "followUps": ["一个控件可以关联多个 label 吗？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-input-name-value", "category": "html", "tags": ["表单", "提交"],
+    "title": "表单控件的 name 和 value 在提交时分别起什么作用？",
+    "answer": "浏览器提交成功控件时，以 name 作为字段名、当前 value 作为字段值。没有 name 的控件通常不会进入原生表单数据。\n\ndisabled 控件也不会提交；只读控件仍会提交，具体还要结合控件类型判断。",
+    "keyPoints": ["name 是提交字段名", "value 是提交值", "无 name 或 disabled 通常不提交"], "difficulty": 1,
+    "followUps": ["readonly 与 disabled 在交互和提交上有什么区别？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-button-types", "category": "html", "tags": ["表单", "按钮"],
+    "title": "button 的 type 为什么应该显式声明？",
+    "answer": "button 在关联表单中默认类型通常是 submit，点击会触发表单提交。普通操作按钮若不声明 `type=\"button\"`，容易造成意外刷新或重复请求。\n\nsubmit 用于提交，reset 会恢复初始值但常带来误操作，通常谨慎使用。",
+    "keyPoints": ["表单内默认可能提交", "普通操作显式使用 button", "submit 触发表单校验与提交"], "difficulty": 1,
+    "followUps": ["button 的 form 属性能解决什么场景？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-anchor-vs-button", "category": "html", "tags": ["语义化", "交互"],
+    "title": "页面跳转应该用 a 还是 button？",
+    "answer": "导航到另一个地址或页面位置使用带 href 的 a；执行提交、展开、删除等当前页面操作使用 button。\n\n二者拥有不同的键盘行为、浏览器菜单和可访问语义，不应仅靠点击事件互相模拟。",
+    "keyPoints": ["导航使用链接", "操作使用按钮", "原生语义自带正确键盘行为"], "difficulty": 1,
+    "followUps": ["没有 href 的 a 为什么不适合作为按钮？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-image-alt", "category": "html", "tags": ["图片", "可访问性"],
+    "title": "img 的 alt 应该如何编写，什么时候使用空字符串？",
+    "answer": "alt 应表达图片在当前上下文中的用途或等价信息，而不是机械描述像素。纯装饰图片使用 `alt=\"\"`，让读屏忽略；信息图片则给出简洁替代文本。\n\n图片已由相邻文字完整说明时，也可考虑空 alt，避免重复朗读。",
+    "keyPoints": ["按上下文描述用途", "装饰图片使用空 alt", "避免与相邻文本重复"], "difficulty": 1,
+    "followUps": ["复杂图表的详细说明应该放在哪里？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-list-semantics", "category": "html", "tags": ["列表", "语义化"],
+    "title": "ul、ol 和 dl 分别适合什么内容？",
+    "answer": "ul 表示顺序不重要的一组项目，ol 表示次序有意义的项目，dl 表示术语与描述或名称与值的分组。\n\n不要只为默认缩进或圆点选择列表类型，视觉样式可由 CSS 调整。",
+    "keyPoints": ["ul 表示无序集合", "ol 表示有序步骤或排名", "dl 表示名称与描述关系"], "difficulty": 1,
+    "followUps": ["导航菜单为什么通常可以使用 ul？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-table-semantics", "category": "html", "tags": ["表格", "可访问性"],
+    "title": "如何用语义化 HTML 编写可访问的数据表格？",
+    "answer": "数据表使用 table，并用 caption 给出表名、th 表示表头、thead/tbody/tfoot 划分区域。简单表格可用 th 的 scope 指明行头或列头。\n\n表格用于二维数据关系，不应作为通用页面布局工具。",
+    "keyPoints": ["caption 描述表格主题", "th 与 scope 建立表头关系", "表格只用于表格数据"], "difficulty": 1,
+    "followUps": ["复杂多级表头如何建立单元格关联？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-details-summary", "category": "html", "tags": ["原生组件", "交互"],
+    "title": "details 和 summary 适合解决什么交互？",
+    "answer": "details 表示可展开的补充内容，summary 是其可见标题，浏览器默认提供展开状态、键盘操作和基础语义。\n\n它适合 FAQ 或次要详情；若交互需要复杂焦点管理和模态行为，应选择更合适的组件。",
+    "keyPoints": ["提供原生折叠交互", "summary 是触发标题", "open 属性反映展开状态"], "difficulty": 1,
+    "followUps": ["如何监听 details 的展开状态变化？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-form-submission-process", "category": "html", "tags": ["表单", "HTTP"],
+    "title": "浏览器原生表单提交时会经历哪些关键步骤？",
+    "answer": "用户激活提交按钮后，浏览器先进行约束校验，收集成功控件，再按 method 与 enctype 编码并导航或发送请求。GET 通常把字段放入查询串，POST 把数据放入请求体。\n\n监听 submit 事件比监听按钮 click 更完整，因为回车等操作也能触发提交。",
+    "keyPoints": ["先约束校验", "只收集成功控件", "编码取决于 method 与 enctype", "应围绕 submit 事件处理"], "difficulty": 2,
+    "followUps": ["上传文件时为什么需要 multipart/form-data？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-constraint-validation", "category": "html", "tags": ["表单", "校验"],
+    "title": "HTML 原生表单校验能做什么，为什么不能替代服务端校验？",
+    "answer": "required、min、max、pattern 和输入类型可在提交前检查常见约束，ValidityState 与 `checkValidity()` 可供脚本读取。\n\n客户端规则可以被绕过，且无法确认业务权限和数据库状态，所以服务端必须独立验证所有输入。",
+    "keyPoints": ["声明式处理常见约束", "可通过 ValidityState 检查原因", "服务端仍需完整校验"], "difficulty": 2,
+    "followUps": ["novalidate 和 formnovalidate 有什么区别？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-input-autocomplete", "category": "html", "tags": ["表单", "用户体验", "安全"],
+    "title": "autocomplete 属性应该如何使用？",
+    "answer": "autocomplete 用标准令牌描述字段含义，如 name、email、current-password、new-password 和 one-time-code，帮助浏览器和密码管理器正确填充。\n\n不能把 `autocomplete=\"off\"` 当成安全机制；敏感数据保护依赖传输、存储和权限控制。",
+    "keyPoints": ["用语义令牌描述字段", "改善自动填充与可访问性", "关闭自动完成不是安全边界"], "difficulty": 2,
+    "followUps": ["登录密码和注册新密码应分别使用哪个令牌？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-responsive-image-srcset-sizes", "category": "html", "tags": ["图片", "响应式", "性能"],
+    "title": "srcset 和 sizes 如何让浏览器选择合适的响应式图片？",
+    "answer": "srcset 提供候选资源及宽度或像素密度描述符，sizes 描述图片在不同条件下预计占用的 CSS 宽度。浏览器结合设备像素比、视口和网络策略选择资源。\n\n使用宽度描述符时通常需要正确设置 sizes，否则浏览器会按默认假设选择，可能下载过大图片。",
+    "keyPoints": ["srcset 声明资源候选", "sizes 描述展示宽度", "最终选择权在浏览器"], "difficulty": 2,
+    "followUps": ["1x/2x 描述符与 480w/960w 描述符适用场景有何不同？"],
+    "references": [{"title": "MDN Responsive images", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-picture-art-direction", "category": "html", "tags": ["图片", "响应式"],
+    "title": "picture 元素与 img 的 srcset 有什么分工？",
+    "answer": "srcset 主要让浏览器在同一图像的不同尺寸中选择；picture 可按 media 或 type 提供不同裁切、构图或格式。\n\npicture 内仍必须保留 img 作为回退和实际图片元素，alt 也写在 img 上。",
+    "keyPoints": ["picture 支持艺术指导", "source 可按媒体条件或格式选择", "img 是必需回退并承载 alt"], "difficulty": 2,
+    "followUps": ["AVIF/WebP 回退结构应如何组织？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-native-lazy-loading", "category": "html", "tags": ["图片", "性能"],
+    "title": "图片和 iframe 的原生懒加载应该如何使用？",
+    "answer": "`loading=\"lazy\"` 提示浏览器延迟加载视口外资源，适合非首屏图片和 iframe。首屏关键图片通常不应懒加载，否则可能拖慢 LCP。\n\n为图片声明 width 与 height 或 aspect-ratio，可在资源到达前预留空间并减少布局偏移。",
+    "keyPoints": ["非首屏资源适合 lazy", "首屏关键资源避免懒加载", "预留尺寸降低 CLS"], "difficulty": 2,
+    "followUps": ["为什么原生 lazy 的触发距离不能作为业务逻辑依赖？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-script-async-defer-module", "category": "html", "tags": ["脚本", "资源加载"],
+    "title": "普通 script、async、defer 和 type=module 的执行时机有何区别？",
+    "answer": "普通外链脚本通常阻塞解析；async 并行下载，下载完立即执行且不保证顺序；defer 并行下载，在解析完成后按文档顺序执行。\n\n模块脚本默认具有类似 defer 的延迟执行特性，并支持依赖图；动态 import 则按需加载模块。",
+    "keyPoints": ["普通脚本可能阻塞解析", "async 不保证顺序", "defer 保序且解析后执行", "模块脚本默认延迟"], "difficulty": 2,
+    "followUps": ["DOMContentLoaded 会等待哪些脚本？"],
+    "references": [{"title": "MDN script element", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-preload-prefetch-preconnect", "category": "html", "tags": ["资源提示", "性能"],
+    "title": "preload、prefetch 和 preconnect 应该如何选择？",
+    "answer": "preload 提前获取当前页面很快会使用的高优先资源；prefetch 通常提示获取未来导航可能使用的低优先资源；preconnect 提前建立到关键源的连接。\n\n资源提示是性能工具而非越多越好，错误的 as、跨域属性或过量预加载会竞争带宽。",
+    "keyPoints": ["preload 面向当前导航", "prefetch 面向潜在后续导航", "preconnect 提前建连", "需控制数量并正确标注 as"], "difficulty": 2,
+    "followUps": ["预加载字体时为什么经常需要 crossorigin？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-iframe-security", "category": "html", "tags": ["iframe", "安全"],
+    "title": "嵌入第三方 iframe 时需要考虑哪些安全与性能问题？",
+    "answer": "第三方 iframe 会引入独立文档、网络与脚本开销，也可能申请权限、导航顶层页面或弹窗。应按需设置 sandbox、allow、referrerpolicy 和 loading，并限制可信来源。\n\n跨源 iframe 受同源策略限制，父子页面需要通过受控的 postMessage 通信。",
+    "keyPoints": ["最小化 iframe 权限", "使用 sandbox 与 Permissions Policy", "跨源通信校验来源", "非首屏可考虑懒加载"], "difficulty": 2,
+    "followUps": ["接收 postMessage 时为什么要校验 origin 和消息结构？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-iframe-sandbox", "category": "html", "tags": ["iframe", "安全"],
+    "title": "iframe 的 sandbox 属性如何限制嵌入内容？",
+    "answer": "空 sandbox 会启用一组严格限制，包括脚本、表单、弹窗和同源能力；再通过 allow-scripts、allow-forms 等令牌逐项放开。\n\n对同源内容同时允许脚本和 allow-same-origin 可能让其移除 sandbox，因此不能把不当组合视为可靠隔离。",
+    "keyPoints": ["默认全部限制再按需放行", "令牌遵循最小权限", "同源加脚本组合需特别谨慎"], "difficulty": 2,
+    "followUps": ["allow-same-origin 的含义为什么不是“只允许同源页面”？"],
+    "references": [{"title": "MDN iframe sandbox", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#sandbox"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-aria-first-rule", "category": "html", "tags": ["ARIA", "可访问性"],
+    "title": "为什么通常应优先使用原生 HTML，而不是给 div 添加 ARIA role？",
+    "answer": "原生 button、input、nav 等自带角色、状态、键盘操作和平台可访问性映射。ARIA 主要补充缺失的语义，不会自动增加行为。\n\n给 div 写 role=button 后，仍需自行实现焦点、Enter/Space 激活、禁用状态等细节。",
+    "keyPoints": ["原生元素同时提供语义与行为", "ARIA 不改变原生交互", "自定义控件维护成本高"], "difficulty": 2,
+    "followUps": ["ARIA 属性会直接改变元素样式或事件行为吗？"],
+    "references": [{"title": "W3C First Rule of ARIA", "url": "https://www.w3.org/TR/using-aria/#rule1"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-tabindex-focus-order", "category": "html", "tags": ["焦点", "可访问性"],
+    "title": "tabindex 的 0、-1 和正数分别表示什么？",
+    "answer": "0 让元素进入按 DOM 顺序排列的顺序焦点导航；-1 允许脚本聚焦但不进入 Tab 顺序；正数创建人为优先级，维护困难且容易破坏直觉。\n\n通常使用原生可聚焦元素和自然 DOM 顺序，避免正 tabindex。",
+    "keyPoints": ["0 加入自然 Tab 顺序", "-1 仅支持程序聚焦", "正数会重排焦点顺序，应避免"], "difficulty": 2,
+    "followUps": ["模态框打开和关闭时应如何管理焦点？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-keyboard-accessibility", "category": "html", "tags": ["键盘", "可访问性"],
+    "title": "实现键盘可访问交互时需要检查哪些要点？",
+    "answer": "所有操作应能通过键盘到达和触发，焦点顺序与视觉顺序一致，并始终有清晰焦点指示。自定义复合组件还需按对应模式实现方向键、Escape 等行为。\n\n不要用 `outline: none` 移除焦点样式，除非提供等价且清晰的替代。",
+    "keyPoints": ["操作可聚焦且可触发", "焦点顺序符合阅读顺序", "焦点指示清晰", "复杂组件遵循既定键盘模式"], "difficulty": 2,
+    "followUps": ["`:focus-visible` 解决了什么体验问题？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-heading-landmarks", "category": "html", "tags": ["标题", "可访问性", "语义化"],
+    "title": "标题层级和 landmark 应该如何组织页面结构？",
+    "answer": "h1 到 h6 表达内容层级，级别应反映结构而非字号；main、nav、header、footer、aside 等 landmark 帮助辅助技术快速导航。\n\n同类 landmark 多次出现时应提供可区分名称，页面视觉样式由 CSS 负责。",
+    "keyPoints": ["标题用于建立内容大纲", "不要为字号选择标题级别", "landmark 支持区域导航", "重复区域需要可区分名称"], "difficulty": 2,
+    "followUps": ["多个 nav 如何为读屏用户提供可区分名称？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-hidden-inert-aria-hidden", "category": "html", "tags": ["可见性", "可访问性"],
+    "title": "hidden、aria-hidden 和 inert 的作用有什么区别？",
+    "answer": "hidden 通常让元素不渲染；aria-hidden 只把元素及其后代从可访问性树中隐藏，不阻止视觉显示或焦点；inert 会使子树不可交互、不可聚焦，并从可访问性树排除。\n\n不能在仍可获得焦点的区域上随意使用 aria-hidden。",
+    "keyPoints": ["hidden 控制呈现", "aria-hidden 只影响辅助技术", "inert 禁止整棵子树交互", "隐藏策略需同步视觉与焦点"], "difficulty": 2,
+    "followUps": ["打开模态框时 inert 可以如何隔离背景内容？"],
+    "references": [{"title": "MDN inert global attribute", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-data-attributes", "category": "html", "tags": ["属性", "DOM"],
+    "title": "data-* 属性适合存放什么数据，如何在脚本中读取？",
+    "answer": "data-* 适合附加与元素相关、需要在标记与脚本间传递的少量自定义数据，可通过 `element.dataset` 读取。属性名会从连字符形式映射为驼峰键。\n\n复杂状态应由应用数据模型管理，敏感信息也不能因写在 data 属性中而获得保护。",
+    "keyPoints": ["用于元素相关的自定义元数据", "通过 dataset 访问", "值本质上是字符串", "不用于敏感或大型状态"], "difficulty": 2,
+    "followUps": ["`data-user-id` 在 dataset 中对应哪个属性名？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-template-element", "category": "html", "tags": ["模板", "DOM"],
+    "title": "template 元素为什么不会直接渲染，它适合什么场景？",
+    "answer": "template 的子节点保存在惰性的 DocumentFragment 中，不参与当前文档渲染，脚本可通过 `template.content` 克隆后插入。\n\n它适合保存可复用的原生 DOM 结构，也是 Web Components 声明内部标记的常见方式。",
+    "keyPoints": ["内容默认不渲染", "通过 content 获取 DocumentFragment", "克隆后才进入活动文档"], "difficulty": 2,
+    "followUps": ["为什么重复使用时通常要 cloneNode(true)？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-media-video-audio", "category": "html", "tags": ["媒体", "可访问性"],
+    "title": "使用 video 和 audio 时需要考虑哪些回退与体验问题？",
+    "answer": "可用多个 source 提供浏览器支持的编码格式，并在元素内容中提供无法播放时的回退说明。视频应提供字幕或文字替代，自动播放需遵循浏览器策略并避免突兀声音。\n\npreload 只是提示，浏览器可能根据环境调整加载策略。",
+    "keyPoints": ["多 source 提供格式回退", "提供字幕或替代内容", "有声自动播放通常受限", "preload 不是强制指令"], "difficulty": 2,
+    "followUps": ["muted 为什么会影响自动播放策略？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-track-captions", "category": "html", "tags": ["媒体", "字幕", "可访问性"],
+    "title": "track 元素可以为媒体提供哪些文本轨道？",
+    "answer": "track 可加载 WebVTT 文本轨道，kind 可表示字幕、听障字幕、描述、章节或元数据。srclang 与 label 帮助用户区分语言，default 可指定默认轨道。\n\n字幕不仅是语音转写，还应在 captions 中表达影响理解的重要非语音声音。",
+    "keyPoints": ["使用 WebVTT 轨道", "kind 描述轨道用途", "语言与标签应明确", "captions 包含必要声音信息"], "difficulty": 2,
+    "followUps": ["subtitles 与 captions 的受众和内容有何不同？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-meta-csp", "category": "html", "tags": ["安全", "CSP"],
+    "title": "通过 meta 配置 CSP 与通过响应头配置有什么区别？",
+    "answer": "CSP 最适合由 HTTP 响应头尽早发送，可覆盖完整策略能力。meta 的 http-equiv 可在无法控制响应头时提供部分策略，但只对它之后的内容生效，且不支持所有指令。\n\n生产环境应优先响应头，并先用 Report-Only 观察违规再收紧。",
+    "keyPoints": ["响应头更早且能力完整", "meta 只影响其后内容", "部分指令不支持 meta", "策略应逐步收紧"], "difficulty": 2,
+    "followUps": ["为什么 CSP 不能只依赖域名白名单？"],
+    "references": [{"title": "MDN CSP guide", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-referrer-policy", "category": "html", "tags": ["隐私", "安全"],
+    "title": "referrerpolicy 如何控制页面跳转和资源请求携带的来源信息？",
+    "answer": "Referrer Policy 决定 Referer 请求头发送完整 URL、仅源信息还是完全不发送，可在响应头、meta 或单个元素上设置。\n\n现代常见默认策略会在跨源时减少路径信息，但敏感数据仍不应放入 URL。元素级策略可用于更精细控制。",
+    "keyPoints": ["控制 Referer 泄露范围", "可设置全局或元素级策略", "跨源通常应减少信息", "URL 不应承载敏感数据"], "difficulty": 2,
+    "followUps": ["strict-origin-when-cross-origin 的核心行为是什么？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-link-rel-security", "category": "html", "tags": ["链接", "安全"],
+    "title": "使用 target=_blank 打开链接时需要注意什么？",
+    "answer": "新页面若能通过 `window.opener` 控制来源页，会带来反向标签劫持风险。现代浏览器通常为 `_blank` 隐式提供 noopener 行为，但显式写 `rel=\"noopener\"` 能清楚表达意图并照顾旧环境。\n\n`noreferrer` 还会阻止发送 Referer，是否使用取决于业务归因与隐私需求。",
+    "keyPoints": ["关注 window.opener 风险", "noopener 切断打开页引用", "noreferrer 额外隐藏来源", "安全与归因需求需权衡"], "difficulty": 2,
+    "followUps": ["noopener 和 noreferrer 的效果有什么区别？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-dialog-element", "category": "html", "tags": ["原生组件", "模态框", "可访问性"],
+    "title": "原生 dialog 的 show、showModal 和 close 有什么区别？",
+    "answer": "show() 打开非模态对话框，showModal() 将其放入 top layer 并让页面其余区域不可交互，close() 关闭并可设置 returnValue。\n\n原生模态提供焦点与 Escape 关闭等基础行为，但应用仍需设置清晰标题、初始焦点和关闭入口。",
+    "keyPoints": ["showModal 创建模态交互", "模态框进入 top layer", "close 可返回结果", "仍需设计名称和焦点"], "difficulty": 2,
+    "followUps": ["为什么不建议只靠点击 backdrop 关闭关键确认框？"],
+    "references": [{"title": "MDN dialog element", "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-popover-api", "category": "html", "tags": ["Popover", "原生组件"],
+    "title": "HTML Popover API 适合什么场景，与 dialog 有何区别？",
+    "answer": "popover 适合菜单、提示面板等非模态浮层，可通过 popovertarget 建立声明式控制，并进入 top layer，自动类浮层通常支持轻触关闭。\n\ndialog 更适合需要聚焦决策的对话框，尤其是模态交互；二者应按语义和焦点需求选择。",
+    "keyPoints": ["popover 面向非模态浮层", "可声明式关联触发器", "top layer 避免层叠遮挡", "模态任务优先 dialog"], "difficulty": 2,
+    "followUps": ["popover=auto 与 manual 的关闭行为有何不同？"],
+    "references": [{"title": "MDN Popover API", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Popover_API"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-parser-error-recovery", "category": "html", "tags": ["解析器", "原理"],
+    "title": "HTML 解析器为什么能容忍错误标记，这会带来什么工程问题？",
+    "answer": "HTML 规范定义了确定性的分词、树构建和错误恢复算法，浏览器会为遗漏标签或非法嵌套补全、重排节点，而不是直接停止。\n\n容错不等于源码正确；修复后的 DOM 可能与模板预期不同，引发选择器失效、事件绑定偏差或服务端水合不一致。",
+    "keyPoints": ["错误恢复由算法定义", "浏览器可能自动补标签或重排节点", "最终 DOM 不一定等于源码结构", "应使用校验和实际 DOM 调试"], "difficulty": 3,
+    "followUps": ["为什么 table 内的非法节点可能被移动到表格外？"],
+    "references": [{"title": "WHATWG HTML parsing", "url": "https://html.spec.whatwg.org/multipage/parsing.html"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-speculative-parser", "category": "html", "tags": ["解析器", "性能"],
+    "title": "浏览器的预加载扫描器如何改善 HTML 加载性能？",
+    "answer": "主解析器被同步脚本阻塞时，预加载扫描器仍可向前发现 img、link、script 等资源并尽早发起请求。它降低发现关键资源的延迟，但不能执行依赖脚本生成的标记。\n\n把关键资源写在初始 HTML 中、避免用脚本晚插入，通常更利于扫描器发现。",
+    "keyPoints": ["与主解析并行发现资源", "降低阻塞期间的资源发现延迟", "不能预测脚本动态生成内容", "关键资源应尽早出现在标记中"], "difficulty": 3,
+    "followUps": ["为什么通过 JavaScript 动态插入首屏图片可能拖慢 LCP？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-domcontentloaded-load-timing", "category": "html", "tags": ["生命周期", "脚本"],
+    "title": "DOMContentLoaded 与 load 事件的触发条件有什么区别？",
+    "answer": "DOMContentLoaded 在 HTML 完成解析且 defer 与模块脚本执行后触发，不等待普通图片等子资源；load 要等待文档及其依赖资源完成加载。\n\nasync 脚本与样式对时序的影响需结合规范判断，业务初始化通常不必等到所有图片加载。",
+    "keyPoints": ["DOMContentLoaded 关注 DOM 可用", "会等待 defer 和模块脚本", "load 等待依赖资源", "初始化时机按真实依赖选择"], "difficulty": 3,
+    "followUps": ["脚本在 DOMContentLoaded 之后动态加载时如何安全初始化？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-custom-elements-lifecycle", "category": "html", "tags": ["Web Components", "自定义元素"],
+    "title": "Custom Elements 的定义和生命周期回调如何工作？",
+    "answer": "通过 customElements.define 注册带连字符名称的类，浏览器会升级匹配元素。connectedCallback、disconnectedCallback 和 attributeChangedCallback 分别处理连接、移除与被观察属性变化。\n\n构造函数中应保持轻量，DOM 相关初始化通常放在连接回调，并保证重复连接时不会重复注册副作用。",
+    "keyPoints": ["名称必须包含连字符", "注册后已有元素可被升级", "生命周期可能多次调用", "副作用需要可清理且幂等"], "difficulty": 3,
+    "followUps": ["observedAttributes 如何决定哪些属性触发回调？"],
+    "references": [{"title": "MDN Using custom elements", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-shadow-dom-slots", "category": "html", "tags": ["Web Components", "Shadow DOM"],
+    "title": "Shadow DOM 的封装边界和 slot 分发机制是什么？",
+    "answer": "Shadow DOM 为组件建立独立节点树和样式作用域，外部普通选择器不会直接穿透；事件则可能跨边界传播并重定向 target。slot 把宿主的 light DOM 子节点分发到影子树插槽。\n\n封装不是安全边界，开放 shadow root 仍可被脚本访问。",
+    "keyPoints": ["DOM 与样式具有封装边界", "slot 分发 light DOM", "事件跨边界会重定向", "Shadow DOM 不提供安全隔离"], "difficulty": 3,
+    "followUps": ["composedPath() 为什么比 event.target 更能反映真实传播路径？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-form-encoding-successful-controls", "category": "html", "tags": ["表单", "编码", "原理"],
+    "title": "表单的成功控件和 enctype 如何共同决定请求数据？",
+    "answer": "提交时只有满足条件的成功控件进入数据集，例如有 name、未禁用，复选框需被选中，提交按钮只包含实际激活的那个。\n\n默认 urlencoded 适合普通字段；multipart/form-data 保留分段并支持文件；text/plain 主要用于调试，不适合常规接口。",
+    "keyPoints": ["并非所有控件都会提交", "同名字段可产生多个值", "文件上传使用 multipart", "编码方式需与服务端解析一致"], "difficulty": 3,
+    "followUps": ["未选中的 checkbox 为什么不会出现在 FormData 中？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-custom-validation-accessibility", "category": "html", "tags": ["表单", "校验", "可访问性"],
+    "title": "自定义表单校验错误时，如何兼顾原生约束和可访问性？",
+    "answer": "可用 setCustomValidity 设置控件的验证消息，并在值修正后清空；错误文案应可见且通过 aria-describedby 等方式与控件关联。\n\n提交失败后将焦点或摘要引导到第一个错误，不能只用红色边框表示失败；异步业务校验还需处理竞态。",
+    "keyPoints": ["setCustomValidity 参与原生校验", "修正后及时清空错误", "错误消息需与控件关联", "颜色不是唯一提示"], "difficulty": 3,
+    "followUps": ["异步用户名查重为什么不能完全依赖原生 required？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-accessible-name", "category": "html", "tags": ["可访问性", "无障碍名称"],
+    "title": "浏览器如何为交互元素计算可访问名称？",
+    "answer": "可访问名称可来自元素内容、关联 label、alt、aria-labelledby 或 aria-label，具体优先级由名称计算规则决定。aria-labelledby 能组合现有可见文本，通常比重复写 aria-label 更易保持一致。\n\n名称回答“这是什么”，description 则补充说明，二者不可混为一谈。",
+    "keyPoints": ["名称来源有明确优先级", "优先复用可见标签", "aria-labelledby 可组合多个节点", "名称与描述职责不同"], "difficulty": 3,
+    "followUps": ["为什么 aria-label 可能覆盖按钮原有文本名称？"],
+    "references": [{"title": "W3C Accessible Name and Description Computation", "url": "https://www.w3.org/TR/accname-1.2/"}], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-hydration-invalid-markup", "category": "html", "tags": ["SSR", "水合", "解析器"],
+    "title": "为什么非法 HTML 嵌套容易导致 SSR 水合失败？",
+    "answer": "服务端输出字符串后，浏览器会按 HTML 树构建规则纠正非法嵌套；客户端框架若按组件树期待另一种节点结构，水合时就无法一一匹配。\n\n排查时应查看浏览器实际 DOM 而不只看响应源码，并修复如 p 内嵌块元素、table 子节点非法等结构。",
+    "keyPoints": ["浏览器会修正非法标记", "实际 DOM 可能偏离服务端字符串", "水合依赖节点结构一致", "应从源头修复嵌套"], "difficulty": 3,
+    "followUps": ["为什么 DevTools Elements 与 View Source 可能显示不同结构？"], "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "html-structured-data-jsonld", "category": "html", "tags": ["SEO", "结构化数据"],
+    "title": "页面结构化数据应如何使用，为什么不能保证搜索结果展示？",
+    "answer": "结构化数据用机器可读词汇描述页面实体，常见实现是 JSON-LD script，并应与用户可见内容保持一致。搜索引擎可借此理解页面并决定是否生成增强结果。\n\n标记正确只是资格条件，展示仍由搜索引擎根据质量、政策和查询决定，不能伪造不可见信息。",
+    "keyPoints": ["JSON-LD 与可见内容一致", "按 Schema.org 类型描述实体", "需要通过验证工具检查", "增强结果不保证出现"], "difficulty": 3,
+    "followUps": ["为什么不能在结构化数据中加入页面没有展示的评分？"],
+    "references": [{"title": "Google Search structured data intro", "url": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"}], "updatedAt": "2026-08-18"
+  }
+]

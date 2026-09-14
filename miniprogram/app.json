@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category",
+    "pages/question/question",
+    "pages/practice/practice",
+    "pages/review/review",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarTitleText": "前端八股",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#F6F8FC",
+    "backgroundColor": "#F6F8FC"
+  },
+  "tabBar": {
+    "color": "#7B8494",
+    "selectedColor": "#2563EB",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/practice/practice", "text": "刷题" },
+      { "pagePath": "pages/review/review", "text": "复习" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "defaultContentBox": true,
+      "tagNameStyleIsolation": "legacy",
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

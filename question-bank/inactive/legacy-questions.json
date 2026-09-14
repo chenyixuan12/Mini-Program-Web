@@ -1,0 +1,218 @@
+[
+  {
+    "id": "js-event-loop",
+    "category": "javascript",
+    "tags": ["异步", "事件循环"],
+    "title": "JavaScript 的事件循环中，微任务和宏任务如何执行？",
+    "answer": "同步代码先在当前调用栈执行。当前宏任务结束后，运行微任务队列直到清空；随后浏览器才有机会进行渲染并取下一个宏任务。\n\nPromise.then、queueMicrotask 属于微任务；setTimeout、I/O 回调等通常作为宏任务调度。",
+    "keyPoints": ["同步任务先执行", "每个宏任务后清空微任务", "微任务优先级高于下一宏任务"],
+    "difficulty": 2,
+    "followUps": ["为什么大量微任务会影响页面渲染？"],
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "js-closure",
+    "category": "javascript",
+    "tags": ["作用域"],
+    "title": "什么是闭包，它有什么典型应用和风险？",
+    "answer": "闭包是函数与其定义时可访问的词法作用域的组合。内部函数即使在外部函数返回后，仍可访问被引用的外部变量。\n\n它适合封装私有状态、柯里化与回调；若长期持有不再需要的大对象，会增加内存占用。",
+    "keyPoints": ["由词法作用域决定", "函数返回后仍可访问外部变量", "谨慎持有大对象"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "ts-interface-type",
+    "category": "typescript",
+    "tags": ["类型系统"],
+    "title": "interface 和 type 应如何选择？",
+    "answer": "两者都能描述对象形状。interface 支持同名声明合并，适合公共对象契约和可扩展 API；type 更适合联合、交叉、映射和条件类型等类型组合。\n\n日常项目不必机械统一，关键是让语义和扩展方式清晰。",
+    "keyPoints": ["interface 支持声明合并", "type 擅长组合类型", "两者都能描述对象"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "ts-unknown-any",
+    "category": "typescript",
+    "tags": ["类型安全"],
+    "title": "unknown 与 any 有什么区别？",
+    "answer": "any 会关闭该值上的类型检查，几乎可赋给任何类型；unknown 是安全的顶层类型，使用前必须通过 typeof、in 或自定义守卫收窄。\n\n处理接口返回值、缓存数据等不可信输入时，应优先用 unknown。",
+    "keyPoints": ["any 绕过类型检查", "unknown 使用前必须收窄", "外部输入优先 unknown"],
+    "difficulty": 1,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "ts-vs-javascript",
+    "category": "typescript",
+    "tags": ["基础", "类型系统"],
+    "title": "TypeScript 与 JavaScript 有什么区别？",
+    "answer": "TypeScript 在 JavaScript 语法之上增加了静态类型系统。编译器可以在代码运行前检查类型错误，并提供补全、重构和接口约束等开发能力。\n\n类型注解通常会在编译时被移除，最终产物仍是 JavaScript，因此浏览器和 Node.js 执行的是生成后的 JavaScript。TypeScript 不能替代运行时校验：接口响应、用户输入等外部数据仍需在运行时验证。",
+    "keyPoints": ["TypeScript 是 JavaScript 的带类型超集", "类型检查主要发生在编译阶段", "类型注解通常不会保留到运行时", "外部数据仍需运行时校验"],
+    "difficulty": 1,
+    "followUps": ["TypeScript 能避免所有运行时错误吗？", "类型擦除会带来什么限制？"],
+    "codeExample": {
+      "language": "typescript",
+      "code": "function greet(name: string): string {\n  return `Hello, ${name}`\n}\n\ngreet('TypeScript')\n// greet(42) // 编译期报错"
+    },
+    "references": [{"title": "TypeScript for the New Programmer", "url": "https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html"}],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "ts-type-overview",
+    "category": "typescript",
+    "tags": ["基础", "类型系统"],
+    "title": "TypeScript 中常见的类型有哪些，应如何分类？",
+    "answer": "TypeScript 可以描述 JavaScript 的 string、number、boolean、bigint、symbol、null、undefined、对象、数组和函数等运行时值。\n\n在此之上，它还提供联合类型、交叉类型、元组、枚举、字面量类型，以及 any、unknown、void、never 等静态类型工具。它们不都是 JavaScript 的运行时“数据类型”，而是编译器用来描述和约束值的方式。",
+    "keyPoints": ["区分运行时值类型与静态类型工具", "数组和元组的长度与元素约束不同", "unknown 使用前必须收窄", "never 表示不可能出现的值"],
+    "difficulty": 1,
+    "followUps": ["void、undefined 和 never 在函数返回值中有什么区别？", "元组与普通数组的类型检查有何不同？"],
+    "references": [{"title": "Everyday Types", "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"}],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "ts-type-composition",
+    "category": "typescript",
+    "tags": ["高级类型", "类型运算"],
+    "title": "TypeScript 如何从已有类型组合出新类型？",
+    "answer": "联合类型 A | B 表示值满足其中至少一种类型，交叉类型 A & B 表示同时满足两种类型。keyof 可取得对象键的联合类型，T[K] 可按键读取属性类型。\n\n映射类型用于遍历属性并改变其修饰或值类型；条件类型根据类型关系选择分支。Partial、Readonly、Pick 等内置工具类型就是这些能力的常见应用。",
+    "keyPoints": ["联合类型表示多种可能", "交叉类型合并约束", "keyof 与索引访问类型可关联键和值", "映射类型批量转换属性", "条件类型根据类型关系选择结果"],
+    "difficulty": 3,
+    "followUps": ["联合类型为什么通常需要类型收窄？", "条件类型在什么情况下会对联合类型分发？"],
+    "codeExample": {
+      "language": "typescript",
+      "code": "type User = { id: number; name: string }\ntype UserKey = keyof User // 'id' | 'name'\ntype UserPatch = Partial<User>\ntype Result<T> = T extends Error ? 'failed' : 'success'"
+    },
+    "references": [{"title": "Creating Types from Types", "url": "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html"}],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "ts-generics",
+    "category": "typescript",
+    "tags": ["泛型", "类型约束"],
+    "title": "TypeScript 泛型解决了什么问题，如何约束泛型参数？",
+    "answer": "泛型用类型参数表达输入、输出或多个成员之间的类型关系，让同一份实现适用于多种类型，同时保留具体类型信息。相比直接使用 any，泛型不会丢失调用处的类型。\n\n当实现依赖某些能力时，可以用 extends 添加约束；keyof 常用于把参数限制为对象真实存在的属性名。约束应只包含实现确实需要的最小能力。",
+    "keyPoints": ["泛型复用实现并保留类型信息", "类型参数用于表达值之间的关系", "extends 限制可接受的类型", "keyof 可约束对象属性名"],
+    "difficulty": 2,
+    "followUps": ["什么时候应该直接使用联合类型而不是泛型？", "为什么泛型约束不应写得过宽？"],
+    "codeExample": {
+      "language": "typescript",
+      "code": "function getValue<T, K extends keyof T>(object: T, key: K): T[K] {\n  return object[key]\n}\n\nconst user = { id: 1, name: 'Ada' }\nconst name = getValue(user, 'name') // string"
+    },
+    "references": [{"title": "Generics", "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html"}],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "ts-modules-namespaces",
+    "category": "typescript",
+    "tags": ["模块化", "命名空间"],
+    "title": "TypeScript 中模块与命名空间有什么区别？",
+    "answer": "包含顶层 import 或 export 的文件会被视为模块。模块有明确的依赖关系，配合 ES Module 和打包工具，可以跨文件组织代码并进行静态分析。\n\nnamespace 主要在全局作用域中组织相关名称，历史上也称“内部模块”。现代应用代码通常优先使用 ES Module；namespace 更多见于全局脚本或某些声明文件，不应作为常规模块系统的替代品。",
+    "keyPoints": ["顶层 import/export 使文件成为模块", "模块显式声明跨文件依赖", "namespace 用于组织全局名称", "现代应用代码优先使用 ES Module"],
+    "difficulty": 2,
+    "followUps": ["没有 import 或 export 的 TypeScript 文件可能产生什么问题？", "import type 有什么作用？"],
+    "references": [
+      {"title": "Modules - Theory", "url": "https://www.typescriptlang.org/docs/handbook/modules/theory.html"},
+      {"title": "Namespaces", "url": "https://www.typescriptlang.org/docs/handbook/namespaces.html"}
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "react-state-batch",
+    "category": "react",
+    "tags": ["状态管理"],
+    "title": "React 为什么 state 更新后不能立刻读到新值？",
+    "answer": "state setter 请求 React 安排一次更新，当前渲染中的 state 是一个快照，不会在同一段同步代码里改变。React 会对同一事件中的更新进行批处理。\n\n依赖前一状态计算下一状态时使用函数式更新，例如 setCount(value => value + 1)。",
+    "keyPoints": ["state 是渲染快照", "更新由 React 调度", "依赖旧值时使用函数式更新"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "react-effect",
+    "category": "react",
+    "tags": ["Hooks"],
+    "title": "useEffect 的依赖数组应该如何理解？",
+    "answer": "Effect 在渲染提交到屏幕后执行。依赖数组列出 Effect 读取的响应式值；这些值变化时，React 会先执行旧清理函数，再运行新 Effect。\n\n不要为了消除依赖而忽略 lint 提示，应调整 Effect 设计或稳定函数引用。",
+    "keyPoints": ["Effect 在提交后执行", "依赖反映读取的响应式值", "清理先于下一次执行"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "browser-render",
+    "category": "browser",
+    "tags": ["渲染"],
+    "title": "浏览器从 HTML 到页面绘制经历了哪些关键步骤？",
+    "answer": "浏览器解析 HTML 构建 DOM，解析 CSS 构建 CSSOM，二者形成渲染树。接着进行布局计算几何位置，再进行绘制与合成。\n\n改变几何属性通常可能触发布局；仅改变 transform、opacity 往往更容易在合成阶段完成。",
+    "keyPoints": ["DOM + CSSOM 形成渲染树", "布局决定几何信息", "绘制与合成是后续步骤"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "browser-cache",
+    "category": "browser",
+    "tags": ["缓存"],
+    "title": "强缓存与协商缓存有什么区别？",
+    "answer": "强缓存命中时浏览器不发送请求，常由 Cache-Control: max-age 控制；强缓存过期后会发起协商请求，携带 ETag 或 Last-Modified，服务端可返回 304 复用本地内容。\n\n带内容哈希的静态资源通常可配置较长强缓存，HTML 则需更谨慎。",
+    "keyPoints": ["强缓存不发请求", "协商缓存可能返回 304", "哈希静态资源适合长缓存"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "network-tcp",
+    "category": "network",
+    "tags": ["TCP"],
+    "title": "TCP 三次握手为什么不能只进行两次？",
+    "answer": "三次握手让双方都确认收发能力，并让服务端确认客户端收到自己的初始序列号。若只有两次，延迟的旧连接请求可能使服务端错误建立连接。\n\n握手完成后，双方同步初始序列号，才能可靠地传输字节流。",
+    "keyPoints": ["确认双向收发能力", "同步初始序列号", "避免旧请求造成误连接"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "network-cors",
+    "category": "network",
+    "tags": ["安全"],
+    "title": "什么是跨域，CORS 预检请求在什么情况下出现？",
+    "answer": "跨域是浏览器同源策略对不同协议、域名或端口的限制。服务端通过 Access-Control-Allow-Origin 等响应头授权跨源读取。\n\n非简单请求会先发送 OPTIONS 预检，例如使用 PUT、DELETE，或带有自定义请求头、application/json 等情况。",
+    "keyPoints": ["同源由协议、域名、端口组成", "CORS 由服务端响应头授权", "非简单请求会预检"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "engineering-ci",
+    "category": "engineering",
+    "tags": ["CI/CD"],
+    "title": "前端 CI 流水线通常应包含哪些质量关卡？",
+    "answer": "一个基础流水线通常包括依赖安装、类型检查、lint、单元测试、构建和产物检查。合并请求可要求质量关卡全部通过，再部署到预览环境。\n\n关卡应稳定且执行足够快，避免把不稳定的端到端测试放进每次提交的阻塞路径。",
+    "keyPoints": ["类型检查与 lint 前置", "构建产物也需验证", "质量关卡要稳定快速"],
+    "difficulty": 1,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "engineering-webpack",
+    "category": "engineering",
+    "tags": ["构建"],
+    "title": "Tree Shaking 生效需要哪些条件？",
+    "answer": "Tree Shaking 依赖 ES Module 的静态结构，让构建工具能分析导入导出关系；生产模式通常还需要压缩器删除未使用代码。\n\n应避免模块顶层副作用，并通过 package.json 的 sideEffects 正确声明有副作用的文件。",
+    "keyPoints": ["依赖 ESM 静态分析", "需要删除未引用导出", "顶层副作用会影响优化"],
+    "difficulty": 3,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "performance-lcp",
+    "category": "performance",
+    "tags": ["Web Vitals"],
+    "title": "如何系统优化 LCP？",
+    "answer": "先在真实设备和性能面板中定位 LCP 元素及其加载链路。常见措施包括优化首屏图片尺寸与格式、预加载关键资源、减少阻塞 CSS/JS、缩短服务端响应时间。\n\n不要只追求单项分数，应确认优化确实改善真实用户的最大内容绘制。",
+    "keyPoints": ["先定位 LCP 元素", "缩短关键资源加载链", "关注真实用户数据"],
+    "difficulty": 2,
+    "updatedAt": "2026-08-12"
+  },
+  {
+    "id": "performance-debounce",
+    "category": "performance",
+    "tags": ["优化"],
+    "title": "防抖和节流的区别及适用场景是什么？",
+    "answer": "防抖会在连续触发停止一段时间后执行一次，适合搜索输入和窗口尺寸变化；节流会限制一段时间内最多执行一次，适合滚动监听和拖拽过程。\n\n两者都要考虑尾部是否需要补一次执行，以及组件卸载时取消定时器。",
+    "keyPoints": ["防抖等待停止触发", "节流限制执行频率", "注意尾调用与清理"],
+    "difficulty": 1,
+    "updatedAt": "2026-08-12"
+  }
+]

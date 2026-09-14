@@ -1,0 +1,1386 @@
+[
+  {
+    "id": "engineering-01",
+    "category": "engineering",
+    "tags": [
+      "工程化基础",
+      "工程化"
+    ],
+    "title": "前端工程化要解决哪些问题？",
+    "answer": "前端工程化把代码组织、依赖安装、质量检查、构建发布和协作流程标准化。目标不是堆工具，而是降低变更风险并让团队可以稳定交付。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "前端工程化把代码组织、依赖安装、质量检查、构建发布和协作流程标准化",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“前端工程化要解决哪些问题”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Modules",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"
+      },
+      {
+        "title": "npm package.json",
+        "url": "https://docs.npmjs.com/cli/v10/configuring-npm/package-json"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-02",
+    "category": "engineering",
+    "tags": [
+      "模块化",
+      "工程化"
+    ],
+    "title": "ES Module 与 CommonJS 有什么区别？",
+    "answer": "ES Module 的 import/export 语法可被静态分析，支持更可靠的 Tree Shaking；CommonJS 在运行时通过 require 加载，兼容 Node.js 历史生态但静态分析能力较弱。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "ES Module 的 import/export 语法可被静态分析，支持更可靠的 Tree Shaking；CommonJS 在运行时通过 require 加载，兼容 Node.js 历史生态但静态分析能力较弱",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“ES Module 与 CommonJS 有什么区别”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "npm package.json",
+        "url": "https://docs.npmjs.com/cli/v10/configuring-npm/package-json"
+      },
+      {
+        "title": "TypeScript tsconfig Reference",
+        "url": "https://www.typescriptlang.org/tsconfig/"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-03",
+    "category": "engineering",
+    "tags": [
+      "模块化",
+      "工程化"
+    ],
+    "title": "为什么推荐使用 ES Module 的静态导入？",
+    "answer": "静态导入让构建工具在编译阶段知道依赖关系，可以做 Tree Shaking、循环依赖提示和更准确的代码分割。动态 import 应留给确实需要按需加载的边界。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "静态导入让构建工具在编译阶段知道依赖关系，可以做 Tree Shaking、循环依赖提示和更准确的代码分割",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“为什么推荐使用 ES Module 的静态导入”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "TypeScript tsconfig Reference",
+        "url": "https://www.typescriptlang.org/tsconfig/"
+      },
+      {
+        "title": "Git Documentation",
+        "url": "https://git-scm.com/docs"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-04",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "构建工具中的开发模式和生产模式有什么差异？",
+    "answer": "开发模式强调启动速度、源码映射和快速增量更新；生产模式强调压缩、分包、缓存友好文件名和运行时体积。两者的配置目标不同，不能只把开发配置直接用于上线。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "开发模式强调启动速度、源码映射和快速增量更新；生产模式强调压缩、分包、缓存友好文件名和运行时体积",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“构建工具中的开发模式和生产模式有什么差异”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "Git Documentation",
+        "url": "https://git-scm.com/docs"
+      },
+      {
+        "title": "GitHub Actions Documentation",
+        "url": "https://docs.github.com/en/actions"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-05",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "Tree Shaking 为什么有时删除不了未使用代码？",
+    "answer": "Tree Shaking 依赖静态 ESM 和正确的副作用声明。模块顶层执行副作用、CommonJS 封装、错误的 sideEffects 配置或动态访问导出，都会让工具保守地保留代码。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "Tree Shaking 依赖静态 ESM 和正确的副作用声明",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“Tree Shaking 为什么有时删除不了未使用代码”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "GitHub Actions Documentation",
+        "url": "https://docs.github.com/en/actions"
+      },
+      {
+        "title": "OWASP Dependency-Check",
+        "url": "https://owasp.org/www-project-dependency-check/"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-06",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "代码分割应该按什么边界设计？",
+    "answer": "通常按路由、页面和低频功能做分割，并把稳定的大型公共依赖提取为共享 chunk。分割过细会增加请求和运行时开销，应该用构建分析和真实访问路径验证。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "通常按路由、页面和低频功能做分割，并把稳定的大型公共依赖提取为共享 chunk",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“代码分割应该按什么边界设计”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "OWASP Dependency-Check",
+        "url": "https://owasp.org/www-project-dependency-check/"
+      },
+      {
+        "title": "web.dev Learn Testing",
+        "url": "https://web.dev/learn/testing/"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-07",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "动态 import 的典型应用和注意事项是什么？",
+    "answer": "动态 import 返回 Promise，适合路由懒加载、编辑器和图表等低频重模块。需要处理加载失败、预加载时机和 chunk 缓存失效，不能把首屏必需代码盲目延后。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "动态 import 返回 Promise，适合路由懒加载、编辑器和图表等低频重模块",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“动态 import 的典型应用和注意事项是什么”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "web.dev Learn Testing",
+        "url": "https://web.dev/learn/testing/"
+      },
+      {
+        "title": "MDN Content Security Policy",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-08",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "source map 有哪些类型，线上如何处理？",
+    "answer": "source map 用于把压缩产物映射回源码，inline-source-map 便于开发但体积大，hidden-source-map 可供错误平台使用而不直接暴露映射地址。生产环境要控制访问权限并避免泄露源码。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "source map 用于把压缩产物映射回源码，inline-source-map 便于开发但体积大，hidden-source-map 可供错误平台使用而不直接暴露映射地址",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“source map 有哪些类型，线上如何处理”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Content Security Policy",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+      },
+      {
+        "title": "Node.js Releases",
+        "url": "https://nodejs.org/en/about/previous-releases"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-09",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "前端构建产物为什么要使用内容哈希？",
+    "answer": "文件名包含内容哈希后，内容不变的资源可以长期缓存，内容变化会生成新 URL，避免用户拿到旧文件。HTML 通常需要短缓存或协商缓存来发现最新入口文件。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "文件名包含内容哈希后，内容不变的资源可以长期缓存，内容变化会生成新 URL，避免用户拿到旧文件",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“前端构建产物为什么要使用内容哈希”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "Node.js Releases",
+        "url": "https://nodejs.org/en/about/previous-releases"
+      },
+      {
+        "title": "Semantic Versioning",
+        "url": "https://semver.org/"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-10",
+    "category": "engineering",
+    "tags": [
+      "依赖治理",
+      "工程化"
+    ],
+    "title": "package.json 中 dependencies、devDependencies 如何区分？",
+    "answer": "运行时需要的包放在 dependencies，只有本地开发、类型检查、测试和构建需要的工具放在 devDependencies。部署方式不同可能只安装生产依赖，因此错误分类会导致线上缺包。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "运行时需要的包放在 dependencies，只有本地开发、类型检查、测试和构建需要的工具放在 devDependencies",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“package.json 中 dependencies、devDependencies 如何区分”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "Semantic Versioning",
+        "url": "https://semver.org/"
+      },
+      {
+        "title": "MDN Web App Manifest",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-11",
+    "category": "engineering",
+    "tags": [
+      "依赖治理",
+      "工程化"
+    ],
+    "title": "lockfile 的作用是什么？",
+    "answer": "lockfile 固定直接和间接依赖的精确版本、解析地址及完整性校验，使不同开发机和 CI 获得可复现安装结果。升级依赖应通过包管理器更新并审查锁文件差异。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "lockfile 固定直接和间接依赖的精确版本、解析地址及完整性校验，使不同开发机和 CI 获得可复现安装结果",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“lockfile 的作用是什么”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "MDN Web App Manifest",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest"
+      },
+      {
+        "title": "SLSA Framework",
+        "url": "https://slsa.dev/"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-12",
+    "category": "engineering",
+    "tags": [
+      "依赖治理",
+      "工程化"
+    ],
+    "title": "如何处理 npm 依赖的安全漏洞？",
+    "answer": "先判断漏洞是否被实际代码路径触发，再升级直接依赖或使用兼容的 override/resolution。不能只盲目执行 force 修复，还要运行测试、构建并记录风险接受或替代方案。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "先判断漏洞是否被实际代码路径触发，再升级直接依赖或使用兼容的 override/resolution",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“如何处理 npm 依赖的安全漏洞”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "references": [
+      {
+        "title": "SLSA Framework",
+        "url": "https://slsa.dev/"
+      },
+      {
+        "title": "MDN JavaScript Modules",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"
+      }
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-13",
+    "category": "engineering",
+    "tags": [
+      "npm",
+      "工程化"
+    ],
+    "title": "npm install、npm ci 和 npm update 有什么区别？",
+    "answer": "npm install 会根据 package.json 和 lockfile 安装并可能更新锁文件；npm ci 要求锁文件存在且严格按锁文件做干净安装，适合 CI；npm update 会主动解析更高的兼容版本。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "npm install 会根据 package.json 和 lockfile 安装并可能更新锁文件；npm ci 要求锁文件存在且严格按锁文件做干净安装，适合 CI；npm update 会主动解析更高的兼容版本",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么 CI 更适合使用 npm ci？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "npm CLI Docs",
+        "url": "https://docs.npmjs.com/cli/v10/commands/npm-ci"
+      }
+    ]
+  },
+  {
+    "id": "engineering-14",
+    "category": "engineering",
+    "tags": [
+      "Webpack",
+      "工程化"
+    ],
+    "title": "Webpack 中 loader 和 plugin 分别解决什么问题？",
+    "answer": "loader 在模块加载时转换特定类型的文件，例如把 TypeScript 或 Sass 转成可处理的模块；plugin 能介入更广泛的构建生命周期，完成 HTML 生成、资源清理和分析等任务。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "loader 在模块加载时转换特定类型的文件，例如把 TypeScript 或 Sass 转成可处理的模块；plugin 能介入更广泛的构建生命周期，完成 HTML 生成、资源清理和分析等任务",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何判断一个需求应该写 loader 还是 plugin？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-15",
+    "category": "engineering",
+    "tags": [
+      "Babel",
+      "工程化"
+    ],
+    "title": "Babel 在前端工程中解决什么问题？",
+    "answer": "Babel 主要负责把新语法转换为目标环境能理解的 JavaScript，例如箭头函数、可选链和 JSX；它本身不负责补齐所有运行时 API，Promise 等能力还需要 polyfill 或降级方案。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "Babel 主要负责把新语法转换为目标环境能理解的 JavaScript，例如箭头函数、可选链和 JSX；它本身不负责补齐所有运行时 API，Promise 等能力还需要 polyfill 或降级方案",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "Babel 转译和 polyfill 的边界是什么？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Babel Documentation",
+        "url": "https://babeljs.io/docs/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-16",
+    "category": "engineering",
+    "tags": [
+      "Vite",
+      "工程化"
+    ],
+    "title": "Vite 为什么开发启动和热更新通常比传统打包器快？",
+    "answer": "Vite 开发阶段利用浏览器原生 ESM 按需提供模块，避免启动时先把整个项目打包；修改文件时只重新处理受影响模块。生产构建仍会进行完整打包和优化，不能把开发速度等同于线上产物速度。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "Vite 开发阶段利用浏览器原生 ESM 按需提供模块，避免启动时先把整个项目打包；修改文件时只重新处理受影响模块",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "Vite 生产构建为什么仍然需要 Rollup 一类的打包过程？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Vite Guide",
+        "url": "https://vite.dev/guide/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-17",
+    "category": "engineering",
+    "tags": [
+      "热更新",
+      "工程化"
+    ],
+    "title": "HMR 的工作原理是什么，为什么有时会失效？",
+    "answer": "开发服务器监听文件变化后，只向浏览器推送受影响模块的更新，运行时尝试替换模块并保留状态。模块边界不支持热替换、状态初始化有副作用或依赖链处理失败时会退回整页刷新。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "开发服务器监听文件变化后，只向浏览器推送受影响模块的更新，运行时尝试替换模块并保留状态",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何定位 HMR 失效是由模块边界还是代码副作用导致的？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      },
+      {
+        "title": "Vite Guide",
+        "url": "https://vite.dev/guide/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-18",
+    "category": "engineering",
+    "tags": [
+      "Webpack",
+      "工程化"
+    ],
+    "title": "Webpack 中 resolve.alias 和 extensions 有什么用途？",
+    "answer": "resolve.alias 为长路径或多入口提供稳定别名，extensions 让导入时可以省略部分扩展名。配置必须同时被 TypeScript、测试工具和编辑器理解，否则会出现开发能运行但检查或测试失败的路径不一致。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "resolve.alias 为长路径或多入口提供稳定别名，extensions 让导入时可以省略部分扩展名",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么别名配置经常需要在多个工具中同步？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-19",
+    "category": "engineering",
+    "tags": [
+      "环境配置",
+      "工程化"
+    ],
+    "title": "前端开发、测试和生产环境变量应该如何管理？",
+    "answer": "环境变量应区分公开配置和服务端秘密，公开值只影响构建或运行时行为，密钥不能打进浏览器产物。不同环境使用明确的配置文件和校验，避免把本地接口地址、调试开关带到生产。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "环境变量应区分公开配置和服务端秘密，公开值只影响构建或运行时行为，密钥不能打进浏览器产物",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么前端环境变量不能当作真正的密钥？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Vite Guide",
+        "url": "https://vite.dev/guide/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-20",
+    "category": "engineering",
+    "tags": [
+      "兼容性",
+      "工程化"
+    ],
+    "title": "Browserslist 在前端项目中有什么作用？",
+    "answer": "Browserslist 用一套目标浏览器查询同时约束 Babel、Autoprefixer 和压缩工具，使转译和 CSS 前缀策略保持一致。目标范围应基于用户数据和业务要求，而不是默认兼容所有浏览器。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "Browserslist 用一套目标浏览器查询同时约束 Babel、Autoprefixer 和压缩工具，使转译和 CSS 前缀策略保持一致",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "修改浏览器支持范围后需要重新验证哪些产物？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Babel Documentation",
+        "url": "https://babeljs.io/docs/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-21",
+    "category": "engineering",
+    "tags": [
+      "版本管理",
+      "工程化"
+    ],
+    "title": "语义化版本中的 major、minor、patch 分别表示什么？",
+    "answer": "major 通常表示不兼容的 API 变化，minor 表示向后兼容的功能增加，patch 表示向后兼容的问题修复。实际升级还要阅读 changelog，因为依赖的行为和类型变化不一定完全符合直觉。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "major 通常表示不兼容的 API 变化，minor 表示向后兼容的功能增加，patch 表示向后兼容的问题修复",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么锁文件仍然需要提交，即使 package.json 使用了范围版本？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "npm CLI Docs",
+        "url": "https://docs.npmjs.com/cli/v10/commands/npm-ci"
+      }
+    ]
+  },
+  {
+    "id": "engineering-22",
+    "category": "engineering",
+    "tags": [
+      "依赖管理",
+      "工程化"
+    ],
+    "title": "dependencies、devDependencies 和 peerDependencies 如何区分？",
+    "answer": "dependencies 是运行时必须安装的依赖，devDependencies 只服务于开发、测试和构建；peerDependencies 用于声明插件与宿主库的兼容范围，避免插件偷偷安装多份宿主依赖。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "dependencies 是运行时必须安装的依赖，devDependencies 只服务于开发、测试和构建；peerDependencies 用于声明插件与宿主库的兼容范围，避免插件偷偷安装多份宿主依赖",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "组件库为什么通常把 React 或 Vue 声明为 peerDependencies？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "npm CLI Docs",
+        "url": "https://docs.npmjs.com/cli/v10/commands/npm-ci"
+      }
+    ]
+  },
+  {
+    "id": "engineering-23",
+    "category": "engineering",
+    "tags": [
+      "CI/CD",
+      "工程化"
+    ],
+    "title": "前端项目从提交到部署的 CI 流程如何设计？",
+    "answer": "常见流程是锁定运行时并干净安装，依次执行类型检查、Lint、单元测试、构建和产物检查，再部署预览或生产。快速且稳定的检查应先执行，失败信息要能定位到具体步骤。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "常见流程是锁定运行时并干净安装，依次执行类型检查、Lint、单元测试、构建和产物检查，再部署预览或生产",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么 CI 要使用干净环境而不是复用开发机 node_modules？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "npm CLI Docs",
+        "url": "https://docs.npmjs.com/cli/v10/commands/npm-ci"
+      }
+    ]
+  },
+  {
+    "id": "engineering-24",
+    "category": "engineering",
+    "tags": [
+      "Git Hooks",
+      "工程化"
+    ],
+    "title": "前端项目为什么使用 lint-staged 和 Git Hooks？",
+    "answer": "Git Hook 可以在提交前只检查本次修改的文件，快速阻止明显的格式和代码质量问题；完整类型检查、测试和构建仍应放在 CI 中，不能把本地 Hook 当作唯一质量保障。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "Git Hook 可以在提交前只检查本次修改的文件，快速阻止明显的格式和代码质量问题；完整类型检查、测试和构建仍应放在 CI 中，不能把本地 Hook 当作唯一质量保障",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "本地 Hook 和 CI 质量关卡如何分工？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-25",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "单元测试、集成测试和端到端测试如何选择？",
+    "answer": "单元测试适合纯函数和独立组件，集成测试验证模块组合，端到端测试验证真实用户流程。测试数量应以风险和反馈速度为依据，关键链路保留少量稳定的 E2E。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "单元测试适合纯函数和独立组件，集成测试验证模块组合，端到端测试验证真实用户流程",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么不能只依赖端到端测试？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-26",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "前端如何 mock 网络请求，避免测试不稳定？",
+    "answer": "应在请求边界使用可控的 mock server 或请求拦截器，明确成功、失败、超时和空数据响应。不要在组件内部到处写临时 mock，否则测试会偏离真实调用方式且难以复用。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "应在请求边界使用可控的 mock server 或请求拦截器，明确成功、失败、超时和空数据响应",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "网络 mock 如何覆盖接口变更导致的契约问题？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-27",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "测试覆盖率应该如何理解？",
+    "answer": "覆盖率能显示哪些代码被执行过，但不能证明断言正确或边界完整。应重点关注核心业务分支、错误处理和纯逻辑，结合变更风险设阈值，避免为了百分比堆无价值测试。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "覆盖率能显示哪些代码被执行过，但不能证明断言正确或边界完整",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么 100% 覆盖率仍可能有线上 bug？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-28",
+    "category": "engineering",
+    "tags": [
+      "发布",
+      "工程化"
+    ],
+    "title": "前端配置为什么不应把密钥打进产物？",
+    "answer": "浏览器端代码和环境变量都可被用户下载，任何打包进去的值都不是秘密。密钥应留在服务端，通过受控接口完成需要授权的操作，前端只接收最小公开配置。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "浏览器端代码和环境变量都可被用户下载，任何打包进去的值都不是秘密",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“前端配置为什么不应把密钥打进产物”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-29",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "单元测试、集成测试和端到端测试如何分工？",
+    "answer": "单元测试验证纯函数和小组件，集成测试验证多个模块组合，端到端测试验证关键用户流程。测试金字塔应让快速稳定的测试占多数，把少量 E2E 用于高价值路径。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "单元测试验证纯函数和小组件，集成测试验证多个模块组合，端到端测试验证关键用户流程",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“单元测试、集成测试和端到端测试如何分工”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-30",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "前端测试中为什么要优先验证用户行为？",
+    "answer": "按实现细节编写的测试容易在重构时失效，而按可见行为和可访问语义编写更接近真实风险。应验证输入、点击、加载和错误状态，同时对复杂纯逻辑保留直接单测。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "按实现细节编写的测试容易在重构时失效，而按可见行为和可访问语义编写更接近真实风险",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“前端测试中为什么要优先验证用户行为”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-31",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "如何测试异步请求和竞态？",
+    "answer": "测试应覆盖成功、失败、超时、取消和响应乱序等情况。使用可控的 mock server 或 Promise，并断言旧请求结果不会覆盖新查询，避免只测理想的单次响应。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "测试应覆盖成功、失败、超时、取消和响应乱序等情况",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“如何测试异步请求和竞态”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-32",
+    "category": "engineering",
+    "tags": [
+      "测试",
+      "工程化"
+    ],
+    "title": "什么是视觉回归测试？",
+    "answer": "视觉回归测试对固定场景截图并与基线比较，用于发现样式、字体和布局意外变化。基线要固定浏览器和数据，差异需要人工确认，不能把像素差异直接等同于缺陷。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "视觉回归测试对固定场景截图并与基线比较，用于发现样式、字体和布局意外变化",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“什么是视觉回归测试”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-33",
+    "category": "engineering",
+    "tags": [
+      "可观测性",
+      "工程化"
+    ],
+    "title": "前端错误监控应采集哪些上下文？",
+    "answer": "至少记录错误类型、堆栈、版本、页面路由、设备和浏览器信息，并通过 source map 还原源码位置。用户标识必须脱敏，采样和上报失败不能阻塞主流程。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "至少记录错误类型、堆栈、版本、页面路由、设备和浏览器信息，并通过 source map 还原源码位置",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“前端错误监控应采集哪些上下文”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-34",
+    "category": "engineering",
+    "tags": [
+      "可观测性",
+      "工程化"
+    ],
+    "title": "如何区分前端 JS 错误和资源加载错误？",
+    "answer": "window error 可捕获脚本运行时异常，unhandledrejection 关注未处理 Promise；资源加载失败需要在捕获阶段或 Resource Timing 中识别。不同类型应分别统计并关联发布版本。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "window error 可捕获脚本运行时异常，unhandledrejection 关注未处理 Promise；资源加载失败需要在捕获阶段或 Resource Timing 中识别",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“如何区分前端 JS 错误和资源加载错误”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-35",
+    "category": "engineering",
+    "tags": [
+      "可观测性",
+      "工程化"
+    ],
+    "title": "前端日志上报为什么要采样和限流？",
+    "answer": "高流量页面若全量上报会增加网络、存储和成本，也可能放大隐私风险。应按错误等级、版本和用户会话采样，对重复错误聚合，并在网络空闲时批量发送。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "高流量页面若全量上报会增加网络、存储和成本，也可能放大隐私风险",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“前端日志上报为什么要采样和限流”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-36",
+    "category": "engineering",
+    "tags": [
+      "架构",
+      "工程化"
+    ],
+    "title": "如何划分前端模块边界？",
+    "answer": "边界应围绕业务能力和稳定契约，而不是按文件类型机械拆分。模块暴露最小 API，避免互相读写内部状态，并通过依赖方向约束降低循环依赖和修改扩散。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "边界应围绕业务能力和稳定契约，而不是按文件类型机械拆分",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“如何划分前端模块边界”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-37",
+    "category": "engineering",
+    "tags": [
+      "架构",
+      "工程化"
+    ],
+    "title": "什么是渐进式重构？",
+    "answer": "渐进式重构在保持线上可用的前提下，用兼容接口、适配层和小步提交逐段替换旧实现。每一步都应可回滚并有测试或监控证明，避免一次性重写造成长期分支。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "渐进式重构在保持线上可用的前提下，用兼容接口、适配层和小步提交逐段替换旧实现",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“什么是渐进式重构”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-38",
+    "category": "engineering",
+    "tags": [
+      "架构",
+      "工程化"
+    ],
+    "title": "前端如何管理跨页面共享状态？",
+    "answer": "先区分服务端数据、页面状态和真正跨页面的客户端状态。优先保持状态靠近使用处，只有存在明确共享需求时才引入集中存储，并规定更新来源、缓存失效和持久化边界。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "先区分服务端数据、页面状态和真正跨页面的客户端状态",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“前端如何管理跨页面共享状态”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-39",
+    "category": "engineering",
+    "tags": [
+      "规范",
+      "工程化"
+    ],
+    "title": "如何制定前端浏览器兼容策略？",
+    "answer": "根据用户数据和业务目标确定支持范围，再用 browserslist、转译和 polyfill 实现，而不是默认兼容所有浏览器。对不支持的能力提供降级或明确提示，并在 CI 验证关键版本。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "根据用户数据和业务目标确定支持范围，再用 browserslist、转译和 polyfill 实现，而不是默认兼容所有浏览器",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“如何制定前端浏览器兼容策略”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-40",
+    "category": "engineering",
+    "tags": [
+      "规范",
+      "工程化"
+    ],
+    "title": "polyfill 与 transpile 有什么区别？",
+    "answer": "transpile 把新语法转换为旧语法，polyfill 则补充运行时缺失的 API。两者需要按目标浏览器按需引入，过量 polyfill 会增加首屏体积，不能把语法转换当成 API 兼容。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "transpile 把新语法转换为旧语法，polyfill 则补充运行时缺失的 API",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“polyfill 与 transpile 有什么区别”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-41",
+    "category": "engineering",
+    "tags": [
+      "安全",
+      "工程化"
+    ],
+    "title": "前端如何防范 XSS？",
+    "answer": "优先使用框架默认转义，避免把不可信字符串写入 innerHTML；必须渲染富文本时进行白名单清洗，并配置 CSP 降低脚本注入影响。URL、模板和第三方内容都要作为不可信输入处理。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "优先使用框架默认转义，避免把不可信字符串写入 innerHTML；必须渲染富文本时进行白名单清洗，并配置 CSP 降低脚本注入影响",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“前端如何防范 XSS”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-42",
+    "category": "engineering",
+    "tags": [
+      "安全",
+      "工程化"
+    ],
+    "title": "前端依赖供应链攻击有哪些防护措施？",
+    "answer": "锁定依赖版本并校验完整性，限制安装脚本权限，审查新增依赖维护状态和权限范围。CI 使用最小权限令牌、漏洞扫描和制品审计，发现异常时保留可追溯的构建记录。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "锁定依赖版本并校验完整性，限制安装脚本权限，审查新增依赖维护状态和权限范围",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“前端依赖供应链攻击有哪些防护措施”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-43",
+    "category": "engineering",
+    "tags": [
+      "构建优化",
+      "工程化"
+    ],
+    "title": "Webpack externals 适合什么场景？",
+    "answer": "externals 把指定依赖排除出打包产物，运行时改由 CDN 或宿主环境提供，可减少包体但增加全局变量、版本和网络可用性风险。只有稳定且可控的公共依赖才适合这样处理。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "externals 把指定依赖排除出打包产物，运行时改由 CDN 或宿主环境提供，可减少包体但增加全局变量、版本和网络可用性风险",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "使用 externals 后如何保证本地、测试和生产版本一致？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-44",
+    "category": "engineering",
+    "tags": [
+      "性能工程",
+      "工程化"
+    ],
+    "title": "如何避免重复打包同一个依赖？",
+    "answer": "检查多版本依赖、别名和 monorepo 解析结果，统一可兼容版本并配置共享 chunk。对于 ESM/CJS 双份引入，要统一入口，避免仅凭文件名判断重复而忽略实际运行时路径。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "检查多版本依赖、别名和 monorepo 解析结果，统一可兼容版本并配置共享 chunk",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“如何避免重复打包同一个依赖”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-45",
+    "category": "engineering",
+    "tags": [
+      "脚本",
+      "工程化"
+    ],
+    "title": "package scripts 应如何组织？",
+    "answer": "脚本名称应表达动作和环境，公共流程组合现有脚本而不是复制命令。跨平台命令要避免依赖特定 shell，并把关键参数集中在配置文件或环境变量中，方便本地和 CI 一致执行。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "脚本名称应表达动作和环境，公共流程组合现有脚本而不是复制命令",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "在真实项目中如何验证“package scripts 应如何组织”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-46",
+    "category": "engineering",
+    "tags": [
+      "发布",
+      "工程化"
+    ],
+    "title": "前端如何处理缓存导致的版本不一致？",
+    "answer": "静态资源使用内容哈希，HTML 和配置采用短缓存或版本校验；服务端发布时保证新旧资源在过渡期同时可用。检测到 chunk 加载失败时可提示刷新或重新获取入口，但不能无限重试。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "静态资源使用内容哈希，HTML 和配置采用短缓存或版本校验；服务端发布时保证新旧资源在过渡期同时可用",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "在真实项目中如何验证“前端如何处理缓存导致的版本不一致”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-47",
+    "category": "engineering",
+    "tags": [
+      "工程实践",
+      "工程化"
+    ],
+    "title": "如何评估一个新前端工具是否值得引入？",
+    "answer": "先确认原生能力和现有工具无法解决，再评估包体、维护活跃度、许可证、学习成本和退出成本。通过小范围 PoC 与构建、测试指标验证收益，避免为单一问题引入长期依赖。\n\n面试中应结合项目中的取舍说明验证方式、失败边界和回滚方案，避免只罗列工具名或背诵单一结论。",
+    "keyPoints": [
+      "先确认原生能力和现有工具无法解决，再评估包体、维护活跃度、许可证、学习成本和退出成本",
+      "先用指标和工具定位问题再选择方案",
+      "关注兼容性、成本与失败边界",
+      "通过自动化检查或真实用户数据验证"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "在真实项目中如何验证“如何评估一个新前端工具是否值得引入”的收益？",
+      "如果优化或改造引入回归，如何发现并回滚？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-48",
+    "category": "engineering",
+    "tags": [
+      "发布",
+      "工程化"
+    ],
+    "title": "前端如何用 feature flag 控制新功能发布？",
+    "answer": "Feature flag 让代码先发布、功能后开放，可以按用户或比例灰度并快速关闭。开关应有默认安全值、权限约束和清理计划，长期保留无用开关会增加测试和维护成本。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "Feature flag 让代码先发布、功能后开放，可以按用户或比例灰度并快速关闭",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "功能开关失效或配置拉取失败时应该默认开启还是关闭？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-49",
+    "category": "engineering",
+    "tags": [
+      "发布",
+      "工程化"
+    ],
+    "title": "前端发布后发现严重问题，回滚应该回滚什么？",
+    "answer": "静态资源发布应保留带版本的历史产物，入口 HTML 或配置切回上一版本即可快速恢复。回滚前要确认接口兼容，不能只切前端代码而让旧版本调用不到当前后端。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "静态资源发布应保留带版本的历史产物，入口 HTML 或配置切回上一版本即可快速恢复",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么前后端发布需要保持一段时间的接口向后兼容？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-50",
+    "category": "engineering",
+    "tags": [
+      "工程配置",
+      "工程化"
+    ],
+    "title": "为什么项目要固定 Node.js 和包管理器版本？",
+    "answer": "不同 Node 或包管理器版本可能产生不同依赖解析、原生模块编译和构建结果。通过 engines、corepack、.nvmrc 或 CI 运行时声明统一版本，能减少“本地能跑、CI 失败”的问题。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "不同 Node 或包管理器版本可能产生不同依赖解析、原生模块编译和构建结果",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如何在 CI 中验证开发者使用了正确的运行时版本？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-51",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "如何区分开发构建、测试构建和生产构建配置？",
+    "answer": "三种构建的目标不同：开发关注源码映射和 HMR，测试关注可控环境与覆盖率，生产关注压缩、缓存和安全配置。应复用基础配置并显式覆盖差异，避免用环境变量堆叠不可读的条件。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "三种构建的目标不同：开发关注源码映射和 HMR，测试关注可控环境与覆盖率，生产关注压缩、缓存和安全配置",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "哪些配置不应该从开发环境直接带入生产？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11"
+  },
+  {
+    "id": "engineering-52",
+    "category": "engineering",
+    "tags": [
+      "构建",
+      "工程化"
+    ],
+    "title": "前端构建中的 source map 应该如何选择？",
+    "answer": "source map 用于把压缩后的堆栈映射回源码，开发环境可选择更快的内联映射，生产环境通常上传到错误监控平台而不公开映射文件。要兼顾调试效率、产物体积和源码泄露风险。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "source map 用于把压缩后的堆栈映射回源码，开发环境可选择更快的内联映射，生产环境通常上传到错误监控平台而不公开映射文件",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么生产 source map 不应直接暴露在公共静态目录？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      }
+    ]
+  },
+  {
+    "id": "engineering-53",
+    "category": "engineering",
+    "tags": [
+      "升级",
+      "工程化"
+    ],
+    "title": "升级 Webpack、Vite 或插件时应该检查什么？",
+    "answer": "先阅读迁移说明并记录当前构建时间、包体和错误率，再在独立分支升级依赖。完成类型检查、测试、生产构建和关键页面验证后分批发布，并保留旧产物作为回滚方案。\n\n回答时应结合具体构建命令、产物变化或线上指标说明取舍，不能只说“用了某个工具”。",
+    "keyPoints": [
+      "先阅读迁移说明并记录当前构建时间、包体和错误率，再在独立分支升级依赖",
+      "先说明原理，再说明项目中的使用边界",
+      "用构建结果、测试或线上数据验证效果",
+      "保留失败时的降级和回滚方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何判断升级带来的构建变慢来自插件还是依赖解析？",
+      "这个方案在什么情况下会失效或带来额外成本？"
+    ],
+    "updatedAt": "2026-09-11",
+    "references": [
+      {
+        "title": "Webpack Guides",
+        "url": "https://webpack.js.org/guides/"
+      },
+      {
+        "title": "Vite Guide",
+        "url": "https://vite.dev/guide/"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1315 @@
+[
+  {
+    "id": "js-var-let-const",
+    "category": "javascript",
+    "tags": [
+      "变量",
+      "作用域"
+    ],
+    "title": "var、let、const 的区别？",
+    "answer": "var：函数作用域，存在变量提升，可以重复声明，没有块级作用域。\nlet /const：块级作用域 {}，存在暂时性死区，不能重复声明。\nlet 可以修改值；const 声明后不能修改引用（对象属性可以改）。\n暂时性死区：块内用 let/const，在声明之前访问会报错，不会像 var 返回 undefined。 开发尽量不用 var。",
+    "keyPoints": [
+      "var：函数作用域，存在变量提升，可以重复声明，没有块级作用域",
+      "let /const：块级作用域 {}，存在暂时性死区，不能重复声明",
+      "let 可以修改值；const 声明后不能修改引用（对象属性可以改）",
+      "暂时性死区：块内用 let/const，在声明之前访问会报错，不会像 var 返回 undefined。 开发尽量不用 var"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-hoisting",
+    "category": "javascript",
+    "tags": [
+      "作用域",
+      "执行上下文"
+    ],
+    "title": "什么是变量提升？函数提升？",
+    "answer": "JS 执行时，会先扫描代码，把 var 变量声明、函数声明提升到作用域顶部。\nvar 只提升声明，赋值留在原地；\n函数声明整体提升；函数表达式不会提升。 let/const 有提升，但存在暂时性死区，不能提前访问。\n运行\n```javascript\nconsole.log(a); // undefinedvar a = 10;\n```",
+    "keyPoints": [
+      "JS 执行时，会先扫描代码，把 var 变量声明、函数声明提升到作用域顶部",
+      "var 只提升声明，赋值留在原地",
+      "函数声明整体提升；函数表达式不会提升。 let/const 有提升，但存在暂时性死区，不能提前访问"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-closure",
+    "category": "javascript",
+    "tags": [
+      "闭包",
+      "作用域"
+    ],
+    "title": "闭包是什么？优缺点，使用场景？",
+    "answer": "闭包：一个内部函数，访问外部函数作用域的变量，即使外部函数执行完毕，变量依然存活。 形成条件：函数嵌套 + 内部引用外部变量 + 内部函数被外部引用。\n用途：\n保存私有变量；\n实现柯里化；\n定时器回调保存变量。\n缺点：变量不会被垃圾回收，容易内存泄漏，不用的时候需要手动置为 null 释放。",
+    "keyPoints": [
+      "闭包：一个内部函数，访问外部函数作用域的变量，即使外部函数执行完毕，变量依然存活。 形成条件：函数嵌套 + 内部引用外部变量 + 内部函数被外部引用",
+      "定时器回调保存变量",
+      "缺点：变量不会被垃圾回收，容易内存泄漏，不用的时候需要手动置为 null 释放"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-prototype-chain",
+    "category": "javascript",
+    "tags": [
+      "原型",
+      "继承"
+    ],
+    "title": "原型、原型链是什么？",
+    "answer": "每个对象都有__proto__，指向它的构造函数的prototype（原型对象）。 构造函数的 prototype 存放实例共享的方法。 原型链：对象通过__proto__一层一层向上查找属性，直到Object.prototype.__proto__ === null，查找终止。 属性查找规则：先找自身，找不到沿着原型链向上找。\ninstanceof原理：沿着原型链看构造函数 prototype 是否出现在实例原型链上。",
+    "keyPoints": [
+      "每个对象都有__proto__，指向它的构造函数的prototype（原型对象）。 构造函数的 prototype 存放实例共享的方法。 原型链：对象通过__proto__一层一层向上查找属性，直到Object.prototype.__proto__ === null，查找终止。 属性查找规则：先找自身，找不到沿着原型链向上找",
+      "instanceof原理：沿着原型链看构造函数 prototype 是否出现在实例原型链上",
+      "了解 原型 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-this-binding",
+    "category": "javascript",
+    "tags": [
+      "this",
+      "函数"
+    ],
+    "title": "this 指向问题？",
+    "answer": "普通函数调用：fn() → this 指向 window（严格模式 undefined）\n对象方法调用：obj.fn() → this 指向 obj\nnew 调用：构造函数中 this 指向新创建的实例对象\ncall /apply/bind：手动指定 this\n箭头函数：没有自己的 this，继承外层作用域的 this，不能被 call/apply/bind 改变。\n面试常坑：回调函数 this 丢失；箭头函数不能做构造函数。",
+    "keyPoints": [
+      "普通函数调用：fn() → this 指向 window（严格模式 undefined）",
+      "对象方法调用：obj.fn() → this 指向 obj",
+      "new 调用：构造函数中 this 指向新创建的实例对象",
+      "call /apply/bind：手动指定 this",
+      "箭头函数：没有自己的 this，继承外层作用域的 this，不能被 call/apply/bind 改变"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-call-apply-bind",
+    "category": "javascript",
+    "tags": [
+      "this",
+      "函数"
+    ],
+    "title": "call、apply、bind 区别？",
+    "answer": "call(thisArg, arg1, arg2) 参数逐个传入，立即执行函数\napply(thisArg, [arg1,arg2]) 参数数组传入，立即执行函数\nbind(thisArg) 返回新函数，不会立刻执行，需要手动调用。",
+    "keyPoints": [
+      "call(thisArg, arg1, arg2) 参数逐个传入，立即执行函数",
+      "apply(thisArg, [arg1,arg2]) 参数数组传入，立即执行函数",
+      "bind(thisArg) 返回新函数，不会立刻执行，需要手动调用"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-execution-context-stack",
+    "category": "javascript",
+    "tags": [
+      "执行上下文",
+      "调用栈"
+    ],
+    "title": "什么是执行上下文、执行栈？",
+    "answer": "执行上下文：JS 代码运行环境，分为全局、函数、eval。 包含：变量环境、词法环境、this 绑定。 执行栈（调用栈）：后进先出，函数调用就压入栈，函数执行完弹出。栈溢出就是调用栈过深。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "执行上下文：JS 代码运行环境，分为全局、函数、eval。 包含：变量环境、词法环境、this 绑定。 执行栈（调用栈）：后进先出，函数调用就压入栈，函数执行完弹出。栈溢出就是调用栈过深",
+      "辨别 调用栈 的适用场景",
+      "了解 执行上下文 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-event-loop",
+    "category": "javascript",
+    "tags": [
+      "异步",
+      "事件循环"
+    ],
+    "title": "浏览器中的 JavaScript 事件循环如何调度任务和微任务？",
+    "answer": "当前任务中的同步代码先执行；任务结束后，事件循环会执行微任务检查点，把当时可运行的微任务持续处理到队列清空。Promise 回调、queueMicrotask 和 await 后的续体通常属于微任务，定时器回调、消息事件等由不同任务源调度。\n\n浏览器会在合适的时机更新渲染，而不是机械地在每个任务后必然绘制一次。大量连续微任务可能让渲染和后续任务迟迟得不到机会。",
+    "keyPoints": [
+      "同步代码属于当前任务并先执行",
+      "任务结束后会运行微任务检查点",
+      "await 续体通常通过微任务恢复",
+      "渲染发生在浏览器选择的更新机会",
+      "持续产生微任务可能造成饥饿"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么递归 queueMicrotask 会让页面无法及时响应？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-promise-basics",
+    "category": "javascript",
+    "tags": [
+      "Promise",
+      "异步"
+    ],
+    "title": "Promise 了解？三种状态，常用方法？",
+    "answer": "Promise 三种状态：pending（等待）、fulfilled（成功）、rejected（失败）。 状态一旦改变，就不可逆。\nAPI：\n.then() 处理成功，返回新 Promise\n.catch() 捕获异常\n.finally() 无论成功失败都会执行\n静态方法： Promise.all() 全部成功才成功，一个失败直接失败； Promise.race() 赛跑，第一个完成就结束； Promise.allSettled() 不管成功失败全部返回结果； Promise.any() 只要一个成功就成功，全部失败才失败。\n注意：Promise 本身是同步执行，.then 回调是微任务。",
+    "keyPoints": [
+      "Promise 三种状态：pending（等待）、fulfilled（成功）、rejected（失败）。 状态一旦改变，就不可逆",
+      ".then() 处理成功，返回新 Promise",
+      ".catch() 捕获异常",
+      ".finally() 无论成功失败都会执行",
+      "静态方法： Promise.all() 全部成功才成功，一个失败直接失败； Promise.race() 赛跑，第一个完成就结束； Promise.allSettled() 不管成功失败全部返回结果； Promise.any() 只要一个成功就成功，全部失败才失败"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-async-await",
+    "category": "javascript",
+    "tags": [
+      "async/await",
+      "异步"
+    ],
+    "title": "async/await 与 Promise 是什么关系，错误如何传播？",
+    "answer": "async 函数调用后总会返回 Promise；return 普通值会兑现该 Promise，抛出异常会拒绝它。await 会先对操作数进行 Promise 化，并暂停当前 async 函数；Promise 落定后，函数续体通常通过微任务恢复。\n\nawait 不会阻塞线程，也不会自动并行执行多个任务。错误可由 try/catch 捕获，未捕获错误会使 async 函数返回的 Promise 拒绝。多个独立任务应先启动，再按需要用 Promise.all 等方式等待。",
+    "keyPoints": [
+      "async 函数始终返回 Promise",
+      "await 暂停函数而不阻塞线程",
+      "续体通常通过微任务恢复",
+      "未捕获异常会转为 Promise 拒绝",
+      "独立任务要显式设计并发"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "连续 await 为什么可能把可并行任务变成串行？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-deep-shallow-copy",
+    "category": "javascript",
+    "tags": [
+      "对象",
+      "拷贝"
+    ],
+    "title": "深拷贝和浅拷贝有什么区别，应如何选择实现？",
+    "answer": "浅拷贝只创建新的外层容器，嵌套对象仍与原对象共享引用；对象展开、Object.assign、数组 slice 等都属于常见浅拷贝。深拷贝希望递归复制可克隆的数据图，但“完全切断所有引用”并不适用于函数、DOM、WeakMap 等所有值。\n\nJSON 往返会丢失 undefined、函数、Symbol、原型和多种内置对象，也不能处理循环引用。现代浏览器可优先评估 structuredClone；领域对象则应明确需要保留的类型、原型和共享关系。",
+    "keyPoints": [
+      "浅拷贝仍共享嵌套引用",
+      "深拷贝必须先定义可克隆的数据范围",
+      "JSON 往返会丢失多种类型和语义",
+      "structuredClone 支持循环引用和更多内置类型",
+      "不可变更新不等于盲目深拷贝"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "structuredClone 不能克隆哪些常见值？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-array-methods",
+    "category": "javascript",
+    "tags": [
+      "数组"
+    ],
+    "title": "数组常用方法，哪些改变原数组，哪些不改变？",
+    "answer": "改变原数组：push pop shift unshift splice reverse sort ❌不改变原数组：map filter reduce every some find findIndex slice concat\n高频考点：\nmap：映射，返回新数组，长度不变\nfilter：过滤，返回符合条件新数组\nreduce：累加器，可以实现求和、数组转对象、去重",
+    "keyPoints": [
+      "改变原数组：push pop shift unshift splice reverse sort ❌不改变原数组：map filter reduce every some find findIndex slice concat",
+      "map：映射，返回新数组，长度不变",
+      "filter：过滤，返回符合条件新数组",
+      "reduce：累加器，可以实现求和、数组转对象、去重"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-equality",
+    "category": "javascript",
+    "tags": [
+      "类型转换",
+      "运算符"
+    ],
+    "title": "== 和 === 的区别？",
+    "answer": "=== 严格相等，类型和值全部相等才 true，不做隐式转换，开发优先使用。 == 宽松相等，会做隐式类型转换。 经典坑：null == undefined → true；null === undefined → false。",
+    "keyPoints": [
+      "=== 严格相等，类型和值全部相等才 true，不做隐式转换，开发优先使用。 == 宽松相等，会做隐式类型转换。 经典坑：null == undefined → true；null === undefined → false",
+      "辨别 运算符 的适用场景",
+      "了解 类型转换 的风险和边界"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-falsy-values",
+    "category": "javascript",
+    "tags": [
+      "类型转换"
+    ],
+    "title": "0、''、null、undefined、NaN、false 哪些是假值？",
+    "answer": "6 个假值：0 '' null undefined NaN false\n注意：[] {} 是真值。NaN 不等于任何东西，包括自己。判断 NaN 用Number.isNaN()。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "6 个假值：0 '' null undefined NaN false",
+      "注意：[] {} 是真值。NaN 不等于任何东西，包括自己。判断 NaN 用Number.isNaN()",
+      "了解 类型转换 的风险和边界"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-garbage-collection",
+    "category": "javascript",
+    "tags": [
+      "内存",
+      "垃圾回收"
+    ],
+    "title": "垃圾回收机制？",
+    "answer": "JS 自动垃圾回收，不用手动管理内存。 浏览器主要：标记清除算法。遍历标记存活对象，清除没有标记的对象。 引用计数存在循环引用问题，现代浏览器已经不用。\n内存泄漏常见场景：\n意外全局变量；\n闭包没有释放；\n定时器忘记清除；\nDOM 引用没有置空。",
+    "keyPoints": [
+      "JS 自动垃圾回收，不用手动管理内存。 浏览器主要：标记清除算法。遍历标记存活对象，清除没有标记的对象。 引用计数存在循环引用问题，现代浏览器已经不用",
+      "内存泄漏常见场景：",
+      "定时器忘记清除",
+      "DOM 引用没有置空"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-new-operator",
+    "category": "javascript",
+    "tags": [
+      "对象",
+      "原型"
+    ],
+    "title": "new 操作符做了哪几件事？",
+    "answer": "创建一个全新空对象；\n将新对象的__proto__指向构造函数的 prototype；\n将构造函数 this 绑定为这个新对象，执行构造函数；\n如果构造函数返回引用类型，返回该对象；否则返回新建对象。",
+    "keyPoints": [
+      "创建一个全新空对象",
+      "将新对象的__proto__指向构造函数的 prototype",
+      "将构造函数 this 绑定为这个新对象，执行构造函数",
+      "如果构造函数返回引用类型，返回该对象；否则返回新建对象"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-debounce-throttle",
+    "category": "javascript",
+    "tags": [
+      "性能",
+      "函数"
+    ],
+    "title": "什么是防抖、节流，区别，使用场景？",
+    "answer": "防抖 debounce：多次触发，只在最后一次执行。场景：搜索框输入联想。\n节流 throttle：固定时间只执行一次。场景：滚动事件、窗口 resize。 面试官大概率会让口述手写思路。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "防抖 debounce：多次触发，只在最后一次执行。场景：搜索框输入联想",
+      "节流 throttle：固定时间只执行一次。场景：滚动事件、窗口 resize。 面试官大概率会让口述手写思路",
+      "了解 性能 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-same-origin-cors",
+    "category": "javascript",
+    "tags": [
+      "浏览器",
+      "跨域"
+    ],
+    "title": "同源策略限制了什么，常见跨源方案如何选择？",
+    "answer": "同源通常要求协议、主机和端口一致。同源策略主要限制不同源文档之间的读取和操作能力，并不是禁止浏览器发出所有跨源请求；非简单 CORS 请求会先预检，预检不通过时实际请求可能不会发送。\n\n生产接口通常由服务端配置 CORS；开发代理和反向代理通过同源转发解决开发或部署边界。postMessage 适合窗口通信，JSONP 只是历史上的脚本加载技巧，仅支持 GET 语义且不应作为现代通用方案。",
+    "keyPoints": [
+      "同源由协议、主机和端口共同决定",
+      "策略重点限制跨源读取和 DOM 访问",
+      "预检失败时实际请求可能不会发出",
+      "CORS 必须由服务端明确授权",
+      "代理与 postMessage 解决的是不同边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么 CORS 成功也不代表接口已经完成授权校验？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-symbol",
+    "category": "javascript",
+    "tags": [
+      "基础类型",
+      "对象"
+    ],
+    "title": "Symbol 用途？",
+    "answer": "生成独一无二的值，作为对象 key，避免属性名冲突。 Symbol('a') !== Symbol('a') for...in 遍历不到 Symbol 属性，Object.getOwnPropertySymbols()可以获取。",
+    "keyPoints": [
+      "生成独一无二的值，作为对象 key，避免属性名冲突。 Symbol('a') !== Symbol('a') for...in 遍历不到 Symbol 属性，Object.getOwnPropertySymbols()可以获取",
+      "辨别 对象 的适用场景",
+      "了解 基础类型 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-map-set-weak",
+    "category": "javascript",
+    "tags": [
+      "集合",
+      "内存"
+    ],
+    "title": "Set、Map、WeakSet、WeakMap 区别？",
+    "answer": "Set：数组去重，元素唯一；\nMap：键可以是对象，不限于字符串；\nWeakSet / WeakMap：key 只能是对象，弱引用，不计入垃圾回收计数，防止内存泄漏。没有遍历方法。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "Set：数组去重，元素唯一",
+      "Map：键可以是对象，不限于字符串",
+      "WeakSet / WeakMap：key 只能是对象，弱引用，不计入垃圾回收计数，防止内存泄漏。没有遍历方法"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-for-in-for-of",
+    "category": "javascript",
+    "tags": [
+      "遍历",
+      "迭代器"
+    ],
+    "title": "for in 和 for of 的区别？",
+    "answer": "for-in：遍历对象可枚举属性（包括原型链），适合对象；不适合数组，会拿到索引字符串。\nfor-of：遍历可迭代对象（Array、Map、Set），获取值，不会遍历原型属性，支持 break continue。",
+    "keyPoints": [
+      "for-in：遍历对象可枚举属性（包括原型链），适合对象；不适合数组，会拿到索引字符串",
+      "for-of：遍历可迭代对象（Array、Map、Set），获取值，不会遍历原型属性，支持 break continue",
+      "了解 遍历 的风险和边界"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-iterator",
+    "category": "javascript",
+    "tags": [
+      "迭代器",
+      "协议"
+    ],
+    "title": "什么是可迭代对象（iterator）？",
+    "answer": "拥有Symbol.iterator方法，返回迭代器。Array、Map、Set、字符串都是可迭代对象，可以用 for-of 遍历。对象默认不是可迭代对象。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "拥有Symbol.iterator方法，返回迭代器。Array、Map、Set、字符串都是可迭代对象，可以用 for-of 遍历。对象默认不是可迭代对象",
+      "辨别 协议 的适用场景",
+      "了解 迭代器 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-generator",
+    "category": "javascript",
+    "tags": [
+      "生成器",
+      "迭代器"
+    ],
+    "title": "什么是 Generator？简单了解？",
+    "answer": "生成器函数 function*，yield 暂停，next 执行返回值。可以实现异步流程，现在基本被 async await 替代，校招一般问概念，很少手写。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "生成器函数 function*，yield 暂停，next 执行返回值。可以实现异步流程，现在基本被 async await 替代，校招一般问概念，很少手写",
+      "辨别 迭代器 的适用场景",
+      "了解 生成器 的风险和边界"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-inheritance",
+    "category": "javascript",
+    "tags": [
+      "继承",
+      "原型"
+    ],
+    "title": "原型链继承、组合继承、ES6 class 继承？",
+    "answer": "class 本质是构造函数的语法糖。 extends实现继承，super()调用父类构造函数。\n\n面试时还应说明适用边界，并结合运行环境验证具体行为。\n\n回答时应区分规范语义、常见实现和具体项目约束。",
+    "keyPoints": [
+      "class 本质是构造函数的语法糖。 extends实现继承，super()调用父类构造函数",
+      "辨别 原型 的适用场景",
+      "了解 继承 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-dom-events",
+    "category": "javascript",
+    "tags": [
+      "事件",
+      "DOM"
+    ],
+    "title": "什么是 DOM0、DOM2 事件，事件捕获、冒泡，事件委托？",
+    "answer": "事件流：捕获 → 目标 → 冒泡。 addEventListener 第三个参数 true 开启捕获，默认 false 冒泡。 事件委托：利用事件冒泡，父元素监听子元素事件，减少事件绑定，适合动态生成 DOM。",
+    "keyPoints": [
+      "事件流：捕获 → 目标 → 冒泡。 addEventListener 第三个参数 true 开启捕获，默认 false 冒泡。 事件委托：利用事件冒泡，父元素监听子元素事件，减少事件绑定，适合动态生成 DOM",
+      "辨别 DOM 的适用场景",
+      "了解 事件 的风险和边界"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如果把这个结论用于真实项目，还需要检查哪些边界条件？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-lexical-environment",
+    "category": "javascript",
+    "tags": [
+      "作用域",
+      "执行上下文"
+    ],
+    "title": "词法环境和作用域链之间是什么关系？",
+    "answer": "词法环境记录当前作用域的标识符绑定并指向外层环境。函数定义位置决定其外层词法环境，而不是调用位置。\n\n变量查找会沿环境引用逐级向外进行，直到找到绑定或抛出错误。面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "词法环境记录当前作用域的标识符绑定并指向外层环境",
+      "函数定义位置决定其外层词法环境，而不是调用位置",
+      "变量查找会沿环境引用逐级向外进行，直到找到绑定或抛出错误"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "闭包为什么能够保留外层词法环境？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-temporal-dead-zone",
+    "category": "javascript",
+    "tags": [
+      "变量",
+      "作用域"
+    ],
+    "title": "什么是暂时性死区，为什么 typeof 也可能报错？",
+    "answer": "let、const 绑定从进入作用域时已经存在，但初始化前不能访问。暂时性死区从作用域开始持续到声明执行完成。\n\n对死区内绑定使用 typeof 仍会抛出 ReferenceError，这与未声明全局变量不同。",
+    "keyPoints": [
+      "let、const 绑定从进入作用域时已经存在，但初始化前不能访问",
+      "暂时性死区从作用域开始持续到声明执行完成",
+      "对死区内绑定使用 typeof 仍会抛出 ReferenceError，这与未声明全局变量不同"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "暂时性死区如何帮助发现初始化顺序问题？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-property-descriptors",
+    "category": "javascript",
+    "tags": [
+      "对象",
+      "属性描述符"
+    ],
+    "title": "JavaScript 属性描述符包含哪些字段？",
+    "answer": "数据属性由 value、writable、enumerable 和 configurable 描述。访问器属性使用 get、set、enumerable 和 configurable。\n\nObject.defineProperty 新建属性时未提供的布尔字段默认是 false，和普通赋值不同。",
+    "keyPoints": [
+      "数据属性由 value、writable、enumerable 和 configurable 描述",
+      "访问器属性使用 get、set、enumerable 和 configurable",
+      "Object.defineProperty 新建属性时未提供的布尔字段默认是 false，和普通赋值不同"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "configurable 为 false 后还能修改哪些字段？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-currying",
+    "category": "javascript",
+    "tags": [
+      "函数式编程",
+      "函数"
+    ],
+    "title": "什么是函数柯里化，它适合哪些场景？",
+    "answer": "柯里化把接收多个参数的函数转换为连续接收单个或部分参数的函数。它便于复用已绑定参数、构造配置函数和组合小函数。\n\n过度柯里化会增加调用层级和调试成本，不应替代清晰的业务接口。面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "柯里化把接收多个参数的函数转换为连续接收单个或部分参数的函数",
+      "它便于复用已绑定参数、构造配置函数和组合小函数",
+      "过度柯里化会增加调用层级和调试成本，不应替代清晰的业务接口"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "柯里化与偏函数应用有什么区别？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-function-composition",
+    "category": "javascript",
+    "tags": [
+      "函数式编程",
+      "组合"
+    ],
+    "title": "函数组合的核心思想是什么？",
+    "answer": "函数组合把前一个函数的输出作为后一个函数的输入。可组合函数通常应保持输入输出契约清楚并尽量减少隐藏副作用。\n\n组合适合数据转换流水线，但异步、错误和多参数函数需要额外约定。面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "函数组合把前一个函数的输出作为后一个函数的输入",
+      "可组合函数通常应保持输入输出契约清楚并尽量减少隐藏副作用",
+      "组合适合数据转换流水线，但异步、错误和多参数函数需要额外约定"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "如何组合返回 Promise 的异步函数？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-promise-combinators",
+    "category": "javascript",
+    "tags": [
+      "Promise",
+      "异步"
+    ],
+    "title": "Promise.all、allSettled、race 和 any 如何选择？",
+    "answer": "Promise.all 在任一输入拒绝时立即拒绝，适合全部成功才继续的任务。allSettled 等待所有结果，race 采用最先落定结果，any 采用最先兑现结果。\n\n这些方法不会自动取消仍在执行的底层任务，取消需要 AbortController 等协作机制。",
+    "keyPoints": [
+      "Promise.all 在任一输入拒绝时立即拒绝，适合全部成功才继续的任务",
+      "allSettled 等待所有结果，race 采用最先落定结果，any 采用最先兑现结果",
+      "这些方法不会自动取消仍在执行的底层任务，取消需要 AbortController 等协作机制"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "Promise.any 全部失败时会返回什么错误？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-promise-error-flow",
+    "category": "javascript",
+    "tags": [
+      "Promise",
+      "错误处理"
+    ],
+    "title": "Promise 链中的错误是如何传播和恢复的？",
+    "answer": "then 回调抛错或返回拒绝 Promise 会让后续链进入拒绝分支。catch 本质上是 then 的拒绝处理器，返回普通值会把链恢复为兑现状态。\n\nfinally 不应改写业务结果，除非自身抛错或返回拒绝 Promise。",
+    "keyPoints": [
+      "then 回调抛错或返回拒绝 Promise 会让后续链进入拒绝分支",
+      "catch 本质上是 then 的拒绝处理器，返回普通值会把链恢复为兑现状态",
+      "finally 不应改写业务结果，除非自身抛错或返回拒绝 Promise"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么忘记 return 一个 Promise 会导致错误链断开？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-abort-controller",
+    "category": "javascript",
+    "tags": [
+      "异步",
+      "取消"
+    ],
+    "title": "AbortController 如何实现异步任务取消？",
+    "answer": "AbortController 通过共享的 AbortSignal 发送取消通知。fetch 等支持 signal 的 API 会在取消后以 AbortError 结束，但取消并不回滚已经发生的副作用。\n\n自定义异步函数应监听 signal、及时清理资源并区分取消与真实失败。",
+    "keyPoints": [
+      "AbortController 通过共享的 AbortSignal 发送取消通知",
+      "fetch 等支持 signal 的 API 会在取消后以 AbortError 结束，但取消并不回滚已经发生的副作用",
+      "自定义异步函数应监听 signal、及时清理资源并区分取消与真实失败"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "多个任务如何共享或组合取消信号？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-esm-live-bindings",
+    "category": "javascript",
+    "tags": [
+      "模块",
+      "ESM"
+    ],
+    "title": "ES Module 的静态结构和实时绑定意味着什么？",
+    "answer": "import 和 export 的静态语法让工具能在执行前分析依赖图。导入绑定是只读视图，会反映导出模块中绑定值的后续变化。\n\n模块默认严格模式且每个模块只求值一次，循环依赖时还要考虑初始化顺序。面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "import 和 export 的静态语法让工具能在执行前分析依赖图",
+      "导入绑定是只读视图，会反映导出模块中绑定值的后续变化",
+      "模块默认严格模式且每个模块只求值一次，循环依赖时还要考虑初始化顺序"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "循环依赖为什么可能触发暂时性死区错误？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-commonjs-esm",
+    "category": "javascript",
+    "tags": [
+      "模块",
+      "工程化"
+    ],
+    "title": "CommonJS 与 ES Module 的主要区别是什么？",
+    "answer": "CommonJS 通常在运行时同步执行 require 并导出对象，ESM 使用静态 import/export。ESM 支持实时绑定和静态分析，CommonJS 的导出对象更接近执行后的值快照。\n\nNode.js 中两套模块系统的解析、文件扩展名和互操作规则需要结合项目配置判断。",
+    "keyPoints": [
+      "CommonJS 通常在运行时同步执行 require 并导出对象，ESM 使用静态 import/export",
+      "ESM 支持实时绑定和静态分析，CommonJS 的导出对象更接近执行后的值快照",
+      "Node.js 中两套模块系统的解析、文件扩展名和互操作规则需要结合项目配置判断"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "为什么不能简单把 require 全部机械替换成 import？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-destructuring-spread",
+    "category": "javascript",
+    "tags": [
+      "语法",
+      "对象"
+    ],
+    "title": "解构赋值和展开语法有哪些常见陷阱？",
+    "answer": "解构按属性名或迭代顺序读取值，并可设置只在 undefined 时生效的默认值。对象展开只复制自身可枚举属性，是浅拷贝而不是递归克隆。\n\n展开过程中会触发属性读取，且原型、不可枚举属性和属性描述符不会原样保留。",
+    "keyPoints": [
+      "解构按属性名或迭代顺序读取值，并可设置只在 undefined 时生效的默认值",
+      "对象展开只复制自身可枚举属性，是浅拷贝而不是递归克隆",
+      "展开过程中会触发属性读取，且原型、不可枚举属性和属性描述符不会原样保留"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "对象展开遇到 getter 时会发生什么？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-optional-nullish",
+    "category": "javascript",
+    "tags": [
+      "语法",
+      "空值"
+    ],
+    "title": "可选链 ?. 和空值合并 ?? 应该如何使用？",
+    "answer": "可选链在左侧为 null 或 undefined 时短路并返回 undefined。空值合并只把 null 和 undefined 视为缺失，不会误伤 0、空字符串和 false。\n\n分组可能中断可选链的连续短路，赋值左侧也不能直接使用可选链。",
+    "keyPoints": [
+      "可选链在左侧为 null 或 undefined 时短路并返回 undefined",
+      "空值合并只把 null 和 undefined 视为缺失，不会误伤 0、空字符串和 false",
+      "分组可能中断可选链的连续短路，赋值左侧也不能直接使用可选链"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "为什么配置默认值通常更适合使用 ?? 而不是 ||？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-number-precision",
+    "category": "javascript",
+    "tags": [
+      "数字",
+      "浮点数"
+    ],
+    "title": "为什么 0.1 + 0.2 不等于 0.3，如何比较浮点数？",
+    "answer": "JavaScript Number 使用 IEEE 754 双精度浮点表示，许多十进制小数无法被二进制精确表示。浮点运算会产生舍入误差，直接使用严格相等比较计算结果可能失败。\n\n比较时可根据业务量级使用容差，金额等精确场景应采用整数最小单位或专用十进制方案。",
+    "keyPoints": [
+      "JavaScript Number 使用 IEEE 754 双精度浮点表示，许多十进制小数无法被二进制精确表示",
+      "浮点运算会产生舍入误差，直接使用严格相等比较计算结果可能失败",
+      "比较时可根据业务量级使用容差，金额等精确场景应采用整数最小单位或专用十进制方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "Number.EPSILON 能否作为所有浮点比较的固定容差？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-bigint",
+    "category": "javascript",
+    "tags": [
+      "数字",
+      "BigInt"
+    ],
+    "title": "BigInt 解决了什么问题，使用时有哪些限制？",
+    "answer": "BigInt 可以精确表示超过 Number 安全整数范围的任意大整数。BigInt 字面量带 n，不能与 Number 直接混合进行算术运算。\n\nJSON 默认不能序列化 BigInt，涉及接口、数据库和浏览器兼容性时需要显式转换方案。",
+    "keyPoints": [
+      "BigInt 可以精确表示超过 Number 安全整数范围的任意大整数",
+      "BigInt 字面量带 n，不能与 Number 直接混合进行算术运算",
+      "JSON 默认不能序列化 BigInt，涉及接口、数据库和浏览器兼容性时需要显式转换方案"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么 BigInt 不适合直接表示带小数的金额？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-proxy-reflect",
+    "category": "javascript",
+    "tags": [
+      "元编程",
+      "对象"
+    ],
+    "title": "Proxy 和 Reflect 如何配合使用？",
+    "answer": "Proxy 可以拦截对象的读取、写入、删除、函数调用等内部操作。Reflect 提供与许多代理陷阱对应的默认语义，便于正确转发原始操作。\n\n代理必须遵守对象不可配置属性等语言不变量，否则运行时会抛出 TypeError。",
+    "keyPoints": [
+      "Proxy 可以拦截对象的读取、写入、删除、函数调用等内部操作",
+      "Reflect 提供与许多代理陷阱对应的默认语义，便于正确转发原始操作",
+      "代理必须遵守对象不可配置属性等语言不变量，否则运行时会抛出 TypeError"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "响应式系统使用 Proxy 时如何处理对象身份？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-json-limitations",
+    "category": "javascript",
+    "tags": [
+      "序列化",
+      "JSON"
+    ],
+    "title": "JSON.stringify 和 JSON.parse 有哪些限制？",
+    "answer": "JSON 只能表达对象、数组、字符串、数字、布尔值和 null 等有限结构。undefined、函数和 Symbol 可能被忽略，BigInt 会报错，Date 通常变成字符串，循环引用会报错。\n\nreplacer、reviver 可以定制部分转换，但不能自动恢复原型、方法和所有内置类型。",
+    "keyPoints": [
+      "JSON 只能表达对象、数组、字符串、数字、布尔值和 null 等有限结构",
+      "undefined、函数和 Symbol 可能被忽略，BigInt 会报错，Date 通常变成字符串，循环引用会报错",
+      "replacer、reviver 可以定制部分转换，但不能自动恢复原型、方法和所有内置类型"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如何安全处理包含循环引用的调试数据？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-structured-clone",
+    "category": "javascript",
+    "tags": [
+      "拷贝",
+      "Web API"
+    ],
+    "title": "structuredClone 与 JSON 深拷贝有什么区别？",
+    "answer": "structuredClone 使用结构化克隆算法，支持循环引用、Map、Set、Date、ArrayBuffer 等更多类型。它不能克隆函数、DOM 节点等不可克隆值，也不会保留自定义类的完整行为语义。\n\n可转移对象可以把底层资源所有权移动到新对象，减少大数据复制成本。",
+    "keyPoints": [
+      "structuredClone 使用结构化克隆算法，支持循环引用、Map、Set、Date、ArrayBuffer 等更多类型",
+      "它不能克隆函数、DOM 节点等不可克隆值，也不会保留自定义类的完整行为语义",
+      "可转移对象可以把底层资源所有权移动到新对象，减少大数据复制成本"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "哪些对象适合通过 transfer 列表转移？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-array-sort",
+    "category": "javascript",
+    "tags": [
+      "数组",
+      "排序"
+    ],
+    "title": "Array.prototype.sort 使用时要注意什么？",
+    "answer": "sort 默认把元素转为字符串并按 UTF-16 码元顺序比较，数字排序必须提供比较函数。sort 会原地修改数组，现代环境可使用 toSorted 获得不变更原数组的结果。\n\n比较函数应保持自反、反对称和传递等一致性，否则结果可能不可预测。",
+    "keyPoints": [
+      "sort 默认把元素转为字符串并按 UTF-16 码元顺序比较，数字排序必须提供比较函数",
+      "sort 会原地修改数组，现代环境可使用 toSorted 获得不变更原数组的结果",
+      "比较函数应保持自反、反对称和传递等一致性，否则结果可能不可预测"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "如何实现多字段稳定排序？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-flat-flatmap",
+    "category": "javascript",
+    "tags": [
+      "数组",
+      "数据处理"
+    ],
+    "title": "flat 和 flatMap 的区别是什么？",
+    "answer": "flat 按指定深度展开嵌套数组，默认只展开一层。flatMap 先对每项映射再展开一层，适合一对零、一或多项的转换。\n\n两者都会返回新数组，并会忽略稀疏数组中的空槽，不能替代任意深度递归处理。面试时还应说明适用边界，并结合运行环境验证具体行为。",
+    "keyPoints": [
+      "flat 按指定深度展开嵌套数组，默认只展开一层",
+      "flatMap 先对每项映射再展开一层，适合一对零、一或多项的转换",
+      "两者都会返回新数组，并会忽略稀疏数组中的空槽，不能替代任意深度递归处理"
+    ],
+    "difficulty": 1,
+    "followUps": [
+      "flatMap 为什么只能展开一层？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-regexp-last-index",
+    "category": "javascript",
+    "tags": [
+      "正则表达式",
+      "状态"
+    ],
+    "title": "正则表达式的 global、sticky 和 lastIndex 有什么关系？",
+    "answer": "带 g 或 y 标志的 RegExp 在 exec、test 等调用中会读写 lastIndex。global 从 lastIndex 之后继续搜索，sticky 要求恰好从 lastIndex 位置匹配。\n\n复用有状态正则时若忽略 lastIndex，连续 test 可能出现交替结果，应按调用场景重置或新建实例。",
+    "keyPoints": [
+      "带 g 或 y 标志的 RegExp 在 exec、test 等调用中会读写 lastIndex",
+      "global 从 lastIndex 之后继续搜索，sticky 要求恰好从 lastIndex 位置匹配",
+      "复用有状态正则时若忽略 lastIndex，连续 test 可能出现交替结果，应按调用场景重置或新建实例"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "为什么循环调用 test 可能一真一假？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-error-handling",
+    "category": "javascript",
+    "tags": [
+      "错误处理"
+    ],
+    "title": "JavaScript 应用如何设计错误处理边界？",
+    "answer": "同步异常可用 try/catch 捕获，Promise 拒绝需要在异步链中显式处理。业务可预期失败与程序缺陷应使用不同错误类型或结果模型表达。\n\n捕获后应补充上下文并决定恢复、重试或上报，不能静默吞掉导致状态不一致的错误。",
+    "keyPoints": [
+      "同步异常可用 try/catch 捕获，Promise 拒绝需要在异步链中显式处理",
+      "业务可预期失败与程序缺陷应使用不同错误类型或结果模型表达",
+      "捕获后应补充上下文并决定恢复、重试或上报，不能静默吞掉导致状态不一致的错误"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "什么时候适合自定义 Error 子类？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-event-listener-options",
+    "category": "javascript",
+    "tags": [
+      "DOM",
+      "事件"
+    ],
+    "title": "addEventListener 的 capture、once、passive 和 signal 有什么作用？",
+    "answer": "capture 决定监听器是否在捕获阶段触发，once 会在首次触发后自动移除。passive 表示监听器不会调用 preventDefault，可帮助浏览器优化触摸和滚动。\n\nsignal 可以通过 AbortController 批量移除监听器，减少组件销毁时的清理遗漏。",
+    "keyPoints": [
+      "capture 决定监听器是否在捕获阶段触发，once 会在首次触发后自动移除",
+      "passive 表示监听器不会调用 preventDefault，可帮助浏览器优化触摸和滚动",
+      "signal 可以通过 AbortController 批量移除监听器，减少组件销毁时的清理遗漏"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "为什么不能把需要阻止滚动的监听器设置为 passive？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-top-level-await",
+    "category": "javascript",
+    "tags": [
+      "模块",
+      "异步"
+    ],
+    "title": "顶层 await 会如何影响 ES Module 依赖图？",
+    "answer": "顶层 await 只允许在模块中使用，并使该模块的求值过程变为异步。依赖它的父模块会等待其完成，但依赖图中的其他无关分支仍可能继续执行。\n\n在公共模块中滥用顶层 await 会推迟应用启动，并让循环依赖问题更难分析。",
+    "keyPoints": [
+      "顶层 await 只允许在模块中使用，并使该模块的求值过程变为异步",
+      "依赖它的父模块会等待其完成，但依赖图中的其他无关分支仍可能继续执行",
+      "在公共模块中滥用顶层 await 会推迟应用启动，并让循环依赖问题更难分析"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "顶层 await 与动态 import 的加载边界有何不同？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-private-fields",
+    "category": "javascript",
+    "tags": [
+      "类",
+      "封装"
+    ],
+    "title": "JavaScript 私有字段 #field 与普通下划线属性有什么区别？",
+    "answer": "# 私有字段由语言在语法和运行时强制限制，只能在声明它的类体内访问。它不属于普通字符串属性，不能通过 Object.keys、in 的字符串形式或代理陷阱直接访问。\n\n私有字段提供封装但也影响测试、序列化和继承设计，应避免把类变成难以组合的状态容器。",
+    "keyPoints": [
+      "# 私有字段由语言在语法和运行时强制限制，只能在声明它的类体内访问",
+      "它不属于普通字符串属性，不能通过 Object.keys、in 的字符串形式或代理陷阱直接访问",
+      "私有字段提供封装但也影响测试、序列化和继承设计，应避免把类变成难以组合的状态容器"
+    ],
+    "difficulty": 2,
+    "followUps": [
+      "子类能否直接访问父类的私有字段？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  },
+  {
+    "id": "js-weakref-finalization",
+    "category": "javascript",
+    "tags": [
+      "内存",
+      "高级 API"
+    ],
+    "title": "WeakRef 和 FinalizationRegistry 为什么应谨慎使用？",
+    "answer": "WeakRef 允许在不阻止垃圾回收的情况下临时访问对象。FinalizationRegistry 可在对象回收后安排清理回调，但回调时间甚至是否执行都不确定。\n\n它们不适合承载关键资源释放或业务逻辑，只应用于可丢失缓存等少数高级场景。",
+    "keyPoints": [
+      "WeakRef 允许在不阻止垃圾回收的情况下临时访问对象",
+      "FinalizationRegistry 可在对象回收后安排清理回调，但回调时间甚至是否执行都不确定",
+      "它们不适合承载关键资源释放或业务逻辑，只应用于可丢失缓存等少数高级场景"
+    ],
+    "difficulty": 3,
+    "followUps": [
+      "为什么文件句柄关闭不能依赖终结回调？"
+    ],
+    "references": [
+      {
+        "title": "MDN JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+      }
+    ],
+    "updatedAt": "2026-08-18"
+  }
+]

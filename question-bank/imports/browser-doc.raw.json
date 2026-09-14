@@ -1,0 +1,490 @@
+[
+  {
+    "sourceIndex": 1,
+    "category": "browser",
+    "title": "从输入 URL 到页面展示完整流程",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "DNS 解析：域名查找对应 IP，查询顺序：浏览器缓存 → hosts 文件 → 本地 DNS 服务器 → 根 DNS 服务器。"
+      },
+      {
+        "kind": "text",
+        "text": "建立 TCP 连接，HTTPS 会进行 TLS 握手。"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器发送 HTTP 请求。"
+      },
+      {
+        "kind": "text",
+        "text": "服务器处理，返回响应报文。"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器接收 HTML 响应，开始解析。"
+      },
+      {
+        "kind": "text",
+        "text": "解析 HTML 生成 DOM 树；解析 CSS 生成 CSSOM 规则树。"
+      },
+      {
+        "kind": "text",
+        "text": "DOM + CSSOM 合并生成渲染树 Render Tree（只包含需要显示的节点）。"
+      },
+      {
+        "kind": "text",
+        "text": "重排 (回流 reflow)：计算每个元素的位置、几何大小。"
+      },
+      {
+        "kind": "text",
+        "text": "重绘 (repaint)：把像素绘制到屏幕。"
+      },
+      {
+        "kind": "text",
+        "text": "合成：分层，交给 GPU 合成输出到显示器。"
+      },
+      {
+        "kind": "text",
+        "text": "注意：遇到<script>会阻塞 DOM 解析；link 不会阻塞 DOM 解析，但会阻塞渲染。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 2,
+    "category": "browser",
+    "title": "重排 (回流)、重绘、合成层，三者区别，如何优化",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "重排 (reflow)：元素几何布局发生变化，浏览器重新计算布局，开销最大。 触发：修改宽高、margin、位置、获取 offsetWidth/clientWidth 等布局属性。"
+      },
+      {
+        "kind": "text",
+        "text": "重绘 (repaint)：只改变颜色、背景，不改变布局，开销较小。"
+      },
+      {
+        "kind": "text",
+        "text": "重排必然触发重绘；重绘不一定触发重排。"
+      },
+      {
+        "kind": "text",
+        "text": "合成层：把元素提升独立图层，GPU 做合成。transform、opacity 动画走合成层，不触发重排重绘，性能最好。"
+      },
+      {
+        "kind": "text",
+        "text": "优化手段："
+      },
+      {
+        "kind": "text",
+        "text": "读写 DOM 属性分离，不要边读布局属性边修改样式；"
+      },
+      {
+        "kind": "text",
+        "text": "动画优先使用 transform、opacity；"
+      },
+      {
+        "kind": "text",
+        "text": "尽量批量修改 DOM，使用 class 切换，少操作 style；"
+      },
+      {
+        "kind": "text",
+        "text": "脱离文档流处理动画元素，缩小重排影响范围；"
+      },
+      {
+        "kind": "text",
+        "text": "不要滥用硬件提升，过多合成层占用显存。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 3,
+    "category": "browser",
+    "title": "script 标签 async /defer 的区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 普通 script：下载、执行都会阻塞 DOM 解析。"
+      },
+      {
+        "kind": "text",
+        "text": "async：异步下载脚本，下载完成立刻执行，执行顺序无法保证。适合不依赖 DOM、无依赖的脚本。"
+      },
+      {
+        "kind": "text",
+        "text": "defer：异步下载脚本，等到 DOM 全部解析完成之后执行，保留脚本书写顺序。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 4,
+    "category": "browser",
+    "title": "DOM、BOM 分别是什么",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "DOM：文档对象模型，操作页面文档节点，增删改查元素。"
+      },
+      {
+        "kind": "text",
+        "text": "BOM：浏览器对象模型，操作浏览器窗口：window、location、history、navigator、setTimeout。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 5,
+    "category": "browser",
+    "title": "事件流：捕获、目标、冒泡；事件委托原理和优缺点",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： DOM 事件流三个阶段：捕获阶段 → 目标阶段 → 冒泡阶段。 addEventListener('click',fn,false)，false 冒泡；true 开启捕获。"
+      },
+      {
+        "kind": "text",
+        "text": "事件委托（事件代理） 原理：利用事件冒泡，把子元素事件绑定到父元素上。 优点："
+      },
+      {
+        "kind": "text",
+        "text": "减少事件绑定数量，节省内存；"
+      },
+      {
+        "kind": "text",
+        "text": "对动态新增的 DOM 节点自动生效，不用重复绑定事件。 缺点：部分事件不冒泡（blur、focus）无法委托；层级太深会有性能损耗。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 6,
+    "category": "browser",
+    "title": "Cookie、localStorage、sessionStorage 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "Cookie：约 4KB；每次 http 请求自动携带发给后端；可设置过期时间；有 HttpOnly、Secure、SameSite 安全属性。"
+      },
+      {
+        "kind": "text",
+        "text": "localStorage：约 5MB；永久存储，手动删除；不会随请求发送；同域所有标签页共享。"
+      },
+      {
+        "kind": "text",
+        "text": "sessionStorage：约 5MB；仅当前标签会话，关闭标签页销毁；不同标签互相隔离。"
+      },
+      {
+        "kind": "text",
+        "text": "存储都受同源策略限制。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 7,
+    "category": "browser",
+    "title": "同源策略是什么，为什么要有同源策略",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 同源：协议、域名、端口三者全部相同。 浏览器同源策略限制不同源页面之间 DOM、数据、接口访问。 目的：安全防护，防止恶意网站窃取用户信息，防范 CSRF 攻击。 跨域：请求是发出去的，浏览器拦截返回结果。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 8,
+    "category": "browser",
+    "title": "浏览器缓存机制，Memory Cache、Disk Cache",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 浏览器缓存分为内存缓存 Memory Cache、磁盘缓存 Disk Cache。"
+      },
+      {
+        "kind": "text",
+        "text": "Memory Cache：内存，读取速度极快；关闭标签页就清空。存放图片、脚本。"
+      },
+      {
+        "kind": "text",
+        "text": "Disk Cache：硬盘，持久化存储，关闭浏览器依然存在。"
+      },
+      {
+        "kind": "text",
+        "text": "缓存优先级：先看强缓存；命中内存缓存；内存没有读取磁盘缓存；都没有发网络请求。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 9,
+    "category": "browser",
+    "title": "垃圾回收机制，浏览器 GC，常见内存泄漏场景",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 浏览器 JS 主要使用标记-清除算法。 从根对象 window 出发，标记所有可达对象；没有标记的视为垃圾，回收释放内存。"
+      },
+      {
+        "kind": "text",
+        "text": "内存泄漏常见场景："
+      },
+      {
+        "kind": "text",
+        "text": "意外的全局变量；"
+      },
+      {
+        "kind": "text",
+        "text": "闭包没有释放，引用一直存活；"
+      },
+      {
+        "kind": "text",
+        "text": "定时器、事件监听忘记清除；"
+      },
+      {
+        "kind": "text",
+        "text": "DOM 元素引用保存，DOM 删除后变量没有置 null；"
+      },
+      {
+        "kind": "text",
+        "text": "不合理的缓存无限增长。"
+      },
+      {
+        "kind": "text",
+        "text": "排查：Chrome DevTools Memory 面板。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 10,
+    "category": "browser",
+    "title": "什么是渲染阻塞资源？哪些会阻塞渲染",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "JS 脚本会阻塞 DOM 解析与渲染；"
+      },
+      {
+        "kind": "text",
+        "text": "CSS 会阻塞渲染，不会阻塞 DOM 解析； 图片不会阻塞 DOM 解析和渲染。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 11,
+    "category": "browser",
+    "title": "页面白屏、FOIT、FOUT 概念",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "白屏：关键资源缺失，页面长时间看不到内容。"
+      },
+      {
+        "kind": "text",
+        "text": "FOIT：字体未下载完成，文字隐藏，下载完才显示文字。"
+      },
+      {
+        "kind": "text",
+        "text": "FOUT：先用后备字体显示，字体下载完成替换。 现在一般推荐 FOUT，提升用户体验。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 12,
+    "category": "browser",
+    "title": "requestAnimationFrame 和 setTimeout 区别",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "requestAnimationFrame：和浏览器刷新频率同步（一般 60 帧），在下一次渲染前执行，动画性能更好；页面隐藏时自动暂停，节省 CPU。"
+      },
+      {
+        "kind": "text",
+        "text": "setTimeout：定时器，时间只是最小延迟，受 JS 主线程阻塞影响，时间不准。"
+      },
+      {
+        "kind": "text",
+        "text": "做动画优先 requestAnimationFrame。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 13,
+    "category": "browser",
+    "title": "微任务、宏任务，浏览器事件循环完整流程",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 宏任务：script 整体代码、setTimeout、setInterval、ajax、UI 渲染。 微任务：Promise.then/catch、await 之后代码、MutationObserver。"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器执行顺序："
+      },
+      {
+        "kind": "text",
+        "text": "执行同步代码；"
+      },
+      {
+        "kind": "text",
+        "text": "同步执行完，把所有微任务全部清空；"
+      },
+      {
+        "kind": "text",
+        "text": "浏览器进行页面渲染；"
+      },
+      {
+        "kind": "text",
+        "text": "取出一个宏任务执行；循环往复。"
+      },
+      {
+        "kind": "text",
+        "text": "注意：渲染时机在一轮微任务全部执行完毕之后。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 14,
+    "category": "browser",
+    "title": "MutationObserver 是干什么的",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 异步监听 DOM 树变化，DOM 增删改、属性变化触发回调；属于微任务。 对比 Mutation 事件是同步，性能差。校招了解概念即可，很少手写。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 15,
+    "category": "browser",
+    "title": "跨标签页通信有哪些方案",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案："
+      },
+      {
+        "kind": "text",
+        "text": "localStorage + storage 事件；"
+      },
+      {
+        "kind": "text",
+        "text": "SharedWorker；"
+      },
+      {
+        "kind": "text",
+        "text": "BroadcastChannel；"
+      },
+      {
+        "kind": "text",
+        "text": "postMessage（iframe、窗口之间）。"
+      },
+      {
+        "kind": "text",
+        "text": "面试记住前 3 种即可。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 16,
+    "category": "browser",
+    "title": "postMessage 作用，安全注意点",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 可以实现不同源 iframe、窗口之间通信，不受同源策略限制。 安全：接收消息的时候一定要校验 origin 来源，防止恶意页面发送消息。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 17,
+    "category": "browser",
+    "title": "回流防抖？浏览器的 Layout thrashing（布局抖动）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 布局抖动：循环中一边读取布局属性 (offsetWidth)，一边修改 DOM，浏览器反复强制重排，性能很差。 解决：读写分离，全部读完布局属性，再统一修改 DOM。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 18,
+    "category": "browser",
+    "title": "Service Worker 了解？",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 独立于主线程的后台线程，离线缓存，PWA 技术。可以拦截请求，做离线缓存。 特点：脱离页面，页面关闭依然运行；必须 HTTPS 环境。"
+      },
+      {
+        "kind": "text",
+        "text": "校招了解概念，大厂才深挖。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 19,
+    "category": "browser",
+    "title": "虚拟 DOM 和真实 DOM 对比",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 虚拟 DOM：JS 对象，描述 DOM 结构。 真实 DOM：浏览器 DOM 节点，操作开销大。 虚拟 DOM 不是更快，是复杂场景下减少频繁完整重排；简单操作直接操作 DOM 会更快。"
+      }
+    ]
+  },
+  {
+    "sourceIndex": 20,
+    "category": "browser",
+    "title": "浏览器的进程模型（多进程）",
+    "blocks": [
+      {
+        "kind": "text",
+        "text": "答案： 现代浏览器是多进程架构："
+      },
+      {
+        "kind": "text",
+        "text": "浏览器主进程：界面、标签管理；"
+      },
+      {
+        "kind": "text",
+        "text": "渲染进程（每个标签页）：JS 引擎、DOM 解析、渲染；"
+      },
+      {
+        "kind": "text",
+        "text": "GPU 进程：GPU 合成；"
+      },
+      {
+        "kind": "text",
+        "text": "网络进程：网络请求。"
+      },
+      {
+        "kind": "text",
+        "text": "同一个域名现在会开启渲染进程隔离。JS 渲染线程和 GUI 渲染线程互斥，JS 长时间阻塞会卡住页面渲染。"
+      }
+    ]
+  }
+]
